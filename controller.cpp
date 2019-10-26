@@ -11,8 +11,6 @@ void Controller::Run() {
     game_ = new Game(painter);
 
     double t = clock();
-    double prev_t = t;
-    int frame_ctr = 0;
     while (window_->isOpen()) {
         sf::Event event;
         while (window_->pollEvent(event))
