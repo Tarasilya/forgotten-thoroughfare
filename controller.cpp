@@ -11,6 +11,8 @@ void Controller::Run() {
     game_ = new Game(painter);
 
     double t = clock();
+    double prev_t = t;
+    int frame_ctr = 0;
     while (window_->isOpen()) {
         sf::Event event;
         while (window_->pollEvent(event))
@@ -22,14 +24,19 @@ void Controller::Run() {
 
             if (event.type == sf::Event::KeyPressed) {
                 ProcessKey(event.key.code);
+		window_->clear({76, 180, 115});
+		game_->Draw();
+		window_->display();
             }
         }
         clock_t dt = clock() - t;
         t = clock();
-        game_->Tick(dt * 1.0 / CLOCKS_PER_SEC);
-        window_->clear({76, 180, 115});
-        game_->Draw();
-        window_->display();
+	if (((t - prev_t)*1.0)/CLOCKS_PER_SEC > 0.016){
+	  frame_ctr ++;
+	  double start_mvt = t;
+	  prev_t = t;
+	  window_->display();
+	}
     }
 }
 

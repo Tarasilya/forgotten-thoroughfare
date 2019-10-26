@@ -16,11 +16,19 @@ struct Color {
 };
 
 struct Rectangle {
-	double x1;
-	double y1;
-	double x2;
-	double y2;
-	Color color;
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+  Color color;
 };
 
-
+/*
+struct RectSprite {
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+  std::string sprite_filename;
+};
+*/
