@@ -14,12 +14,11 @@ private:
 	int display_width_;
 	int display_height_;
 
-    int Transform(double coord, int size);
-
 public:
 	Painter(sf::RenderWindow* window);
 	void Draw(const Rectangle& rect);
 
 	virtual int Width();
 	virtual int Height();
+    int Transform(double coord, int size);
 };
