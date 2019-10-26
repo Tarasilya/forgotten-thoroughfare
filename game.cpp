@@ -10,7 +10,7 @@
 
 Game::Game(Painter* painter) {
     painter_ = painter;
-    View* view = new View(0.5, 0.5)
+    View* view = new View(0.5, 0.5);
     players_.push_back(new Player(view));
     views_.push_back(view);
 }
@@ -32,7 +32,4 @@ void Game::ProcessKey(sf::Keyboard::Key key)
 
 void Game::Tick(double dt)
 {
-    for (auto object: map_->GetObjects()) {
-        object->Tick(dt);
-    }
 }

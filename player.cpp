@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Player::Player() {}
+Player::Player(View* view) : view_(view) {}
 
 
 bool Player::ProcessKey(sf::Keyboard::Key key) {

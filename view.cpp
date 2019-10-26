@@ -1,4 +1,5 @@
 #include "view.h"
+#include "painter.h"
 
 View::View(double x, double y) : x_(x), y_(y) {}
 
@@ -8,5 +9,5 @@ void View::Move(double dx, double dy) {
 }
 
 void View::Draw(Painter* painter) {
-    painter->Draw(Rect(x_ - size, y_ - size, x_ + size, y_ + size, Color(50, 150, 75)));
+    painter->Draw({x_ - size, y_ - size, x_ + size, y_ + size, Color(50, 150, 75)});
 }

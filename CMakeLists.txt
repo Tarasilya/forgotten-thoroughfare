@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(syla-roads)
+project(forgotten-thoroughfare)
 
 if (APPLE)
 set(LINKER_FLAGS "-framework sfml-system -framework sfml-window -framework sfml-graphics")
@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11" )
 
 file(GLOB SOURCES "*.cpp")
 
-add_executable(syla ${SOURCES}) 
+add_executable(ft ${SOURCES}) 
 
 if (UNIX AND NOT APPLE) 
 target_link_libraries(syla -L/usr/local/lib)

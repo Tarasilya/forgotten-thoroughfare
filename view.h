@@ -12,4 +12,4 @@ public:
     View(double x, double y);
     void Move(double dx, double dy);
     void Draw(Painter* painter);
-}
+};

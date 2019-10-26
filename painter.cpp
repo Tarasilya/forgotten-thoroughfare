@@ -10,11 +10,6 @@ Painter::Painter(sf::RenderWindow* window) {
 
 	display_width_ = window_->getSize().x;
 	display_height_ = window_->getSize().y;
-
-	if (!font_.loadFromFile("font.ttf"))
-	{
-	    std::cerr << "cant load font!!" << std::endl;
-	}	
 }
 
 void Painter::Draw(const Rectangle& rect) {
@@ -34,12 +29,6 @@ void Painter::Draw(const Rectangle& rect) {
 
 	window_->draw(draw_rect);
 }
-	draw_text.setPosition(sf::Vector2f(x, y));
-	draw_text.setColor(sf::Color::White);
-	window_->draw(draw_text);
-}
-
-
 
 int Painter::Width() {
 	return display_width_;
