@@ -9,5 +9,6 @@ void View::Move(double dx, double dy) {
 }
 
 void View::Draw(Painter* painter) {
-    painter->Draw({x_ - size, y_ - size, x_ + size, y_ + size, Color(50, 150, 75)});
+  player_sprite.setPosition(painter->Transform(x_, painter->Width()), painter->Transform(y_, painter->Height()));
+  painter->Draw(player_sprite);
 }
