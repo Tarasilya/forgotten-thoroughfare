@@ -30,6 +30,10 @@ void Painter::Draw(const Rectangle& rect) {
 	window_->draw(draw_rect);
 }
 
+void Painter::Draw(sf::Sprite player_sprite){
+  window_->draw(player_sprite);
+}
+
 int Painter::Width() {
 	return display_width_;
 }

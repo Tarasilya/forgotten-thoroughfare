@@ -7,6 +7,6 @@ RectCollisionBox::RectCollisionBox(double x1, double y1, double x2, double y2)
 
 
 bool RectCollisionBox::collide(RectCollisionBox* box) {
-    return x1 + eps < box.x2 && box.x1 + eps < x2 &&
-        y1 + eps < box.y2 && box.y1 + eps < y2;
+    return x1 + eps < box->x2 && box->x1 + eps < x2 &&
+        y1 + eps < box->y2 && box->y1 + eps < y2;
 }

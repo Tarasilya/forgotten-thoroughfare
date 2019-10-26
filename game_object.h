@@ -2,6 +2,8 @@
 
 #include "collision_box.h"
 
+#include <SFML/Graphics.hpp>
+
 class GameObject {
 public:
     virtual CollisionBox* GetCollisionBox() = 0;

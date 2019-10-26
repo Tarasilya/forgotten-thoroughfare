@@ -1,4 +1,5 @@
 #include "rat.h"
+#include "rect_collision_box.h"
 
 const double speed = 0.05;
 const double size = 0.02;
@@ -28,7 +29,7 @@ bool Rat::ProcessKey(sf::Keyboard::Key key) {
             return true;
         }
         if (key == sf::Keyboard::D) {
-            y_ += speed;
+            x_ += speed;
             return true;
         }
     }
@@ -46,8 +47,17 @@ bool Rat::ProcessKey(sf::Keyboard::Key key) {
             return true;
         }
         if (key == sf::Keyboard::L) {
-            y_ += speed;
+            x_ += speed;
             return true;
         }
     }
+
+    return false;
+}
+
+double Rat::GetX() {
+    return x_;
+}
+double Rat::GetY() {
+    return y_;
 }

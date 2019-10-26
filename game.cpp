@@ -1,9 +1,9 @@
 #include "collision_box.h"
 #include "game.h"
 #include "painter.h"
-#include "player.h"
-#include "rat_view.h"
+#include "rat.h"
 #include "view.h"
+#include "view_factory.h"
 
 
 #include <iostream>
@@ -16,12 +16,11 @@ Game::Game(Painter* painter) {
     InitObjects();
 }
 
-void Game:InitObjects() {
+void Game::InitObjects() {
     for (int i = 0; i < 2; i++) {
         Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i);
-        RatView* rat_view = new RatView(rat);
         objects_.push_back(rat);
-        views_.push_back(rat_view);
+        views_.push_back(ViewFactory::CreateView(rat));
     }
 }
 
@@ -48,11 +47,11 @@ void Game::Tick(double dt)
 }
 
 std::vector<GameObject*>& Game::GetCollision(CollisionBox* collision_box) {
-    std::vector<GameObject*> collided_objects = new vector<GameObject*>();
+    std::vector<GameObject*>* collided_objects = new std::vector<GameObject*>();
     for (auto object : objects_) {
         if (object->GetCollisionBox()->collide(collision_box)) {
-            collided_objects.append(object);
+            collided_objects->push_back(object);
         }
     }
-    return collided_objects;
+    return *collided_objects;
 }
