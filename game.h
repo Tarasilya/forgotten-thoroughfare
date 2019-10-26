@@ -11,7 +11,7 @@ class Game {
 private:
     Painter* painter_;
 
-    std::vector<Player*> players_;
+    std::vector<GameObject*> objects_;
     std::vector<View*> views_;
     
 public: 
