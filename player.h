@@ -4,7 +4,7 @@
 
 class View;
 
-const double speed = 0.01;
+const double speed = 0.1;
 
 class Player {
     View* view_;

@@ -24,19 +24,20 @@ void Controller::Run() {
 
             if (event.type == sf::Event::KeyPressed) {
                 ProcessKey(event.key.code);
-		window_->clear({76, 180, 115});
-		game_->Draw();
-		window_->display();
             }
         }
         clock_t dt = clock() - t;
         t = clock();
-	if (((t - prev_t)*1.0)/CLOCKS_PER_SEC > 0.016){
-	  frame_ctr ++;
-	  double start_mvt = t;
-	  prev_t = t;
-	  window_->display();
-	}
+        if ( ((t - prev_t) * 1.0) / CLOCKS_PER_SEC > 0.016){
+            frame_ctr++;
+            double start_mvt = t;
+            prev_t = t;
+
+            game_->Tick(dt);
+            window_->clear({76, 180, 115});
+            game_->Draw();
+            window_->display();
+        }
     }
 }
 
