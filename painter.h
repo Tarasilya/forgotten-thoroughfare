@@ -19,7 +19,7 @@ private:
 public:
 	Painter(sf::RenderWindow* window);
 	void Draw(const Rectangle& rect);
-	void Draw(sf::Sprite player_sprite);
+
 	virtual int Width();
 	virtual int Height();
 };
