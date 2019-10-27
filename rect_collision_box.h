@@ -10,5 +10,7 @@ public:
     double y2;
 
     RectCollisionBox(double x1, double y1, double x2, double y2);
-    bool collide(RectCollisionBox* box) override;
+    bool Collide(CollisionBox* box) override;
+    bool Collide(RectCollisionBox* box) override;
+    void Move(double dx, double dy) override;
 };

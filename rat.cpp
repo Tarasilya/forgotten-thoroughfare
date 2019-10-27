@@ -1,11 +1,13 @@
 #include "rat.h"
+
+#include "game.h"
 #include "rect_collision_box.h"
 
-const double speed = 0.05;
-const double size = 0.02;
+const double speed = 0.02;
+const double size = 0.1;
 
-Rat::Rat(double x, double y, double i) : x_(x), y_(y), i_(i) {
-    collision_box_ = new RectCollisionBox(x - size, y - size, x + size, y + size);
+Rat::Rat(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game) {
+    collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
 }
 
 CollisionBox* Rat::GetCollisionBox() {
@@ -17,42 +19,54 @@ void Rat::Tick(double dt){}
 bool Rat::ProcessKey(sf::Keyboard::Key key) {
     if (i_ == 0) {
         if (key == sf::Keyboard::W) {
-            y_ -= speed;
+            Move(0, -speed);
             return true;
         }
         if (key == sf::Keyboard::A) {
-            x_ -= speed;
+            Move(-speed, 0);
             return true;
         }
         if (key == sf::Keyboard::S) {
-            y_ += speed;
+            Move(0, speed);
             return true;
         }
         if (key == sf::Keyboard::D) {
-            x_ += speed;
+            Move(speed, 0);
             return true;
         }
     }
     else {
         if (key == sf::Keyboard::I) {
-            y_ -= speed;
+            Move(0, -speed);
             return true;
         }
         if (key == sf::Keyboard::J) {
-            x_ -= speed;
+            Move(-speed, 0);
             return true;
         }
         if (key == sf::Keyboard::K) {
-            y_ += speed;
+            Move(0, speed);
             return true;
         }
         if (key == sf::Keyboard::L) {
-            x_ += speed;
+            Move(speed, 0);
             return true;
         }
     }
 
     return false;
+}
+
+void Rat::Move(double dx, double dy) {
+    collision_box_->Move(dx, dy);
+    for (auto object : game_->GetCollision(collision_box_)) {
+        if (object != this) {
+            collision_box_->Move(-dx, -dy);
+            return;
+        }
+    }
+    x_ += dx;
+    y_ += dy;
 }
 
 double Rat::GetX() {
