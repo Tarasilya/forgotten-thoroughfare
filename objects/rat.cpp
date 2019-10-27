@@ -1,7 +1,7 @@
 #include "rat.h"
 
-#include "game.h"
-#include "rect_collision_box.h"
+#include "../core/game.h"
+#include "../collisions/rect_collision_box.h"
 
 const double speed = 0.02;
 const double size = 0.1;
