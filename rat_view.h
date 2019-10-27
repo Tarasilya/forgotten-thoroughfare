@@ -1,16 +1,13 @@
 #pragma once
 
-#include "view.h"
-
-#include <SFML/Graphics.hpp>
+#include "texture_view.h"
 
 class Rat;
 
-class RatView : public View{
+class RatView : public TextureView {
 private:
     Rat* rat_;
-    sf::Sprite sprite_;
 public:
-    RatView(Rat* rat);
+    RatView(Rat* rat, Painter* painter);
     void Draw(Painter* painter) override;
 };

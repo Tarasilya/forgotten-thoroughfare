@@ -5,5 +5,5 @@ class View;
 
 class ViewFactory {
 public:
-    static View* CreateView(Rat* rat);
+    static View* CreateView(Rat* rat, Painter* painter);
 };

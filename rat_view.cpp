@@ -1,18 +1,17 @@
 #include "painter.h"
 #include "rat.h"
 #include "rat_view.h"
+#include "rect_collision_box.h"
 
 #include <iostream>
 
-RatView::RatView(Rat* rat) : rat_(rat) {
-    sf::Texture* texture_ = new sf::Texture();
-    if (!texture_->loadFromFile("mouse_assassin-min.jpg")){
-        std::cerr << "Could not load image";
-    }
-    sprite_.setTexture(*texture_);
-    sprite_.scale(sf::Vector2f(0.5f, 0.5f));
+RatView::RatView(Rat* rat, Painter* painter) : TextureView("mouse_assassin-min.jpg"), rat_(rat) {
+    // THAT'S REAL DIRTY DOWN THERE
+    RectCollisionBox* box = (RectCollisionBox*) rat->GetCollisionBox();
+    SetSize(
+        painter->Transform(box->x2 - box->x1, painter->Width()), 
+        painter->Transform(box->y2 - box->y1, painter->Height()));
 }
 void RatView::Draw(Painter* painter) {
-    sprite_.setPosition(painter->Transform(rat_->GetX(), painter->Width()), painter->Transform(rat_->GetY(), painter->Height()));
-    painter->Draw(sprite_);
+    TextureView::Draw(painter, rat_->GetX(), rat_->GetY());
 }

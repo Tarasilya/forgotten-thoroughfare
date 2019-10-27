@@ -18,9 +18,9 @@ Game::Game(Painter* painter) {
 
 void Game::InitObjects() {
     for (int i = 0; i < 2; i++) {
-        Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i);
+        Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i, this);
         objects_.push_back(rat);
-        views_.push_back(ViewFactory::CreateView(rat));
+        views_.push_back(ViewFactory::CreateView(rat, painter_));
     }
 }
 
@@ -49,7 +49,7 @@ void Game::Tick(double dt)
 std::vector<GameObject*>& Game::GetCollision(CollisionBox* collision_box) {
     std::vector<GameObject*>* collided_objects = new std::vector<GameObject*>();
     for (auto object : objects_) {
-        if (object->GetCollisionBox()->collide(collision_box)) {
+        if (object->GetCollisionBox()->Collide(collision_box)) {
             collided_objects->push_back(object);
         }
     }

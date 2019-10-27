@@ -2,6 +2,6 @@
 #include "view_factory.h"
 
 
-View* ViewFactory::CreateView(Rat* rat) {
-    return new RatView(rat);
+View* ViewFactory::CreateView(Rat* rat, Painter* painter) {
+    return new RatView(rat, painter);
 }
