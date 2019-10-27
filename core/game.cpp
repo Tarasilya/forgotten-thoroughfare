@@ -1,9 +1,9 @@
-#include "../collisions/collision_box.h"
+#include "collisions/collision_box.h"
 #include "game.h"
-#include "../painter/painter.h"
-#include "../objects/rat.h"
-#include "../views/view.h"
-#include "../views/view_factory.h"
+#include "painter/painter.h"
+#include "objects/rat.h"
+#include "views/view.h"
+#include "views/view_factory.h"
 
 
 #include <iostream>
