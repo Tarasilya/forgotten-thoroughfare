@@ -1,6 +1,6 @@
 #include "texture_view.h"
 
-#include "painter.h"
+#include "../painter/painter.h"
 
 #include <cstdio>
 

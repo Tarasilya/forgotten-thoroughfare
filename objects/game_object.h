@@ -1,6 +1,6 @@
 #pragma once
 
-#include "collision_box.h"
+#include "../collisions/collision_box.h"
 
 #include <SFML/Graphics.hpp>
 

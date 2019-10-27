@@ -1,11 +1,11 @@
-#include "painter.h"
-#include "rat.h"
+#include "../painter/painter.h"
+#include "../objects/rat.h"
 #include "rat_view.h"
-#include "rect_collision_box.h"
+#include "../collisions/rect_collision_box.h"
 
 #include <iostream>
 
-RatView::RatView(Rat* rat, Painter* painter) : TextureView("mouse_assassin-min.jpg"), rat_(rat) {
+RatView::RatView(Rat* rat, Painter* painter) : TextureView("pics/mouse_assassin.jpg"), rat_(rat) {
     // THAT'S REAL DIRTY DOWN THERE
     RectCollisionBox* box = (RectCollisionBox*) rat->GetCollisionBox();
     SetSize(
