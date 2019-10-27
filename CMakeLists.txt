@@ -12,6 +12,7 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11" )
 file(GLOB SOURCES "*/*.cpp")
 
 add_executable(ft ${SOURCES}) 
+target_include_directories(ft PRIVATE .)
 
 if (UNIX AND NOT APPLE) 
 target_link_libraries(ft -L/usr/local/lib)

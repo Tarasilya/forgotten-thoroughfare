@@ -1,7 +1,7 @@
 #include "controller.h"
 #include "game.h"
 
-#include "../painter/painter.h"
+#include "painter/painter.h"
 
 #include <iostream>
 

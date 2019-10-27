@@ -1,7 +1,7 @@
-#include "../painter/painter.h"
-#include "../objects/rat.h"
+#include "painter/painter.h"
+#include "objects/rat.h"
 #include "rat_view.h"
-#include "../collisions/rect_collision_box.h"
+#include "collisions/rect_collision_box.h"
 
 #include <iostream>
 
