@@ -10,7 +10,8 @@ void Controller::Run() {
     Painter* painter = new Painter(window_);
     game_ = new Game(painter);
 
-    double t = clock();
+    clock_t t = clock();
+    clock_t prev_t = t;
     while (window_->isOpen()) {
         sf::Event event;
         while (window_->pollEvent(event))
@@ -26,10 +27,14 @@ void Controller::Run() {
         }
         clock_t dt = clock() - t;
         t = clock();
-        game_->Tick(dt * 1.0 / CLOCKS_PER_SEC);
-        window_->clear({76, 180, 115});
-        game_->Draw();
-        window_->display();
+        if ( ((t - prev_t) * 1.0) / CLOCKS_PER_SEC > 0.016){
+            prev_t = t;
+
+            game_->Tick(dt);
+            window_->clear({76, 180, 115});
+            game_->Draw();
+            window_->display();
+        }
     }
 }
 
