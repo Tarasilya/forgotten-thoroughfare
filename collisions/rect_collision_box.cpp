@@ -1,4 +1,5 @@
 #include "rect_collision_box.h"
+#include <algorithm>
 
 const double eps = 1e-09;
 
@@ -20,4 +21,13 @@ void RectCollisionBox::Move(double dx, double dy) {
     x2 += dx;
     y1 += dy;
     y2 += dy;
+}
+
+std::pair<double> GetCorrection(CollisionBox* box, double dx, double dy) {
+	box->Move(dx, dy);
+	double too_low = max(box->y2 - y1, 0);
+	double too_high = max(y2 - box->y1, 0);
+	double too_right = max()
+	box->Move(-dx, -dy);
+	return 
 }

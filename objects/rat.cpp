@@ -1,3 +1,4 @@
+#include <utility>
 #include "rat.h"
 
 #include "core/game.h"
@@ -57,10 +58,11 @@ bool Rat::ProcessKey(sf::Keyboard::Key key) {
     return false;
 }
 
-void Rat::Move(double dx, double dy) {
+void Rat::Move(double dx, double dy) {z
     collision_box_->Move(dx, dy);
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this) {
+            correction_coord = collision_box_->GetCorrection(object->GetCollisionBox(), dx, dy);
             collision_box_->Move(-dx, -dy);
             return;
         }
