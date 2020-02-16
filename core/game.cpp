@@ -30,10 +30,10 @@ void Game::Draw() {
     }
 }
 
-void Game::ProcessKey(sf::Keyboard::Key key)
+void Game::ProcessKey(sf::Keyboard::Key key, bool pressed)
 {
     for (auto object : objects_) {
-        if (object->ProcessKey(key)) {
+        if (object->ProcessKey(key, pressed)) {
             break;
         }
     }

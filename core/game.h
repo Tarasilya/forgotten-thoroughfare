@@ -21,7 +21,7 @@ private:
 public: 
     Game(Painter* painter);
     void Draw();
-    void ProcessKey(sf::Keyboard::Key key);
+    void ProcessKey(sf::Keyboard::Key key, bool pressed);
     void Tick(double dt);
     std::vector<GameObject*>& GetCollision(CollisionBox* collision_box);
 };

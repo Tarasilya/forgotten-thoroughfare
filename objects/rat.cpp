@@ -8,52 +8,43 @@ const double size = 0.1;
 
 Rat::Rat(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game) {
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
+    if (i_ == 0) {
+        moves[UP] = sf::Keyboard::W;
+        moves[LEFT] = sf::Keyboard::A;
+        moves[DOWN] = sf::Keyboard::S;
+        moves[RIGHT] = sf::Keyboard::D;
+    }
+    else {
+        moves[UP] = sf::Keyboard::I;
+        moves[LEFT] = sf::Keyboard::J;
+        moves[DOWN] = sf::Keyboard::K;
+        moves[RIGHT] = sf::Keyboard::L;
+    }
 }
 
 CollisionBox* Rat::GetCollisionBox() {
     return collision_box_;
 }
 
-void Rat::Tick(double dt){}
-
-bool Rat::ProcessKey(sf::Keyboard::Key key) {
-    if (i_ == 0) {
-        if (key == sf::Keyboard::W) {
-            Move(0, -speed);
-            return true;
-        }
-        if (key == sf::Keyboard::A) {
-            Move(-speed, 0);
-            return true;
-        }
-        if (key == sf::Keyboard::S) {
-            Move(0, speed);
-            return true;
-        }
-        if (key == sf::Keyboard::D) {
-            Move(speed, 0);
-            return true;
-        }
+void Rat::Tick(double dt) {
+    double vertical_speed = 0;
+    double horizontal_speed = 0;
+    if (sf::Keyboard::isKeyPressed(moves[UP])) {
+        vertical_speed -= speed;
     }
-    else {
-        if (key == sf::Keyboard::I) {
-            Move(0, -speed);
-            return true;
-        }
-        if (key == sf::Keyboard::J) {
-            Move(-speed, 0);
-            return true;
-        }
-        if (key == sf::Keyboard::K) {
-            Move(0, speed);
-            return true;
-        }
-        if (key == sf::Keyboard::L) {
-            Move(speed, 0);
-            return true;
-        }
+    if (sf::Keyboard::isKeyPressed(moves[DOWN])) {
+        vertical_speed += speed;
     }
+    if (sf::Keyboard::isKeyPressed(moves[LEFT])) {
+        horizontal_speed -= speed;
+    }
+    if (sf::Keyboard::isKeyPressed(moves[RIGHT])) {
+        horizontal_speed += speed;
+    }
+    Move(horizontal_speed, vertical_speed);
+}
 
+bool Rat::ProcessKey(sf::Keyboard::Key key, bool pressed) {
     return false;
 }
 

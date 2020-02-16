@@ -16,13 +16,17 @@ void Controller::Run() {
         sf::Event event;
         while (window_->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed) {
-                window_->close();
-                break;
-            }
-
-            if (event.type == sf::Event::KeyPressed) {
-                ProcessKey(event.key.code);
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window_->close();
+                    exit(0);
+                    break;
+                case sf::Event::KeyPressed:
+                    ProcessKey(event.key.code, true);
+                    break;
+                case sf::Event::KeyReleased:
+                    ProcessKey(event.key.code, false);
+                    break;
             }
         }
         clock_t dt = clock() - t;
@@ -38,12 +42,12 @@ void Controller::Run() {
     }
 }
 
-void Controller::ProcessKey(sf::Keyboard::Key key) {
+void Controller::ProcessKey(sf::Keyboard::Key key, bool pressed) {
     if (key == sf::Keyboard::Escape) {
         window_->close();
         exit(0);
     }
     else {
-        game_->ProcessKey(key);
+        game_->ProcessKey(key, pressed);
     }
 }
