@@ -58,12 +58,14 @@ bool Rat::ProcessKey(sf::Keyboard::Key key) {
     return false;
 }
 
-void Rat::Move(double dx, double dy) {z
+void Rat::Move(double dx, double dy) {
     collision_box_->Move(dx, dy);
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this) {
-            correction_coord = collision_box_->GetCorrection(object->GetCollisionBox(), dx, dy);
-            collision_box_->Move(-dx, -dy);
+            std::pair<double, double> correction = collision_box_->GetCorrection((RectCollisionBox*) object->GetCollisionBox(), dx, dy);
+            collision_box_->Move(correction.first, correction.second);
+            x_ += dx + correction.first;
+            y_ += dy + correction.second;
             return;
         }
     }
