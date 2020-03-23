@@ -35,7 +35,6 @@ void Controller::Run() {
             prev_t = t;
 
             game_->Tick(dt);
-            window_->clear({76, 180, 115});
             game_->Draw();
             window_->display();
         }
