@@ -1,4 +1,10 @@
+#include <algorithm>
+#include <iostream>
 #include <utility>
+
+#include <math.h>
+#include <stdlib.h>
+
 #include "rat.h"
 
 #include "core/game.h"
@@ -63,9 +69,27 @@ void Rat::Move(double dx, double dy) {
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this) {
             std::pair<double, double> correction = collision_box_->GetCorrection((RectCollisionBox*) object->GetCollisionBox(), dx, dy);
-            collision_box_->Move(correction.first, correction.second);
-            x_ += dx + correction.first;
-            y_ += dy + correction.second;
+            double new_dx = -copysign(std::min(correction.first, abs(dx)), dx);
+            double new_dy = -copysign(std::min(correction.second, abs(dy)), dy);
+            collision_box_->Move(new_dx, new_dy);
+            x_ += dx + new_dx;
+            y_ += dy + new_dy;
+
+            view->PrintBounce();
+            ((Rat*) object)->view->PrintBounce();
+
+
+            std::cerr << "Intended horizontal: " << dx << "; Actual horizontal: " << dx + new_dx << "\n";
+            std::cerr << "Intended vertical: "   << dy << "; Actual vertical: " << dy + new_dy << "\n";
+            
+
+            std::cerr << "Self actual x: " << x_ << "\n";
+            std::cerr << "Self actual y: " << y_ << "\n";
+
+            std::cerr << "Other actual x: " << ((Rat*) object)->x_ << "\n";
+            std::cerr << "Other actual y: " << ((Rat*) object)->y_ << "\n";
+
+
             return;
         }
     }

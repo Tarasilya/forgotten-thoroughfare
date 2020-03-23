@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_object.h"
+#include "views/rat_view.h"
 
 class Game;
 class RectCollisionBox;
@@ -13,6 +14,7 @@ private:
     Game* game_;
     RectCollisionBox* collision_box_;
 
+
     void Move(double dx, double dy);
 
 public:
@@ -21,6 +23,8 @@ public:
     void Tick(double dt) override;
     bool ProcessKey(sf::Keyboard::Key key) override;
 
+    RatView* view;
+    
     double GetX();
     double GetY();
 };

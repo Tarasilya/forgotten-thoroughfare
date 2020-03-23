@@ -12,4 +12,5 @@ public:
     TextureView(const std::string& file);
     void SetSize(double width, double height);
     void Draw(Painter* painter, double x, double y);
+    void PrintBounce();
 };

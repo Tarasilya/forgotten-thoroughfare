@@ -3,6 +3,8 @@
 #include "painter/painter.h"
 
 #include <cstdio>
+#include <iostream>
+#include <stdlib.h>
 
 TextureView::TextureView(const std::string& file) {
     sprite_ = new sf::Sprite();
@@ -14,12 +16,23 @@ TextureView::TextureView(const std::string& file) {
 }
 void TextureView::SetSize(double width, double height) {
     auto size = texture_->getSize();
-    printf("%.2f %.2f\n", width / size.x, height / size.y);
+    printf("%.2f %.2f %.2f %.2f\n", width, (double) size.x, height, (double) size.y);
     sprite_->scale(sf::Vector2f(width / size.x, height / size.y));
 }
 void TextureView::Draw(Painter* painter, double x, double y) {
     sprite_->setPosition(
         painter->Transform(x, painter->Width()),
         painter->Transform(y, painter->Height()));
+
+    
     painter->Draw(sprite_);
+}
+
+void TextureView::PrintBounce() {
+    std::cerr.setf( std::ios::fixed, std:: ios::floatfield );
+
+    auto bounce = sprite_->getGlobalBounds();
+
+    std::cerr << "Sprite: " << bounce.left << " " << bounce.top << " "  << bounce.width << " " << bounce.height << "\n";
+
 }
