@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_object.h"
+#include "views/rat_view.h"
 
 #include <unordered_map>
 #include <string>
@@ -24,6 +25,7 @@ private:
     RectCollisionBox* collision_box_;
     std::unordered_map<std::string, sf::Keyboard::Key> moves;
 
+
     void Move(double dx, double dy);
 
 public:
@@ -32,6 +34,8 @@ public:
     void Tick(double dt) override;
     bool ProcessKey(sf::Keyboard::Key key, bool pressed) override;
 
+    RatView* view;
+    
     double GetX();
     double GetY();
 };

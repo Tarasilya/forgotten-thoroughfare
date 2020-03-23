@@ -19,8 +19,13 @@ Game::Game(Painter* painter) {
 void Game::InitObjects() {
     for (int i = 0; i < 2; i++) {
         Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i, this);
+        RatView* rat_view = (RatView*) ViewFactory::CreateView(rat, painter_);
+
+        rat->view = rat_view;
+        
         objects_.push_back(rat);
-        views_.push_back(ViewFactory::CreateView(rat, painter_));
+
+        views_.push_back(rat_view);
     }
 }
 
