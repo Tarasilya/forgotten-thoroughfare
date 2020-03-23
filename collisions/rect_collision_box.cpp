@@ -10,6 +10,10 @@ bool RectCollisionBox::Collide(CollisionBox* box) {
     return box->Collide(this);
 }
 
+bool RectCollisionBox::Collide(NullCollisionBox* box) {
+    return false;
+}
+
 bool RectCollisionBox::Collide(RectCollisionBox* box) {
     return x1 + eps < box->x2 && box->x1 + eps < x2 &&
         y1 + eps < box->y2 && box->y1 + eps < y2;
