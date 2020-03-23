@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdlib.h>
+#include <cmath>
 
 const double eps = 1e-09;
 

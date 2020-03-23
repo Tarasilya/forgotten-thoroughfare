@@ -16,7 +16,7 @@ TextureView::TextureView(const std::string& file) {
 }
 void TextureView::SetSize(double width, double height) {
     auto size = texture_->getSize();
-    printf("%.2f %.2f %.2f %.2f\n", width, (double) size.x, height, (double) size.y);
+    printf("setsize: %.2f %.2f %.2f %.2f\n", width, (double) size.x, height, (double) size.y);
     sprite_->scale(sf::Vector2f(width / size.x, height / size.y));
 }
 void TextureView::Draw(Painter* painter, double x, double y) {

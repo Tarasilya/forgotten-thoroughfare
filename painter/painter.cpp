@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <cmath>
+#include <cstdio>
 #include <iostream>
 
 Painter::Painter(sf::RenderWindow* window) {
@@ -42,6 +43,10 @@ int Painter::Height() {
 	return display_height_;
 }
 
-int Painter::Transform(double coord, int size) {
-	return coord * size;
+int Painter::Transform(double coord, int size, bool kek) {
+	if (kek) {
+		printf("transform: %.5f %d\n", coord, size);
+		printf("transform: %.5f\n", coord * size);
+	}
+	return round(coord * size);
 }
