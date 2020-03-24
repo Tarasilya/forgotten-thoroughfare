@@ -21,5 +21,5 @@ public:
 
 	virtual int Width();
 	virtual int Height();
-    int Transform(double coord, int size, bool kek = false);
+    int Transform(double coord, int size);
 };

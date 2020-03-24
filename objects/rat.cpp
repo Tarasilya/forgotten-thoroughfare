@@ -10,7 +10,7 @@
 #include "core/game.h"
 #include "collisions/rect_collision_box.h"
 
-const double speed = 0.02;
+const double speed = 0.002;
 const double size = 0.1;
 
 Rat::Rat(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game) {
@@ -65,21 +65,6 @@ void Rat::Move(double dx, double dy) {
             collision_box_->Move(new_dx, new_dy);
             x_ += dx + new_dx;
             y_ += dy + new_dy;
-
-            view->PrintBounce();
-            ((Rat*) object)->view->PrintBounce();
-
-
-            std::cerr << "Intended horizontal: " << dx << "; Actual horizontal: " << dx + new_dx << "\n";
-            std::cerr << "Intended vertical: "   << dy << "; Actual vertical: " << dy + new_dy << "\n";
-            
-
-            std::cerr << "Self actual x: " << x_ << "\n";
-            std::cerr << "Self actual y: " << y_ << "\n";
-
-            std::cerr << "Other actual x: " << ((Rat*) object)->x_ << "\n";
-            std::cerr << "Other actual y: " << ((Rat*) object)->y_ << "\n";
-
 
             return;
         }
