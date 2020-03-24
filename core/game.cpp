@@ -1,7 +1,7 @@
 #include "collisions/collision_box.h"
 #include "game.h"
 #include "painter/painter.h"
-#include "objects/rat.h"
+#include "objects/player.h"
 #include "views/view.h"
 #include "views/view_factory.h"
 
@@ -18,14 +18,14 @@ Game::Game(Painter* painter) {
 
 void Game::InitObjects() {
     for (int i = 0; i < 2; i++) {
-        Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i, this);
-        RatView* rat_view = (RatView*) ViewFactory::CreateView(rat, painter_);
+        Player* player = new Player(0.25 + 0.5 * i, 0.5, i, this);
+        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter_);
 
-        rat->view = rat_view;
+        player->view = player_view;
         
-        objects_.push_back(rat);
+        objects_.push_back(player);
 
-        views_.push_back(rat_view);
+        views_.push_back(player_view);
     }
 }
 

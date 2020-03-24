@@ -1,9 +1,9 @@
 #pragma once
 
-class Rat;
+class Player;
 class View;
 
 class ViewFactory {
 public:
-    static View* CreateView(Rat* rat, Painter* painter);
+    static View* CreateView(Player* player, Painter* painter);
 };
