@@ -52,9 +52,9 @@ void Painter::AddView(View* view) {
 
 void Painter::Redraw() {
 	for (auto view : views_) {
+		printf("view %d\n", view->Z());
         view->Draw(painter_);
     }
-
 }
 
 int Painter::Width() {

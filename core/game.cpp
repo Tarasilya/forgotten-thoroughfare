@@ -35,33 +35,17 @@ void Game::AddObject(GameObject* object) {
     objects_.push_back(object);
 }
 
-void Game::AddView(View* view) {
-    printf("AddView %d\n", views_.size());
-    views_.push_back(view);
-    printf("booty\n");
-}
-
 void Game::InitObjects() {
     auto painter = Painter::GetPainter();
     for (int i = 0; i < 2; i++) {
         Player* player = new Player(0.25 + 0.5 * i, 0.5, i, this);
-        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter_);
+        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
 
         player->view = player_view;
         
         objects_.push_back(player);
 
-        views_.push_back(player_view);
-    }
-}
-
-void Game::Draw() {
-    for (auto view : views_) {
-        view->Draw(painter_);
-        Rat* rat = new Rat(0.25 + 0.5 * i, 0.5, i, this);
-        objects_.push_back(rat);
-        painter->AddView(ViewFactory::CreateView(rat, painter));
-        printf("InitObjects %d\n", views_.size());
+        painter->AddView(player_view);
     }
 }
 

@@ -13,6 +13,4 @@ public:
     virtual bool Collide(NullCollisionBox* box) = 0;
 
     virtual void Move(double dx, double dy) = 0;
-
-    virtual std::pair<double, double> GetCorrection(RectCollisionBox* box, double dx, double dy) = 0;
 };

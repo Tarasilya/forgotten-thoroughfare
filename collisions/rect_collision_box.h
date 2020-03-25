@@ -15,5 +15,5 @@ public:
     bool Collide(NullCollisionBox* box) override;
     void Move(double dx, double dy) override;
 
-    std::pair<double, double> GetCorrection(RectCollisionBox* box, double dx, double dy) override;
+    std::pair<double, double> GetCorrection(RectCollisionBox* box, double dx, double dy);
 };
