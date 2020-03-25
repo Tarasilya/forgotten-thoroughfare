@@ -9,12 +9,11 @@
 
 class CollisionBox;
 class NullCollisionBox;
+class TileView;
 
 class Map : public GameObject {
 private:
-    std::vector<std::vector<Tile*>> map_;
-
-    Tile* CreateTile(char c);
+    std::vector<std::vector<TileView*>> map_;
 
     NullCollisionBox* null_collision_box_;
 public:
