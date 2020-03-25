@@ -1,5 +1,6 @@
 #include "collisions/collision_box.h"
 #include "game.h"
+#include "map/map.h"
 #include "painter/painter.h"
 #include "objects/player.h"
 #include "views/view.h"
@@ -9,29 +10,42 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
+#include <cstdio>
 
-Game::Game(Painter* painter) {
-    painter_ = painter;
-    
+Game* Game::current_game_ = 0;
+
+void Game::StartGame() {
+    current_game_ = new Game();
+    current_game_->InitMap();
+}
+
+Game* Game::GetCurrentGame() {
+    return current_game_;
+}
+
+Game::Game() {
     InitObjects();
 }
 
+void Game::InitMap() {
+    new Map("maps/dumb.map");
+}
+
+void Game::AddObject(GameObject* object) {
+    objects_.push_back(object);
+}
+
 void Game::InitObjects() {
+    auto painter = Painter::GetPainter();
     for (int i = 0; i < 2; i++) {
         Player* player = new Player(0.25 + 0.5 * i, 0.5, i, this);
-        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter_);
+        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
 
         player->view = player_view;
         
         objects_.push_back(player);
 
-        views_.push_back(player_view);
-    }
-}
-
-void Game::Draw() {
-    for (auto view : views_) {
-        view->Draw(painter_);
+        painter->AddView(player_view);
     }
 }
 

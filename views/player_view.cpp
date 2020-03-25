@@ -1,12 +1,14 @@
+#include "player_view.h"
+
 #include "painter/painter.h"
 #include "objects/player.h"
-#include "player_view.h"
 #include "collisions/rect_collision_box.h"
 
 #include <iostream>
 #include <cstdio>
 
 PlayerView::PlayerView(Player* player, Painter* painter) : TextureView("pics/mouse_assassin.jpg"), player_(player) {
+    z_ = 1;
     // THAT'S REAL DIRTY DOWN THERE
     RectCollisionBox* box = (RectCollisionBox*) player->GetCollisionBox();
 

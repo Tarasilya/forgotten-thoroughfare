@@ -7,8 +7,10 @@
 
 void Controller::Run() {
     window_ = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SYLA");
-    Painter* painter = new Painter(window_);
-    game_ = new Game(painter);
+    Painter::Init(window_);
+    Painter* painter = Painter::GetPainter();
+    Game::StartGame();
+    game_ = Game::GetCurrentGame();
 
     clock_t t = clock();
     clock_t prev_t = t;
@@ -35,8 +37,7 @@ void Controller::Run() {
             prev_t = t;
 
             game_->Tick(dt);
-            window_->clear({76, 180, 115});
-            game_->Draw();
+            painter->Redraw();
             window_->display();
         }
     }

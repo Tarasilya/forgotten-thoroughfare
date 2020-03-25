@@ -1,8 +1,8 @@
 #pragma once
 
-#include "collisions/collision_box.h"
-
 #include <SFML/Graphics.hpp>
+
+class CollisionBox;
 
 class GameObject {
 public:
