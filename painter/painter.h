@@ -19,6 +19,7 @@ private:
 	sf::RenderWindow* window_;
 	int display_width_;
 	int display_height_;
+	sf::Font font_;
 
     //std::function<bool (int, int)> comp = 
     std::set<View*, std::function<bool (View*, View*m)>> views_ = 
@@ -38,6 +39,7 @@ public:
 
     void Redraw();
 	void Draw(const Rectangle& rect);
+	void Draw(const sf::Text& text);
     void Draw(sf::Sprite* player_sprite);
 
     void AddView(View* view);

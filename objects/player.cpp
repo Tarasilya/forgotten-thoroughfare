@@ -13,20 +13,25 @@
 const double speed = 0.002;
 const double size = 0.1;
 
-Player::Player(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game) {
+Player::Player(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game),
+                                                           backpack_visibility_(false) {
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
     if (i_ == 0) {
         moves[UP] = sf::Keyboard::W;
         moves[LEFT] = sf::Keyboard::A;
         moves[DOWN] = sf::Keyboard::S;
         moves[RIGHT] = sf::Keyboard::D;
+        moves[BACKPACK] = sf::Keyboard::E;
     }
     else {
         moves[UP] = sf::Keyboard::I;
         moves[LEFT] = sf::Keyboard::J;
         moves[DOWN] = sf::Keyboard::K;
         moves[RIGHT] = sf::Keyboard::L;
+        moves[BACKPACK] = sf::Keyboard::O;
     }
+    backpack_ = new Backpack();
+
 }
 
 CollisionBox* Player::GetCollisionBox() {
@@ -47,6 +52,9 @@ void Player::Tick(double dt) {
     }
     if (sf::Keyboard::isKeyPressed(moves[RIGHT])) {
         horizontal_speed += speed;
+    }
+    if (sf::Keyboard::isKeyPressed(moves[BACKPACK])) {
+        backpack_visibility_ = !backpack_visibility_;
     }
     Move(horizontal_speed, vertical_speed);
 }
@@ -78,4 +86,12 @@ double Player::GetX() {
 }
 double Player::GetY() {
     return y_;
+}
+
+Backpack* Player::GetBackpack() {
+    return backpack_;
+}
+
+bool Player::GetBackpackVisibility() {
+    return backpack_visibility_;
 }

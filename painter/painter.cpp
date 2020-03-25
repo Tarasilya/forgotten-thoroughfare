@@ -17,6 +17,11 @@ Painter::Painter(sf::RenderWindow* window) {
 
 	display_width_ = window_->getSize().x;
 	display_height_ = window_->getSize().y;
+
+	if (!font_.loadFromFile("Windsong.ttf"))
+	{
+	    std::cerr << "cant load font!!" << std::endl;
+	}	
 }
 
 Painter* Painter::GetPainter() {
@@ -41,6 +46,22 @@ void Painter::Draw(const Rectangle& rect) {
 
 	window_->draw(draw_rect);
 }
+
+void Painter::Draw(const sf::Text& text) {
+	sf::Vector2f coords = text.getPosition();
+	float text_x = coords.x;
+	float text_y = coords.y;
+	int x = Transform(text_x, display_width_);
+	int y = Transform(text_y, display_height_);
+	sf::Text draw_text;
+	draw_text.setString(text.getString());
+	draw_text.setFont(font_);
+	draw_text.setCharacterSize(100);
+	draw_text.setPosition(sf::Vector2f(x, y));
+	draw_text.setColor(sf::Color::White);
+	window_->draw(draw_text);
+}
+
 
 void Painter::Draw(sf::Sprite* player_sprite){
   window_->draw(*player_sprite);

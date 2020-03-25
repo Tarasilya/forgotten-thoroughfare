@@ -1,9 +1,6 @@
 #include "rect_collision_box.h"
+#include "null_collision_box.h"
 
-#include <algorithm>
-#include <iostream>
-#include <stdlib.h>
-#include <cmath>
 
 const double eps = 1e-09;
 

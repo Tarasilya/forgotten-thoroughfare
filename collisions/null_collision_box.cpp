@@ -1,3 +1,4 @@
+#include "rect_collision_box.h"
 #include "null_collision_box.h"
 
 bool NullCollisionBox::Collide(CollisionBox* box) {
