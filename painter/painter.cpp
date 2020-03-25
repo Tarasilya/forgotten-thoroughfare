@@ -6,11 +6,22 @@
 #include <cstdio>
 #include <iostream>
 
+Painter* Painter::painter_ = 0;
+
+void Painter::Init(sf::RenderWindow* window) {
+	painter_ = new Painter(window);
+}
+
 Painter::Painter(sf::RenderWindow* window) {
 	window_ = window;
 
 	display_width_ = window_->getSize().x;
 	display_height_ = window_->getSize().y;
+}
+
+Painter* Painter::GetPainter() {
+	assert(painter_ != 0);
+	return painter_;
 }
 
 void Painter::Draw(const Rectangle& rect) {
@@ -33,6 +44,17 @@ void Painter::Draw(const Rectangle& rect) {
 
 void Painter::Draw(sf::Sprite* player_sprite){
   window_->draw(*player_sprite);
+}
+
+void Painter::AddView(View* view) {
+	views_.insert(view);
+}
+
+void Painter::Redraw() {
+	for (auto view : views_) {
+        view->Draw(painter_);
+    }
+
 }
 
 int Painter::Width() {
