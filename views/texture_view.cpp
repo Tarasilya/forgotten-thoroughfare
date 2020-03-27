@@ -6,12 +6,20 @@
 #include <iostream>
 #include <stdlib.h>
 
+std::map<std::string, sf::Texture*> TextureView::textures_;
+
 TextureView::TextureView(const std::string& file) {
     sprite_ = new sf::Sprite();
-    texture_ = new sf::Texture();
-    if (!texture_->loadFromFile(file)){
-        printf("Could not load image");
+
+    if (textures_.count(file) == 0) {
+        sf::Texture* texture = new sf::Texture();
+        if (!texture->loadFromFile(file)){
+            printf("Could not load image");
+        }        
+        textures_[file] = texture;
     }
+
+    texture_ = textures_[file];
     sprite_->setTexture(*texture_);
 }
 

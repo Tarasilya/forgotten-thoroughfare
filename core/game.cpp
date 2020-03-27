@@ -39,26 +39,21 @@ void Game::AddObject(GameObject* object) {
 
 void Game::InitObjects() {
     auto painter = Painter::GetPainter();
-    for (int i = 0; i < 2; i++) {
-        Player* player = new Player(0.25 + 0.5 * i, 0.5, i, this);
-        PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
 
-        player->view = player_view;
-        
-        for (int j = 0; j < i; j++){ 
-        
-            Stick* stick = new Stick();    
-            player->GetBackpack()->AddItem(stick);
-            std::cerr <<"New Stick \n";
-        }
-        
-        painter->AddView(player_view);
-        BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
-        
-        objects_.push_back(player);
+    Player* player = new Player(0.25, 0.5, this);
+    PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
 
-        painter->AddView(backpack_view);
-    }
+    player->view = player_view;
+
+    Stick* stick = new Stick();    
+    player->GetBackpack()->AddItem(stick);
+    BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
+    painter->AddView(backpack_view);
+
+    
+    objects_.push_back(player);
+
+    painter->AddView(player_view);
 }
 
 

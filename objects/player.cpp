@@ -9,29 +9,19 @@
 
 #include "core/game.h"
 #include "collisions/rect_collision_box.h"
+#include "painter/painter.h"
 
-const double speed = 0.002;
+const double speed = 0.005;
 const double size = 0.1;
 
-Player::Player(double x, double y, double i, Game* game) : x_(x), y_(y), i_(i), game_(game),
-                                                           backpack_visibility_(false) {
+Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
-    if (i_ == 0) {
-        moves[UP] = sf::Keyboard::W;
-        moves[LEFT] = sf::Keyboard::A;
-        moves[DOWN] = sf::Keyboard::S;
-        moves[RIGHT] = sf::Keyboard::D;
-        moves[BACKPACK] = sf::Keyboard::E;
-    }
-    else {
-        moves[UP] = sf::Keyboard::I;
-        moves[LEFT] = sf::Keyboard::J;
-        moves[DOWN] = sf::Keyboard::K;
-        moves[RIGHT] = sf::Keyboard::L;
-        moves[BACKPACK] = sf::Keyboard::O;
-    }
+    moves[UP] = sf::Keyboard::I;
+    moves[LEFT] = sf::Keyboard::J;
+    moves[DOWN] = sf::Keyboard::K;
+    moves[RIGHT] = sf::Keyboard::L;
+    moves[BACKPACK] = sf::Keyboard::O;
     backpack_ = new Backpack();
-
 }
 
 CollisionBox* Player::GetCollisionBox() {
@@ -64,6 +54,7 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed) {
 }
 
 void Player::Move(double dx, double dy) {
+    Painter* painter = Painter::GetPainter();
     collision_box_->Move(dx, dy);
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this) {
@@ -73,12 +64,14 @@ void Player::Move(double dx, double dy) {
             collision_box_->Move(new_dx, new_dy);
             x_ += dx + new_dx;
             y_ += dy + new_dy;
+            painter->PlayerMoved(x_, y_);
 
             return;
         }
     }
     x_ += dx;
     y_ += dy;
+    painter->PlayerMoved(x_, y_);
 }
 
 double Player::GetX() {

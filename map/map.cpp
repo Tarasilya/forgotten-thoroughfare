@@ -14,12 +14,17 @@ Map::Map(std::string filename) {
     std::string row;
     int i = 0;
     Game* game = Game::GetCurrentGame();
+
+    int height, width;
+
+    in >> height >> width;
+
     while(in >> row) {
         int j = 0;
         map_.push_back(std::vector<TileView*>());
         for(char c : row) {
-            double x = j * TILE_SIZE;
-            double y = i * TILE_SIZE;
+            double x = (j - width / 2) * TILE_SIZE;
+            double y = (i - height / 2) * TILE_SIZE;
             map_.back().push_back(TileView::CreateTileView(x, y, c, painter));
             j++;
         }
