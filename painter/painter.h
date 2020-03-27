@@ -8,6 +8,7 @@
 
 #include <set>
 #include <utility>
+#include <functional>
 
 const Color micro_MVP_RECTANGLE_COLOR = {82, 194, 228};
 

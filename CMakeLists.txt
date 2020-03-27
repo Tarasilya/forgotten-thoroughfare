@@ -9,7 +9,12 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11" )
 
-file(GLOB SOURCES "*/*.cpp")
+file(GLOB A "*/*.cpp")
+file(GLOB B "*/items/*.cpp")
+file(GLOB C "*/items/stick/*.cpp")
+
+set(SOURCES ${A} ${B} ${C})
+
 
 add_executable(ft ${SOURCES}) 
 target_include_directories(ft PRIVATE .)

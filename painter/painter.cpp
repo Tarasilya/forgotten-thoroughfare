@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
+#include <cassert>
 
 Painter* Painter::painter_ = 0;
 

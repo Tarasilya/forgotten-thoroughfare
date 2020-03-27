@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 BackpackView::BackpackView(Backpack* backpack, Player* player) : TextView("Empty Backpack") {
+	z_ = 2;
 	std::cerr << "Here b \n";
 	backpack_ = backpack; 
 	player_ = player;

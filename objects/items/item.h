@@ -15,7 +15,7 @@ class Item : public GameObject {
 private:   
     double x_;
     double y_;
-    RectCollisionBox* collision_box_;    
+    CollisionBox* collision_box_;    
     bool visibility_;
     ItemType type_;
 
@@ -23,4 +23,7 @@ public:
 	Item(bool visibility, ItemType type);
 	bool GetVisibility();
 	ItemType GetItemType();
+	double GetX();
+	double GetY();
+
 };

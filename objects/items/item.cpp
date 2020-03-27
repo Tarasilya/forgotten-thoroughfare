@@ -16,3 +16,11 @@ bool Item::GetVisibility() {
 ItemType Item::GetItemType() {
     return type_;
 }
+
+double Item::GetX() {
+    return x_;
+}
+
+double Item::GetY() {
+    return y_;
+}
