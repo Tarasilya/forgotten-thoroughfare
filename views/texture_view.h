@@ -4,8 +4,12 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <map>
+
 class TextureView : public View {
 private:
+    static std::map<std::string, sf::Texture*> textures_;
+
     sf::Sprite* sprite_;
     sf::Texture* texture_;
 public:

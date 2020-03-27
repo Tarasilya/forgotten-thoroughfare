@@ -2,9 +2,11 @@
 
 #include "shapes.h"
 
+#include "collisions/rect_collision_box.h"
 #include "views/view.h"
 
 #include <SFML/Graphics.hpp>
+
 
 #include <set>
 #include <utility>
@@ -16,6 +18,8 @@ class Painter {
 private:
     static Painter* painter_;
     Painter(sf::RenderWindow* window);
+
+    RectCollisionBox* display_rect_;
 
 	sf::RenderWindow* window_;
 	int display_width_;
@@ -44,6 +48,8 @@ public:
     void Draw(sf::Sprite* player_sprite);
 
     void AddView(View* view);
+
+    void PlayerMoved(double x, double y);
 
 	virtual int Width();
 	virtual int Height();

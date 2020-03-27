@@ -9,11 +9,15 @@
 
 Painter* Painter::painter_ = 0;
 
+const double ALLOWANCE = 0.4;
+
 void Painter::Init(sf::RenderWindow* window) {
 	painter_ = new Painter(window);
 }
 
 Painter::Painter(sf::RenderWindow* window) {
+	display_rect_ = new RectCollisionBox(0, 0, 1, 1);
+
 	window_ = window;
 
 	display_width_ = window_->getSize().x;
@@ -30,9 +34,24 @@ Painter* Painter::GetPainter() {
 	return painter_;
 }
 
+void Painter::PlayerMoved(double x, double y) {
+	if (x < display_rect_->x1 + ALLOWANCE) {
+		display_rect_->Move(-(display_rect_->x1 + ALLOWANCE - x), 0);
+	}
+	if (y < display_rect_->y1 + ALLOWANCE) {
+		display_rect_->Move(0, -(display_rect_->y1 + ALLOWANCE - y));
+	}
+	if (x > display_rect_->x2 - ALLOWANCE) {
+		display_rect_->Move(x - (display_rect_->x2 - ALLOWANCE), 0);
+	}
+	if (y > display_rect_->y2 - ALLOWANCE) {
+		display_rect_->Move(0, y - (display_rect_->y2 - ALLOWANCE));
+	}
+}
+
 void Painter::Draw(const Rectangle& rect) {
-	int x1 = Transform(rect.x1, display_width_);
-	int y1 = Transform(rect.y1, display_height_);
+	int x1 = Transform(rect.x1 - display_rect_->x1, display_width_);
+	int y1 = Transform(rect.y1 - display_rect_->y1, display_height_);
 	int x2 = Transform(rect.x2, display_width_);
 	int y2 = Transform(rect.y2, display_height_);
 
@@ -52,8 +71,8 @@ void Painter::Draw(const sf::Text& text) {
 	sf::Vector2f coords = text.getPosition();
 	float text_x = coords.x;
 	float text_y = coords.y;
-	int x = Transform(text_x, display_width_);
-	int y = Transform(text_y, display_height_);
+	int x = Transform(text_x - display_rect_->x1, display_width_);
+	int y = Transform(text_y - display_rect_->y1, display_height_);
 	sf::Text draw_text;
 	draw_text.setString(text.getString());
 	draw_text.setFont(font_);
@@ -65,7 +84,13 @@ void Painter::Draw(const sf::Text& text) {
 
 
 void Painter::Draw(sf::Sprite* player_sprite){
-  window_->draw(*player_sprite);
+	auto position = player_sprite->getPosition();
+	player_sprite->setPosition(
+		position.x - Transform(display_rect_->x1, display_width_),
+		position.y - Transform(display_rect_->y1, display_width_)
+	);
+ 	window_->draw(*player_sprite);
+	player_sprite->setPosition(position);
 }
 
 void Painter::AddView(View* view) {

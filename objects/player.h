@@ -20,7 +20,6 @@ class RectCollisionBox;
 
 class Player : public GameObject {
 private:
-    int i_;
     double x_;
     double y_;
     bool backpack_visibility_;
@@ -32,7 +31,7 @@ private:
     void Move(double dx, double dy);
 
 public:
-    Player(double x, double y, double i, Game* game);
+    Player(double x, double y, Game* game);
     CollisionBox* GetCollisionBox() override;
     void Tick(double dt) override;
     bool ProcessKey(sf::Keyboard::Key key, bool pressed) override;
