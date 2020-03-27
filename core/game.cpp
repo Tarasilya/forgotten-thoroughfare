@@ -1,10 +1,12 @@
 #include "collisions/collision_box.h"
 #include "game.h"
 #include "map/map.h"
-#include "painter/painter.h"
 #include "objects/player.h"
+#include "objects/items/stick/stick.h"
+#include "painter/painter.h"
 #include "views/view.h"
 #include "views/view_factory.h"
+#include "views/backpack_view.h"
 
 
 #include <iostream>
@@ -43,11 +45,22 @@ void Game::InitObjects() {
 
         player->view = player_view;
         
+        for (int j = 0; j < i; j++){ 
+        
+            Stick* stick = new Stick();    
+            player->GetBackpack()->AddItem(stick);
+            std::cerr <<"New Stick \n";
+        }
+        
+        painter->AddView(player_view);
+        BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
+        
         objects_.push_back(player);
 
-        painter->AddView(player_view);
+        painter->AddView(backpack_view);
     }
 }
+
 
 void Game::ProcessKey(sf::Keyboard::Key key, bool pressed)
 {
