@@ -57,7 +57,7 @@ void Painter::Draw(const sf::Text& text) {
 	sf::Text draw_text;
 	draw_text.setString(text.getString());
 	draw_text.setFont(font_);
-	draw_text.setCharacterSize(100);
+	draw_text.setCharacterSize(50);
 	draw_text.setPosition(sf::Vector2f(x, y));
 	draw_text.setColor(sf::Color::White);
 	window_->draw(draw_text);
@@ -74,7 +74,6 @@ void Painter::AddView(View* view) {
 
 void Painter::Redraw() {
 	for (auto view : views_) {
-		printf("view %d\n", view->Z());
         view->Draw(painter_);
     }
 }

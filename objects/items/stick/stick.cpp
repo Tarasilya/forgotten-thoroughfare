@@ -4,7 +4,13 @@
 
 Stick::Stick() : Item(false, ItemType::STICK), name_("stick") {}
 
-CollisionBox* Stick::GetCollisionBox() {
-	return new NullCollisionBox();
+
+
+
+void Stick::Tick(double dt){
+	return;
 }
 
+bool Stick::ProcessKey(sf::Keyboard::Key key, bool pressed) {
+	return false;
+}

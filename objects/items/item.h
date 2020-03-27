@@ -19,10 +19,17 @@ private:
     bool visibility_;
     ItemType type_;
 
+	static std::map<ItemType, std::string> item_type_convert_;
+
+
 public:
 	Item(bool visibility, ItemType type);
 	bool GetVisibility();
-	ItemType GetItemType();
+	ItemType GetType();
+
+	static std::map<ItemType, std::string> GetConversionTable();	
+
+    CollisionBox* GetCollisionBox() override;
 	double GetX();
 	double GetY();
 

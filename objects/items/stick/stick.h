@@ -13,5 +13,6 @@ public:
 	Stick();
     std::string GetName();
 
-    CollisionBox* GetCollisionBox() override;
+    void Tick(double dt) override;
+    bool ProcessKey(sf::Keyboard::Key key, bool pressed) override;
 };

@@ -4,6 +4,11 @@ Backpack::Backpack(){
 	return;
 }
 
+std::vector<Item*> Backpack::GetItems() {
+	return items_;
+}
+
+
 void Backpack::AddItem(Item* item) {
-	return;
+	items_.push_back(item);
 }
