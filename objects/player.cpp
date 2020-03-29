@@ -29,27 +29,33 @@ CollisionBox* Player::GetCollisionBox() {
 }
 
 void Player::Tick(double dt) {
-    double vertical_speed = 0;
-    double horizontal_speed = 0;
-    if (sf::Keyboard::isKeyPressed(moves[UP])) {
-        vertical_speed -= speed;
-    }
-    if (sf::Keyboard::isKeyPressed(moves[DOWN])) {
-        vertical_speed += speed;
-    }
-    if (sf::Keyboard::isKeyPressed(moves[LEFT])) {
-        horizontal_speed -= speed;
-    }
-    if (sf::Keyboard::isKeyPressed(moves[RIGHT])) {
-        horizontal_speed += speed;
-    }
-    if (sf::Keyboard::isKeyPressed(moves[BACKPACK])) {
-        backpack_visibility_ = !backpack_visibility_;
-    }
-    Move(horizontal_speed, vertical_speed);
+    std::cerr << "Tick " << dt << " " <<  vertical_speed_ << " " << horizontal_speed_ << std::endl;
+    Move(horizontal_speed_, vertical_speed_);
+    vertical_speed_ = 0;
+    horizontal_speed_ = 0;
 }
 
-bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed) {
+bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
+    if (key == moves[UP]) {
+        vertical_speed_ -= speed;
+        return true;
+    }
+    if (key == moves[DOWN]) {
+        vertical_speed_ += speed;
+        return true;
+    }
+    if (key == moves[LEFT]) {
+        horizontal_speed_ -= speed;
+        return true;
+    }
+    if (key == moves[RIGHT]) {
+        horizontal_speed_ += speed;
+        return true;
+    }
+    if (key == moves[BACKPACK] && !repeated) {
+        backpack_visibility_ = !backpack_visibility_;
+        return true;
+    }
     return false;
 }
 

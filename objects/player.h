@@ -22,6 +22,9 @@ class Player : public GameObject {
 private:
     double x_;
     double y_;
+    double horizontal_speed_;
+    double vertical_speed_;
+
     bool backpack_visibility_;
     Game* game_;
     RectCollisionBox* collision_box_;
@@ -34,7 +37,7 @@ public:
     Player(double x, double y, Game* game);
     CollisionBox* GetCollisionBox() override;
     void Tick(double dt) override;
-    bool ProcessKey(sf::Keyboard::Key key, bool pressed) override;
+    bool ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) override;
 
     PlayerView* view;
     

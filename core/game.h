@@ -23,7 +23,7 @@ public:
     static Game* GetCurrentGame();
 
     Game();
-    void ProcessKey(sf::Keyboard::Key key, bool pressed);
+    void ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated);
     void Tick(double dt);
     void AddObject(GameObject* object);
     std::vector<GameObject*>& GetCollision(CollisionBox* collision_box);
