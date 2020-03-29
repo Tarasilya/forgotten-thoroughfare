@@ -12,12 +12,17 @@ ItemView::ItemView(Item* item, Painter* painter, const std::string& filename) : 
     RectCollisionBox* box = (RectCollisionBox*) item->GetCollisionBox();
 
     SetSize(
-        painter->Transform(box->x2 - box->x1, painter->Width()), 
-        painter->Transform(box->y2 - box->y1, painter->Height()));
+        	painter->Transform(0.05, painter->Width()), 
+        	painter->Transform(0.05, painter->Height()));
+
 }
 
 void ItemView::Draw(Painter* painter) {
+	
 	if (item_->GetVisibility()) {
+		RectCollisionBox* collision_box_ = (RectCollisionBox*) item_->GetCollisionBox();
+		
+	    
 	    TextureView::Draw(painter, item_->GetX(), item_->GetY());
 	}
 }

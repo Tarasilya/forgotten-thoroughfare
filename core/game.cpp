@@ -7,6 +7,7 @@
 #include "views/view.h"
 #include "views/view_factory.h"
 #include "views/backpack_view.h"
+#include "views/stick_view.h"
 
 
 #include <iostream>
@@ -45,8 +46,14 @@ void Game::InitObjects() {
 
     player->view = player_view;
 
-    Stick* stick = new Stick();    
-    player->GetBackpack()->AddItem(stick);
+    for (int i = 0; i < 20000; i++) {
+        Stick* stick = new Stick(); 
+        StickView* stick_view = new StickView(stick, painter);
+        painter->AddView(stick_view);
+
+        player->GetBackpack()->AddItem(stick);
+    }
+
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
     painter->AddView(backpack_view);
 

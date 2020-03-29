@@ -13,6 +13,7 @@ const std::string DOWN = "down";
 const std::string LEFT = "left";
 const std::string RIGHT = "right";
 const std::string BACKPACK = "backpack";
+const std::string DROP = "drop";
 
 
 class Game;

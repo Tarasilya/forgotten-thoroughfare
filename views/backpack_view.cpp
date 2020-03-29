@@ -11,7 +11,6 @@ BackpackView::BackpackView(Backpack* backpack, Player* player) : TextView("Empty
 	z_ = 2;
 	backpack_ = backpack; 
 	player_ = player;
-    // SetText("8========>");
 }
 
 void BackpackView::Draw(Painter* painter) {
