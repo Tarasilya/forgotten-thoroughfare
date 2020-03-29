@@ -63,8 +63,7 @@ void Controller::ProcessKey(sf::Keyboard::Key key, bool pressed) {
 
 void Controller::ProcessPressedKeys() {
     for (auto it = pressed_keys_.begin(); it != pressed_keys_.end(); it++) {
-        std::cerr << "PressedKeys: " << it->first << " " << it->second << " " << pressed_keys_.size() << std::endl;
-        if (it->second) {
+       if (it->second) {
             game_->ProcessKey(it->first, true, it->second);
         }
         it->second = true;

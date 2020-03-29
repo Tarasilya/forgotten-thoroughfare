@@ -21,6 +21,7 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[DOWN] = sf::Keyboard::K;
     moves[RIGHT] = sf::Keyboard::L;
     moves[BACKPACK] = sf::Keyboard::O;
+    moves[DROP] = sf::Keyboard::U;
     backpack_ = new Backpack();
 }
 
@@ -29,7 +30,6 @@ CollisionBox* Player::GetCollisionBox() {
 }
 
 void Player::Tick(double dt) {
-    std::cerr << "Tick " << dt << " " <<  vertical_speed_ << " " << horizontal_speed_ << std::endl;
     Move(horizontal_speed_, vertical_speed_);
     vertical_speed_ = 0;
     horizontal_speed_ = 0;
@@ -56,12 +56,26 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         backpack_visibility_ = !backpack_visibility_;
         return true;
     }
+    if (key == moves[DROP] && !repeated) {
+        backpack_->DropItem(x_, y_);
+        return true;
+    }
+
     return false;
 }
 
 void Player::Move(double dx, double dy) {
     Painter* painter = Painter::GetPainter();
     collision_box_->Move(dx, dy);
+    
+    ////// DANGER //////
+    
+    x_ += dx;
+    y_ += dy;
+    painter->PlayerMoved(x_, y_);
+
+    return;
+
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this) {
             std::pair<double, double> correction = collision_box_->GetCorrection((RectCollisionBox*) object->GetCollisionBox(), dx, dy);

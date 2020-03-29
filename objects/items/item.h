@@ -32,5 +32,7 @@ public:
     CollisionBox* GetCollisionBox() override;
 	double GetX();
 	double GetY();
+	void Drop(double x, double y);
+	bool Droppable();
 
 };
