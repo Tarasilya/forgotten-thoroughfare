@@ -57,10 +57,10 @@ void Game::InitObjects() {
 }
 
 
-void Game::ProcessKey(sf::Keyboard::Key key, bool pressed)
+void Game::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated)
 {
     for (auto object : objects_) {
-        if (object->ProcessKey(key, pressed)) {
+        if (object->ProcessKey(key, pressed, repeated)) {
             break;
         }
     }

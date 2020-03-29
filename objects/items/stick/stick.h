@@ -14,5 +14,4 @@ public:
     std::string GetName();
 
     void Tick(double dt) override;
-    bool ProcessKey(sf::Keyboard::Key key, bool pressed) override;
 };

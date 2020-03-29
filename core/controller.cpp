@@ -31,11 +31,14 @@ void Controller::Run() {
                     break;
             }
         }
+
+
         clock_t dt = clock() - t;
         t = clock();
         if ( ((t - prev_t) * 1.0) / CLOCKS_PER_SEC > 0.016){
             prev_t = t;
 
+            ProcessPressedKeys();
             game_->Tick(dt);
             painter->Redraw();
             window_->display();
@@ -48,7 +51,22 @@ void Controller::ProcessKey(sf::Keyboard::Key key, bool pressed) {
         window_->close();
         exit(0);
     }
+    
+    if (pressed) {
+        game_->ProcessKey(key, pressed, false);
+        pressed_keys_[key] = false;
+    }    
     else {
-        game_->ProcessKey(key, pressed);
+        pressed_keys_.erase(key);
+    }
+}
+
+void Controller::ProcessPressedKeys() {
+    for (auto it = pressed_keys_.begin(); it != pressed_keys_.end(); it++) {
+        std::cerr << "PressedKeys: " << it->first << " " << it->second << " " << pressed_keys_.size() << std::endl;
+        if (it->second) {
+            game_->ProcessKey(it->first, true, it->second);
+        }
+        it->second = true;
     }
 }

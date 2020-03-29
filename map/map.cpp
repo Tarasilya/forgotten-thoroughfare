@@ -31,13 +31,3 @@ Map::Map(std::string filename) {
         i++;
     }
 }
-
-CollisionBox* Map::GetCollisionBox() {
-    return new NullCollisionBox();
-}
-
-void Map::Tick(double dt) {}
-
-bool Map::ProcessKey(sf::Keyboard::Key key, bool pressed) {
-    return false;
-}
