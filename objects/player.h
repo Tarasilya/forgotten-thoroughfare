@@ -15,10 +15,13 @@ const std::string RIGHT = "right";
 const std::string BACKPACK = "backpack";
 const std::string DROP = "drop";
 const std::string PICKUP = "pickup";
+const std::string DAMAGE = "damage";
+const std::string HEAL = "heal";
 
 
 class Game;
 class RectCollisionBox;
+class HpBar;
 
 class Player : public GameObject {
 private:
@@ -26,6 +29,8 @@ private:
     double y_;
     double horizontal_speed_;
     double vertical_speed_;
+
+    HpBar* hp_bar_;
 
     bool backpack_visibility_;
     Game* game_;
@@ -38,7 +43,7 @@ private:
 
 public:
     Player(double x, double y, Game* game);
-    CollisionBox* GetCollisionBox() override;
+    CollisionBox* GetCollisionBox() const override;
     void Tick(double dt) override;
     bool ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) override;
     bool Collidable(Player* p) override;
@@ -46,8 +51,8 @@ public:
 
     PlayerView* view;
     
-    double GetX();
-    double GetY();
+    double GetX() const;
+    double GetY() const;
     Backpack* GetBackpack();
     bool GetBackpackVisibility();
 };

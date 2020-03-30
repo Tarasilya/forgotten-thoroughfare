@@ -32,7 +32,7 @@ double Item::GetY() {
 }
 
 
-CollisionBox* Item::GetCollisionBox() {
+CollisionBox* Item::GetCollisionBox() const {
     return collision_box_;
 }
 

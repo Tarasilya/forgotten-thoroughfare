@@ -10,11 +10,16 @@
 #include "core/game.h"
 #include "collisions/rect_collision_box.h"
 #include "painter/painter.h"
+#include "player/hp_bar.h"
 
 const double speed = 0.005;
 const double size = 0.1;
 
+const double MAX_HP = 100;
+const double DMG = 10;
+
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
+    hp_bar_ = new HpBar(MAX_HP, this);
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
     moves[UP] = sf::Keyboard::I;
     moves[LEFT] = sf::Keyboard::J;
@@ -23,10 +28,12 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[BACKPACK] = sf::Keyboard::O;
     moves[DROP] = sf::Keyboard::Q;
     moves[PICKUP] = sf::Keyboard::E;
+    moves[DAMAGE] = sf::Keyboard::A;
+    moves[HEAL] = sf::Keyboard::S;
     backpack_ = new Backpack();
 }
 
-CollisionBox* Player::GetCollisionBox() {
+CollisionBox* Player::GetCollisionBox() const {
     return collision_box_;
 }
 
@@ -57,8 +64,12 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         backpack_visibility_ = !backpack_visibility_;
         return true;
     }
-    if (key == moves[DROP] && !repeated) {
-        backpack_->DropItem(x_, y_);
+    if (key == moves[DAMAGE] && !repeated) {
+        hp_bar_->Change(-DMG);
+        return true;
+    }
+    if (key == moves[HEAL] && !repeated) {
+        hp_bar_->Change(DMG);
         return true;
     }
     if (key == moves[PICKUP]) {
@@ -94,17 +105,16 @@ void Player::Move(double dx, double dy) {
 void Player::PickUpItems() {
     for (auto object : game_->GetCollision(collision_box_)) {
         if (object != this && object->Pickupable(this)) {
-            std::cerr << "\n\n FLOCKA! \n\n";
             backpack_->PickItem((Item*) object);
             return;
         }
     }
 }
 
-double Player::GetX() {
+double Player::GetX() const {
     return x_;
 }
-double Player::GetY() {
+double Player::GetY() const {
     return y_;
 }
 
