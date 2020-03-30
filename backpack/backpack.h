@@ -13,4 +13,5 @@ public:
     void AddItem(Item* item);
     void DropItem(double x, double y); // Drops topmost item of backpack
     void Display();
+    void PickItem(Item* item);  
 };

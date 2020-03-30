@@ -48,6 +48,7 @@ void Game::InitObjects() {
 
     for (int i = 0; i < 20000; i++) {
         Stick* stick = new Stick(); 
+        AddObject(stick);
         StickView* stick_view = new StickView(stick, painter);
         painter->AddView(stick_view);
 
@@ -58,7 +59,7 @@ void Game::InitObjects() {
     painter->AddView(backpack_view);
 
     
-    objects_.push_back(player);
+    AddObject(player);
 
     painter->AddView(player_view);
 }

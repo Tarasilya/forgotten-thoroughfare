@@ -14,6 +14,7 @@ const std::string LEFT = "left";
 const std::string RIGHT = "right";
 const std::string BACKPACK = "backpack";
 const std::string DROP = "drop";
+const std::string PICKUP = "pickup";
 
 
 class Game;
@@ -33,12 +34,15 @@ private:
     Backpack* backpack_;
 
     void Move(double dx, double dy);
+    void PickUpItems();
 
 public:
     Player(double x, double y, Game* game);
     CollisionBox* GetCollisionBox() override;
     void Tick(double dt) override;
     bool ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) override;
+    bool Collidable(Player* p) override;
+    bool Pickupable(Player* p) override;
 
     PlayerView* view;
     

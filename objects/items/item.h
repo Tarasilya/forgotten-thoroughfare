@@ -33,6 +33,8 @@ public:
 	double GetX();
 	double GetY();
 	void Drop(double x, double y);
+	void GetPicked();
 	bool Droppable();
-
+	bool Pickupable(Player* p) override;
+	bool Collidable(Player* p) override;
 };
