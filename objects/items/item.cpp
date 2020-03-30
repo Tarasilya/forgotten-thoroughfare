@@ -50,3 +50,18 @@ void Item::Drop(double x, double y) {
 bool Item::Droppable() {
     return !visibility_;
 }
+
+bool Item::Pickupable(Player* p) {
+    return true;
+}
+
+bool Item::Collidable(Player* p) {
+    return true;
+}
+
+void Item::GetPicked() {
+    visibility_ = false;
+    x_ = 0;
+    y_ = 0;
+    collision_box_ = new NullCollisionBox();
+}

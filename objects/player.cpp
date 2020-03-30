@@ -21,7 +21,8 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[DOWN] = sf::Keyboard::K;
     moves[RIGHT] = sf::Keyboard::L;
     moves[BACKPACK] = sf::Keyboard::O;
-    moves[DROP] = sf::Keyboard::U;
+    moves[DROP] = sf::Keyboard::Q;
+    moves[PICKUP] = sf::Keyboard::E;
     backpack_ = new Backpack();
 }
 
@@ -60,6 +61,10 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         backpack_->DropItem(x_, y_);
         return true;
     }
+    if (key == moves[PICKUP]) {
+        PickUpItems();
+        return true;
+    }
 
     return false;
 }
@@ -68,16 +73,8 @@ void Player::Move(double dx, double dy) {
     Painter* painter = Painter::GetPainter();
     collision_box_->Move(dx, dy);
     
-    ////// DANGER //////
-    
-    x_ += dx;
-    y_ += dy;
-    painter->PlayerMoved(x_, y_);
-
-    return;
-
     for (auto object : game_->GetCollision(collision_box_)) {
-        if (object != this) {
+        if (object != this && ! object->Collidable(this)) {
             std::pair<double, double> correction = collision_box_->GetCorrection((RectCollisionBox*) object->GetCollisionBox(), dx, dy);
             double new_dx = -copysign(std::min(correction.first, abs(dx)), dx);
             double new_dy = -copysign(std::min(correction.second, abs(dy)), dy);
@@ -94,6 +91,16 @@ void Player::Move(double dx, double dy) {
     painter->PlayerMoved(x_, y_);
 }
 
+void Player::PickUpItems() {
+    for (auto object : game_->GetCollision(collision_box_)) {
+        if (object != this && object->Pickupable(this)) {
+            std::cerr << "\n\n FLOCKA! \n\n";
+            backpack_->PickItem((Item*) object);
+            return;
+        }
+    }
+}
+
 double Player::GetX() {
     return x_;
 }
@@ -107,4 +114,12 @@ Backpack* Player::GetBackpack() {
 
 bool Player::GetBackpackVisibility() {
     return backpack_visibility_;
+}
+
+bool Player::Collidable(Player* p) {
+    return false;
+}
+
+bool Player::Pickupable(Player* p) {
+    return false;
 }

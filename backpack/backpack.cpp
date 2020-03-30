@@ -22,3 +22,8 @@ void Backpack::DropItem(double x, double y) {
 		item_to_drop->Drop(x, y);
 	}
 }
+
+void Backpack::PickItem(Item* item) {
+	AddItem(item);
+	item->GetPicked();
+}
