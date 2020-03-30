@@ -29,7 +29,7 @@ public:
 
 	static std::map<ItemType, std::string> GetConversionTable();	
 
-    CollisionBox* GetCollisionBox() override;
+    CollisionBox* GetCollisionBox() const override;
 	double GetX();
 	double GetY();
 	void Drop(double x, double y);

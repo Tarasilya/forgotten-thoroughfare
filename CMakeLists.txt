@@ -12,8 +12,9 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11" )
 file(GLOB A "*/*.cpp")
 file(GLOB B "*/items/*.cpp")
 file(GLOB C "*/items/stick/*.cpp")
+file(GLOB D "*/player/*.cpp")
 
-set(SOURCES ${A} ${B} ${C})
+set(SOURCES ${A} ${B} ${C} ${D})
 
 
 add_executable(ft ${SOURCES}) 

@@ -52,8 +52,8 @@ void Painter::PlayerMoved(double x, double y) {
 void Painter::Draw(const Rectangle& rect) {
 	int x1 = Transform(rect.x1 - display_rect_->x1, display_width_);
 	int y1 = Transform(rect.y1 - display_rect_->y1, display_height_);
-	int x2 = Transform(rect.x2, display_width_);
-	int y2 = Transform(rect.y2, display_height_);
+	int x2 = Transform(rect.x2 - display_rect_->x1, display_width_);
+	int y2 = Transform(rect.y2 - display_rect_->y1, display_height_);
 
 	sf::ConvexShape draw_rect;
 

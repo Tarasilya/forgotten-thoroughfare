@@ -7,10 +7,7 @@
 #include <stdlib.h>
 
 TextView::TextView(const std::string& string) {
-    std::cerr << string <<"Constructor TextView\n";  
     text_.setString(string);
-
-    std::cerr << "Constructor TextView End\n";  
 }
 
 void TextView::Draw(Painter* painter) {
