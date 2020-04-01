@@ -6,8 +6,12 @@
 #include <iostream>
 #include <stdlib.h>
 
+TextView::TextView() {
+    SetText("");
+}
+
 TextView::TextView(const std::string& string) {
-    text_.setString(string);
+    SetText(string);
 }
 
 void TextView::Draw(Painter* painter) {

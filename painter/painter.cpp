@@ -67,12 +67,12 @@ void Painter::Draw(const Rectangle& rect) {
 	window_->draw(draw_rect);
 }
 
-void Painter::Draw(const sf::Text& text) {
+void Painter::Draw(const sf::Text& text, bool absolute) {
 	sf::Vector2f coords = text.getPosition();
 	float text_x = coords.x;
 	float text_y = coords.y;
-	int x = Transform(text_x - display_rect_->x1, display_width_);
-	int y = Transform(text_y - display_rect_->y1, display_height_);
+	int x = Transform(text_x - display_rect_->x1 * absolute, display_width_);
+	int y = Transform(text_y - display_rect_->y1 * absolute, display_height_);
 	sf::Text draw_text;
 	draw_text.setString(text.getString());
 	draw_text.setFont(font_);

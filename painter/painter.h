@@ -44,7 +44,7 @@ public:
 
     void Redraw();
 	void Draw(const Rectangle& rect);
-	void Draw(const sf::Text& text);
+	void Draw(const sf::Text& text, bool absolute = true);
     void Draw(sf::Sprite* player_sprite);
 
     void AddView(View* view);

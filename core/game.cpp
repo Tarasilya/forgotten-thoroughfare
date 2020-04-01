@@ -8,6 +8,7 @@
 #include "views/view_factory.h"
 #include "views/backpack_view.h"
 #include "views/stick_view.h"
+#include "views/fps_view.h"
 
 
 #include <iostream>
@@ -40,6 +41,8 @@ void Game::AddObject(GameObject* object) {
 
 void Game::InitObjects() {
     auto painter = Painter::GetPainter();
+
+    painter->AddView(new FpsView());
 
     Player* player = new Player(0.25, 0.5, this);
     PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
