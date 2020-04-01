@@ -8,8 +8,7 @@ class TextView : public View {
 private:
     sf::Text text_;
 public:
-
-
+    TextView();
     TextView(const std::string& string);
 
 
