@@ -72,6 +72,10 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         hp_bar_->Change(DMG);
         return true;
     }
+    if (key == moves[DROP] && !repeated) {
+        backpack_->DropItem(x_, y_);
+        return true;
+    }    
     if (key == moves[PICKUP]) {
         PickUpItems();
         return true;
