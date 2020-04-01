@@ -13,8 +13,9 @@ file(GLOB A "*/*.cpp")
 file(GLOB B "*/items/*.cpp")
 file(GLOB C "*/items/stick/*.cpp")
 file(GLOB D "*/player/*.cpp")
+file(GLOB E "*/taunt/*.cpp")
 
-set(SOURCES ${A} ${B} ${C} ${D})
+set(SOURCES ${A} ${B} ${C} ${D} ${E})
 
 
 add_executable(ft ${SOURCES}) 

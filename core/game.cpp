@@ -9,6 +9,7 @@
 #include "views/backpack_view.h"
 #include "views/stick_view.h"
 #include "views/fps_view.h"
+#include "views/taunt_view.h"
 
 
 #include <iostream>
@@ -46,6 +47,9 @@ void Game::InitObjects() {
 
     Player* player = new Player(0.25, 0.5, this);
     PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
+
+    TauntView* taunt_view = new TauntView(player->GetTaunt(), painter);
+    painter->AddView(taunt_view);
 
     player->view = player_view;
 
