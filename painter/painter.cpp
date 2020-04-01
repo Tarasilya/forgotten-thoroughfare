@@ -23,7 +23,7 @@ Painter::Painter(sf::RenderWindow* window) {
 	display_width_ = window_->getSize().x;
 	display_height_ = window_->getSize().y;
 
-	if (!font_.loadFromFile("Windsong.ttf"))
+	if (!font_.loadFromFile("SEASRN__.ttf"))
 	{
 	    std::cerr << "cant load font!!" << std::endl;
 	}	

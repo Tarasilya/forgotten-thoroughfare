@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <utility>
+#include <ctime>
 
 #include <math.h>
 #include <stdlib.h>
@@ -14,12 +15,14 @@
 
 const double speed = 0.005;
 const double size = 0.1;
+const double taunt_size = 0.05;
 
 const double MAX_HP = 100;
 const double DMG = 10;
 
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
     hp_bar_ = new HpBar(MAX_HP, this);
+    taunt_ = new Taunt();
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
     moves[UP] = sf::Keyboard::I;
     moves[LEFT] = sf::Keyboard::J;
@@ -30,6 +33,7 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[PICKUP] = sf::Keyboard::E;
     moves[DAMAGE] = sf::Keyboard::A;
     moves[HEAL] = sf::Keyboard::S;
+    moves[TAUNT] = sf::Keyboard::F;
     backpack_ = new Backpack();
 }
 
@@ -39,9 +43,11 @@ CollisionBox* Player::GetCollisionBox() const {
 
 void Player::Tick(double dt) {
     Move(horizontal_speed_, vertical_speed_);
+    MoveTaunt(horizontal_speed_, vertical_speed_);
     vertical_speed_ = 0;
     horizontal_speed_ = 0;
 }
+
 
 bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     if (key == moves[UP]) {
@@ -80,8 +86,37 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         PickUpItems();
         return true;
     }
-
+    if (key == moves[TAUNT] && !repeated) {
+        FundamentallyExerciseTaunt();
+        return true;
+    }
     return false;
+}
+
+
+void Player::MoveTaunt(double dx, double dy) {
+    if (taunt_->GetVisibility()) {
+        double new_x = taunt_->GetX() + dx;
+        clock_t current_time = clock();
+        double taunt_mvmt;
+
+        double taunt_speed_multiplier = 5.0 / 8.0;
+
+        double mvmt_time = (current_time - taunt_->GetStartTime()) * 1.0 / CLOCKS_PER_SEC;
+        if (mvmt_time <= taunt_->MVMT_PERIOD / 2) {
+            taunt_mvmt = -speed * taunt_speed_multiplier;
+        }
+        else if ((mvmt_time > taunt_->MVMT_PERIOD / 2) && (mvmt_time < taunt_->MVMT_PERIOD)) {
+            taunt_mvmt = speed * taunt_speed_multiplier;
+        }
+        else {
+            taunt_->SetVisibility(false);
+            taunt_->SetCoords(0, 0);
+            return;
+        }
+        double new_y = taunt_->GetY() + dy + taunt_mvmt;
+        taunt_->SetCoords(new_x, new_y);   
+    }
 }
 
 void Player::Move(double dx, double dy) {
@@ -126,6 +161,10 @@ Backpack* Player::GetBackpack() {
     return backpack_;
 }
 
+Taunt* Player::GetTaunt() {
+    return taunt_;
+}
+
 bool Player::GetBackpackVisibility() {
     return backpack_visibility_;
 }
@@ -136,4 +175,12 @@ bool Player::Collidable(Player* p) {
 
 bool Player::Pickupable(Player* p) {
     return false;
+}
+
+void Player::FundamentallyExerciseTaunt() {
+    double x_taunt = x_ - taunt_size;
+    double y_taunt = y_ + size - taunt_size;
+    taunt_->SetVisibility(true);
+    taunt_->SetCoords(x_taunt, y_taunt);
+    taunt_->SetStartTime(clock());
 }
