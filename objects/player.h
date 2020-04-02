@@ -3,7 +3,6 @@
 #include "objects/game_object.h"
 #include "views/player_view.h"
 #include "backpack/backpack.h"
-#include "objects/taunt/taunt.h"
 
 #include <unordered_map>
 #include <string>
@@ -24,6 +23,7 @@ const std::string TAUNT = "taunt";
 class Game;
 class RectCollisionBox;
 class HpBar;
+class Taunt;
 
 class Player : public GameObject {
 private:
@@ -42,7 +42,7 @@ private:
     Backpack* backpack_;
 
     void Move(double dx, double dy);
-    void MoveTaunt(double dx, double dy);
+    void MoveTaunt();
     void PickUpItems();
 
 public:

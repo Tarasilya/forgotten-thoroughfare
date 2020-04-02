@@ -1,13 +1,13 @@
 #include "objects/taunt/taunt.h"
 #include "collisions/null_collision_box.h"
 
-Taunt::Taunt() {
+Taunt::Taunt(Player* player) {
 	x_ = 0;
 	y_ = 0;
 	collision_box_ = new NullCollisionBox();
 	visibility_ = false;
 	start_time_ = clock();
-	state_ = TauntState::STANDBY;
+	player_ = player;
 }
 
 void Taunt::SetVisibility(bool visibility) {
@@ -53,4 +53,8 @@ clock_t Taunt::GetStartTime() {
 
 void Taunt::Tick(double dt) {
 	return;
+}
+
+Player* Taunt::GetPlayer() {
+	return player_;
 }
