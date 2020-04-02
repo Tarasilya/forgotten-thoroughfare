@@ -3,13 +3,13 @@
 #include "views/view.h"
 
 class HpBar;
-class Player;
+class GameObject;
 
 class HpBarView : public View {
 private:
     const HpBar* hp_bar_;
-    const Player* player_;
+    const GameObject* object_;
 public:
-    HpBarView(const HpBar* hp_bar, const Player* player);
+    HpBarView(const HpBar* hp_bar, const GameObject* object);
     void Draw(Painter* painter) override;
 };

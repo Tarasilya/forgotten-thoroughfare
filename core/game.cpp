@@ -3,6 +3,7 @@
 #include "map/map.h"
 #include "objects/player.h"
 #include "objects/items/stick/stick.h"
+#include "objects/punching_bag.h"
 #include "painter/painter.h"
 #include "views/view.h"
 #include "views/view_factory.h"
@@ -53,7 +54,7 @@ void Game::InitObjects() {
 
     player->view = player_view;
 
-    for (int i = 0; i < 20000; i++) {
+    for (int i = 0; i < 100; i++) {
         Stick* stick = new Stick(); 
         AddObject(stick);
         StickView* stick_view = new StickView(stick, painter);
@@ -67,6 +68,8 @@ void Game::InitObjects() {
 
     
     AddObject(player);
+
+    AddObject(new PunchingBag());
 
     painter->AddView(player_view);
 }

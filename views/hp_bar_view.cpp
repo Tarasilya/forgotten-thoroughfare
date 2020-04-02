@@ -2,19 +2,19 @@
 
 #include "collisions/rect_collision_box.h"
 #include "painter/painter.h"
-#include "objects/player.h"
+#include "objects/game_object.h"
 #include "objects/player/hp_bar.h"
 
 #include <iostream>
 
 const double BAR_HEIGHT = 0.015;
 
-HpBarView::HpBarView(const HpBar* hp_bar, const Player* player): hp_bar_(hp_bar), player_(player) {
+HpBarView::HpBarView(const HpBar* hp_bar, const GameObject* object): hp_bar_(hp_bar), object_(object) {
     z_ = 5;
 }
 
 void HpBarView::Draw(Painter* painter) {
-    RectCollisionBox* box = (RectCollisionBox*) player_->GetCollisionBox();
+    RectCollisionBox* box = (RectCollisionBox*) object_->GetCollisionBox();
 
 
     double percentage = hp_bar_->GetCurrent() / hp_bar_->GetMax();

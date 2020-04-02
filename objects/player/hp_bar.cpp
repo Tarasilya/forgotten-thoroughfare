@@ -3,8 +3,8 @@
 #include "painter/painter.h"
 #include "views/hp_bar_view.h"
 
-HpBar::HpBar(double max, const Player* player): max_(max), current_(max) {
-    Painter::GetPainter()->AddView(new HpBarView(this, player));
+HpBar::HpBar(double max, const GameObject* object): max_(max), current_(max) {
+    Painter::GetPainter()->AddView(new HpBarView(this, object));
 }
 
 double HpBar::GetCurrent() const {

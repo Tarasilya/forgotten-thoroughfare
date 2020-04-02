@@ -124,7 +124,7 @@ void Player::Move(double dx, double dy) {
     collision_box_->Move(dx, dy);
     
     for (auto object : game_->GetCollision(collision_box_)) {
-        if (object != this && ! object->Collidable(this)) {
+        if (object != this && !object->Collidable(this)) {
             std::pair<double, double> correction = collision_box_->GetCorrection((RectCollisionBox*) object->GetCollisionBox(), dx, dy);
             double new_dx = -copysign(std::min(correction.first, abs(dx)), dx);
             double new_dy = -copysign(std::min(correction.second, abs(dy)), dy);
