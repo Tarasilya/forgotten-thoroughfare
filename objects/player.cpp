@@ -13,6 +13,7 @@
 #include "painter/painter.h"
 #include "player/hp_bar.h"
 #include "objects/taunt/taunt.h"
+#include "objects/player/attack.h"
 
 const double speed = 0.005;
 const double size = 0.1;
@@ -24,6 +25,9 @@ const double DMG = 10;
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
+    attack_ = new Attack(this);
+    game->AddObject(attack_);
+    
     collision_box_ = new RectCollisionBox(x, y, x + size, y + size);
     moves[UP] = sf::Keyboard::I;
     moves[LEFT] = sf::Keyboard::J;
@@ -35,6 +39,7 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[DAMAGE] = sf::Keyboard::A;
     moves[HEAL] = sf::Keyboard::S;
     moves[TAUNT] = sf::Keyboard::F;
+    moves[ATTACK] = sf::Keyboard::R;
     backpack_ = new Backpack();
 }
 
@@ -67,31 +72,42 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         horizontal_speed_ += speed;
         return true;
     }
+
+    if (key == moves[PICKUP]) {
+        PickUpItems();
+        return true;
+    }
+
     if (key == moves[BACKPACK] && !repeated) {
         backpack_visibility_ = !backpack_visibility_;
         return true;
     }
     if (key == moves[DAMAGE] && !repeated) {
-        hp_bar_->Change(-DMG);
+        Damage(DMG);
         return true;
     }
     if (key == moves[HEAL] && !repeated) {
-        hp_bar_->Change(DMG);
+        Damage(-DMG);
         return true;
     }
     if (key == moves[DROP] && !repeated) {
         backpack_->DropItem(x_, y_);
         return true;
     }    
-    if (key == moves[PICKUP]) {
-        PickUpItems();
-        return true;
-    }
     if (key == moves[TAUNT] && !repeated) {
         FundamentallyExerciseTaunt();
         return true;
     }
+    if (key == moves[ATTACK] && !repeated) {
+        attack_->Trigger();
+        return true;
+    }
     return false;
+}
+
+
+void Player::Damage(double dmg) {
+    hp_bar_->Change(-dmg);
 }
 
 

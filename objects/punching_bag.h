@@ -1,11 +1,12 @@
 #pragma once
 
 #include "objects/passive_object.h"
+#include "objects/damageable.h"
 
 class HpBar;
 
 
-class PunchingBag : public PassiveObject {
+class PunchingBag : public PassiveObject, public Damageable {
 private:   
     double x_;
     double y_;
@@ -19,4 +20,5 @@ public:
     double GetY() const;
     bool Collidable(Player* player) override;
     void Tick(double dt) override;
+    void Damage(double dmg) override;
 };

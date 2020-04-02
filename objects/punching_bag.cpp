@@ -16,6 +16,10 @@ PunchingBag::PunchingBag() {
     Painter::GetPainter()->AddView(new PunchingBagView(this));
 }
 
+void PunchingBag::Damage(double dmg) {
+    hp_bar_->Change(-dmg);
+}
+
 CollisionBox* PunchingBag::GetCollisionBox() const {
     return collision_box_;
 }

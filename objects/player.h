@@ -1,6 +1,7 @@
 #pragma once
 
 #include "objects/game_object.h"
+#include "objects/damageable.h"
 #include "views/player_view.h"
 #include "backpack/backpack.h"
 
@@ -18,14 +19,16 @@ const std::string PICKUP = "pickup";
 const std::string DAMAGE = "damage";
 const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
+const std::string ATTACK = "attack";
 
 
+class Attack;
 class Game;
 class RectCollisionBox;
 class HpBar;
 class Taunt;
 
-class Player : public GameObject {
+class Player : public GameObject, public Damageable {
 private:
     double x_;
     double y_;
@@ -34,6 +37,7 @@ private:
 
     HpBar* hp_bar_;
     Taunt* taunt_;
+    Attack* attack_;
 
     bool backpack_visibility_;
     Game* game_;
@@ -52,6 +56,8 @@ public:
     bool ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) override;
     bool Collidable(Player* p) override;
     bool Pickupable(Player* p) override;
+
+    void Damage(double dmg) override;
 
     PlayerView* view;
     
