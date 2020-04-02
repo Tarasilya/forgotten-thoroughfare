@@ -4,13 +4,13 @@
 
 #include "objects/passive_object.h"
 
-enum TauntState{MOVE_UP, MOVE_DOWN, STANDBY};
+#include "objects/player.h"
 
 class Taunt : PassiveObject {
 private:
 	double x_;
 	double y_;
-	TauntState state_;
+	Player* player_;
 	CollisionBox* collision_box_;
 	bool visibility_;
 	clock_t start_time_;
@@ -20,12 +20,13 @@ public:
 	const double MVMT_PERIOD = 0.8;
 
 
-	Taunt();
+	Taunt(Player* player);
 	void SetVisibility(bool visibility);
 	void SetCoords(double x_taunt, double y_taunt);
 	void SetStartTime(clock_t time);
 	clock_t GetStartTime();
 	bool GetVisibility();
+	Player* GetPlayer();
 	double GetX();
 	double GetY();
 	CollisionBox* GetCollisionBox() const override;

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cstdio>
 
-TauntView::TauntView(Taunt* taunt, Painter* painter) : TextureView("pics/taunt.png"), taunt_(taunt) {
+TauntView::TauntView(Taunt* taunt, Painter* painter) : TextureView("pics/taunt2.png"), taunt_(taunt) {
     // THAT'S REAL DIRTY DOWN THERE
     RectCollisionBox* box = (RectCollisionBox*) taunt->GetCollisionBox();
     z_ = 4;
@@ -21,6 +21,6 @@ TauntView::TauntView(Taunt* taunt, Painter* painter) : TextureView("pics/taunt.p
 void TauntView::Draw(Painter* painter) {
 	
 	if (taunt_->GetVisibility()) {
-	    TextureView::Draw(painter, taunt_->GetX(), taunt_->GetY());
+	    TextureView::Draw(painter, taunt_->GetPlayer()->GetX() - 0.05 + taunt_->GetX(), taunt_->GetPlayer()->GetY() + 0.05 + taunt_->GetY());
 	}
 }
