@@ -8,7 +8,8 @@
 
 std::map<std::string, sf::Texture*> TextureView::textures_;
 
-TextureView::TextureView(const std::string& file) {
+TextureView::TextureView(const std::string& file, Position* position) {
+    position_ = position;
     sprite_ = new sf::Sprite();
 
     if (textures_.count(file) == 0) {
@@ -21,18 +22,44 @@ TextureView::TextureView(const std::string& file) {
 
     texture_ = textures_[file];
     sprite_->setTexture(*texture_);
+
+    Painter* painter = Painter::GetPainter();
 }
 
-void TextureView::SetSize(double width, double height) {
+TextureView* TextureView::SetSize(double width, double height) {
+    ScaleToSize(
+            painter->Transform(width, painter->Width()), 
+            painter->Transform(height, painter->Height()));
+
+    return this;
+}
+
+TextureView* TextureView::SetZ(int z) {
+    z_ = z;
+    return this;
+}
+
+TextureView* TextureView::SetVisibility(Visible* visibility) {
+    visibility_ = visibility;
+    return this;
+}
+
+void TextureView::ScaleToSize(double width, double height) {
     auto size = texture_->getSize();
     sprite_->scale(sf::Vector2f(width / size.x, height / size.y));
 }
 
-void TextureView::Draw(Painter* painter, double x, double y) {
-    sprite_->setPosition(
-        painter->Transform(x, painter->Width()),
-        painter->Transform(y, painter->Height()));
+void TextureView::Draw(Painter* painter) {
+    Draw(painter, position_->GetX(), position_->GetY());
+}
 
-    
-    painter->Draw(sprite_);
+void TextureView::Draw(Painter* painter, double x, double y) {
+    if (visibility_->GetVisibility()) {
+        sprite_->setPosition(
+            painter->Transform(x, painter->Width()),
+            painter->Transform(y, painter->Height()));
+
+        
+        painter->Draw(sprite_);
+    }
 }

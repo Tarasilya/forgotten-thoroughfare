@@ -2,7 +2,7 @@
 
 #include "objects/game_object.h"
 #include "objects/damageable.h"
-#include "views/player_view.h"
+#include "views/position.h"
 #include "backpack/backpack.h"
 
 #include <unordered_map>
@@ -28,7 +28,7 @@ class RectCollisionBox;
 class HpBar;
 class Taunt;
 
-class Player : public GameObject, public Damageable {
+class Player : public GameObject, public Damageable, public Position {
 private:
     double x_;
     double y_;
@@ -58,11 +58,9 @@ public:
     bool Pickupable(Player* p) override;
 
     void Damage(double dmg) override;
-
-    PlayerView* view;
     
-    double GetX() const;
-    double GetY() const;
+    double GetX() override;
+    double GetY() override;
     Backpack* GetBackpack();
     Taunt* GetTaunt();
     bool GetBackpackVisibility();

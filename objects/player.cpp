@@ -14,6 +14,7 @@
 #include "player/hp_bar.h"
 #include "objects/taunt/taunt.h"
 #include "objects/player/attack.h"
+#include "views/texture_view.h"
 
 const double speed = 0.005;
 const double size = 0.1;
@@ -23,6 +24,9 @@ const double MAX_HP = 100;
 const double DMG = 10;
 
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
+    View* view = (new TextureView("pics/mouse_assassin.jpg", this))->SetZ(1)->SetSize(size, size);
+
+
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
     attack_ = new Attack(this);

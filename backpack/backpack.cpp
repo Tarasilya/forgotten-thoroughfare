@@ -15,7 +15,7 @@ void Backpack::AddItem(Item* item) {
 }
 
 void Backpack::DropItem(double x, double y) {
-	if (! items_.empty()) {
+	if (!items_.empty()) {
 		Item* item_to_drop = items_.back();
 		items_.pop_back();
 		assert(item_to_drop->Droppable());

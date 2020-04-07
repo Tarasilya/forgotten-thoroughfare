@@ -13,7 +13,9 @@ PunchingBag::PunchingBag() {
     x_ = 0;
     y_ = -0.4;
     collision_box_ = new RectCollisionBox(x_, y_, x_ + WIDTH, y_ + HEIGHT);
-    Painter::GetPainter()->AddView(new PunchingBagView(this));
+
+    View* view = new TextureView("pics/punch_bag.png", this).SetSize(WIDTH, HEIGHT).SetZ(1);
+    Painter::GetPainter()->AddView(view);
 }
 
 void PunchingBag::Damage(double dmg) {

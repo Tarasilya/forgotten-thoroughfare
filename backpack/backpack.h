@@ -1,6 +1,5 @@
 #pragma once
 
-#include "views/player_view.h"
 #include "objects/items/item.h"
 #include <vector>
 

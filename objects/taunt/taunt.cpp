@@ -1,7 +1,11 @@
 #include "objects/taunt/taunt.h"
 #include "collisions/null_collision_box.h"
 
+const double SIZE = 0.05;
+
 Taunt::Taunt(Player* player) {
+	View* view = new TextureView("pics/taunt2.png", this).SetZ(4).SetSize(SIZE, SIZE).SetVisibility(this);
+
 	x_ = 0;
 	y_ = 0;
 	collision_box_ = new NullCollisionBox();
@@ -40,11 +44,11 @@ bool Taunt::Collidable(Player* p) {
 }
 
 double Taunt::GetX() {
-	return x_;
+	return player->GetX() + x_ - SIZE;
 }
 
 double Taunt::GetY() {
-	return y_;
+	return player->GetY() + y_ - SIZE;
 }
 
 clock_t Taunt::GetStartTime() {

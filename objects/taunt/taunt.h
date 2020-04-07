@@ -6,7 +6,7 @@
 
 #include "objects/player.h"
 
-class Taunt : PassiveObject {
+class Taunt : public PassiveObject, public Visible, public Position {
 private:
 	double x_;
 	double y_;
@@ -25,10 +25,10 @@ public:
 	void SetCoords(double x_taunt, double y_taunt);
 	void SetStartTime(clock_t time);
 	clock_t GetStartTime();
-	bool GetVisibility();
+	bool GetVisibility() override;
 	Player* GetPlayer();
-	double GetX();
-	double GetY();
+	double GetX() override;
+	double GetY() override;
 	CollisionBox* GetCollisionBox() const override;
 	bool Pickupable(Player* p) override;
 	bool Collidable(Player* p) override;

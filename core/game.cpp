@@ -6,11 +6,8 @@
 #include "objects/punching_bag.h"
 #include "painter/painter.h"
 #include "views/view.h"
-#include "views/view_factory.h"
 #include "views/backpack_view.h"
-#include "views/stick_view.h"
 #include "views/fps_view.h"
-#include "views/taunt_view.h"
 
 
 #include <iostream>
@@ -47,18 +44,10 @@ void Game::InitObjects() {
     painter->AddView(new FpsView());
 
     Player* player = new Player(0.25, 0.5, this);
-    PlayerView* player_view = (PlayerView*) ViewFactory::CreateView(player, painter);
-
-    TauntView* taunt_view = new TauntView(player->GetTaunt(), painter);
-    painter->AddView(taunt_view);
-
-    player->view = player_view;
 
     for (int i = 0; i < 100; i++) {
         Stick* stick = new Stick(); 
         AddObject(stick);
-        StickView* stick_view = new StickView(stick, painter);
-        painter->AddView(stick_view);
 
         player->GetBackpack()->AddItem(stick);
     }
@@ -66,12 +55,8 @@ void Game::InitObjects() {
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
     painter->AddView(backpack_view);
 
-    
     AddObject(player);
-
     AddObject(new PunchingBag());
-
-    painter->AddView(player_view);
 }
 
 
