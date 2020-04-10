@@ -57,6 +57,7 @@ void Game::InitObjects() {
         Stick* stick = new Stick(); 
         AddObject(stick);
         Apple* apple = new Apple();
+        AddObject(apple);
 
 
 

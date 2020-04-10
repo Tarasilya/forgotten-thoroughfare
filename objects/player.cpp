@@ -78,7 +78,7 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         return true;
     }
 
-    if (key == moves[PICKUP]) {
+    if (key == moves[PICKUP] && !repeated) {
         PickUpItems();
         return true;
     }
@@ -145,8 +145,8 @@ void Player::Move(double dx, double dy) {
 }
 
 void Player::PickUpItems() {
-    for (auto object : game_->GetCollision(collision_box_)) {
-        std::cerr << "101\n";
+    auto objects = game_->GetCollision(collision_box_);
+    for (auto object : objects) {
         if (object != this && object->Pickupable(this)) {
             backpack_->PickItem((Item*) object);
             return;

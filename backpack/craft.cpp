@@ -1,9 +1,12 @@
-#include <cassert>
+#include "craft.h"
 
-#include "backpack/craft.h"
+#include "core/game.h"
 #include "objects/player.h"
 #include "objects/items/sword/sword.h"
 #include "objects/items/cider/cider.h"
+
+#include <cassert>
+
 
 std::map<ItemType, std::map<ItemType, int>> Craft::crafting_recipes_;
 
@@ -35,6 +38,7 @@ void Craft::CraftItem(ItemType requested_item, Player* p) {
 			default:
 				assert(false);
 		}
+		Game::GetCurrentGame()->AddObject(item_to_craft);
 		p->GetBackpack()->AddItem(item_to_craft);
 	}
 }
