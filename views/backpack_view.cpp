@@ -8,7 +8,7 @@
 #include <string>
 
 BackpackView::BackpackView(Backpack* backpack, Player* player) : TextView("Empty Backpack") {
-	z_ = 2;
+	SetZ(2);
 	backpack_ = backpack; 
 	player_ = player;
 }

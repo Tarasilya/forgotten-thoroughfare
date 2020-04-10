@@ -97,6 +97,10 @@ void Painter::AddView(View* view) {
 	views_.insert(view);
 }
 
+void Painter::RemoveView(View* view) {
+	views_.erase(view);
+}
+
 void Painter::Redraw() {
 	for (auto view : views_) {
         view->Draw(painter_);

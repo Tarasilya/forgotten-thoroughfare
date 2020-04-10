@@ -4,7 +4,7 @@
 #include "views/hp_bar_view.h"
 
 HpBar::HpBar(double max, const GameObject* object): max_(max), current_(max) {
-    Painter::GetPainter()->AddView(new HpBarView(this, object));
+    new HpBarView(this, object);
 }
 
 double HpBar::GetCurrent() const {

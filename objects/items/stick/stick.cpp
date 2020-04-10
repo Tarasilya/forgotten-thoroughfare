@@ -6,11 +6,10 @@
 #include "views/texture_view.h"
 
 Stick::Stick() : Item(false, ItemType::STICK), name_("stick") {
-    View* view = (new TextureView("pics/stick_cool.png", this))
-        ->SetZ(1)
+    (new TextureView("pics/stick_cool.png", this))
         ->SetSize(ITEM_SIZE, ITEM_SIZE)
-        ->SetVisibility(this);
-    Painter::GetPainter()->AddView(view);
+        ->SetVisibility(this)
+        ->SetZ(1);
 }
 
 void Stick::Tick(double dt){

@@ -25,7 +25,6 @@ private:
 public:
     TextureView(const std::string& file, Position* position);
     TextureView* SetSize(double width, double height);
-    TextureView* SetZ(int z);
     TextureView* SetVisibility(Visible* visibility);
 
     void Draw(Painter* painter);

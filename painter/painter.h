@@ -48,6 +48,7 @@ public:
     void Draw(sf::Sprite* player_sprite);
 
     void AddView(View* view);
+    void RemoveView(View* view);
 
     void PlayerMoved(double x, double y);
 

@@ -10,7 +10,7 @@
 const double BAR_HEIGHT = 0.015;
 
 HpBarView::HpBarView(const HpBar* hp_bar, const GameObject* object): hp_bar_(hp_bar), object_(object) {
-    z_ = 5;
+    SetZ(5);
 }
 
 void HpBarView::Draw(Painter* painter) {
