@@ -21,6 +21,7 @@ const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
 const std::string ATTACK = "attack";
 
+const double PLAYER_SIZE = 0.1;
 
 class Attack;
 class Game;
@@ -46,7 +47,6 @@ private:
     Backpack* backpack_;
 
     void Move(double dx, double dy);
-    void MoveTaunt();
     void PickUpItems();
 
 public:
@@ -64,5 +64,4 @@ public:
     Backpack* GetBackpack();
     Taunt* GetTaunt();
     bool GetBackpackVisibility();
-    void FundamentallyExerciseTaunt();
 };

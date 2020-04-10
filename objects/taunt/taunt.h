@@ -3,8 +3,10 @@
 #include <ctime>
 
 #include "objects/passive_object.h"
+#include "views/visible.h"
+#include "views/position.h"
 
-#include "objects/player.h"
+class Player;
 
 class Taunt : public PassiveObject, public Visible, public Position {
 private:
@@ -16,14 +18,8 @@ private:
 	clock_t start_time_;
 
 public:
-
-	const double MVMT_PERIOD = 0.8;
-
-
 	Taunt(Player* player);
-	void SetVisibility(bool visibility);
-	void SetCoords(double x_taunt, double y_taunt);
-	void SetStartTime(clock_t time);
+	void Launch();
 	clock_t GetStartTime();
 	bool GetVisibility() override;
 	Player* GetPlayer();

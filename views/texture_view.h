@@ -19,6 +19,7 @@ private:
 
     Visible* visibility_ = new AlwaysVisible();
     Position* position_;
+    Painter* painter_;
 
     void ScaleToSize(double width, double height);
 public:

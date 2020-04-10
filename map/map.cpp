@@ -37,17 +37,19 @@ Map::Map(std::string filename) {
 
 TextureView* Map::CreateTileView(double x, double y, char type) {
     TextureView* view;
+    std::string filename;
     switch(type) {
         case '@':
-            view = new TextureView("pics/water.jpg", new Position(x, y));
+            filename = "pics/water.jpg";
             break;
         case '.':
-            view = new TextureView("pics/sand.jpg", new Position(x, y));
+            filename = "pics/sand.jpg";
             break;
         case '*':
-            view = new TextureView("pics/forest.jpg", new Position(x, y));
+            filename = "pics/forest.jpg";
             break;
-    }    
+    }   
+    view = new TextureView(filename, new Position(x, y)); 
     view->SetZ(0)->SetSize(TILE_SIZE, TILE_SIZE);
     Painter::GetPainter()->AddView(view);
     return view;    

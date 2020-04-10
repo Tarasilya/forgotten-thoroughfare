@@ -1,10 +1,21 @@
-#include "objects/taunt/taunt.h"
+#include "taunt.h"
+
 #include "collisions/null_collision_box.h"
+#include "objects/player.h"
+#include "painter/painter.h"
+#include "views/texture_view.h"
+
 
 const double SIZE = 0.05;
+const double MVMT_PERIOD = 0.8;
+
 
 Taunt::Taunt(Player* player) {
-	View* view = new TextureView("pics/taunt2.png", this).SetZ(4).SetSize(SIZE, SIZE).SetVisibility(this);
+	View* view = (new TextureView("pics/taunt2.png", this))
+		->SetZ(4)
+		->SetSize(SIZE, SIZE)
+		->SetVisibility(this);
+	Painter::GetPainter()->AddView(view);
 
 	x_ = 0;
 	y_ = 0;
@@ -14,21 +25,8 @@ Taunt::Taunt(Player* player) {
 	player_ = player;
 }
 
-void Taunt::SetVisibility(bool visibility) {
-	visibility_ = visibility;
-}
-
 bool Taunt::GetVisibility() {
 	return visibility_;
-}
-
-void Taunt::SetCoords(double x_taunt, double y_taunt) {
-	x_ = x_taunt;
-	y_ = y_taunt;
-}
-
-void Taunt::SetStartTime(clock_t time) {
-	start_time_ = time;
 }
 
 CollisionBox* Taunt::GetCollisionBox() const {
@@ -44,19 +42,43 @@ bool Taunt::Collidable(Player* p) {
 }
 
 double Taunt::GetX() {
-	return player->GetX() + x_ - SIZE;
+	return player_->GetX() + x_ - SIZE;
 }
 
 double Taunt::GetY() {
-	return player->GetY() + y_ - SIZE;
+	return player_->GetY() + y_ + SIZE;
 }
 
 clock_t Taunt::GetStartTime() {
 	return start_time_;
 }
 
+void Taunt::Launch() {
+	visibility_ = true;
+	x_ = 0;
+	y_ = 0;
+	start_time_ = clock();
+}
+
 void Taunt::Tick(double dt) {
-	return;
+	if (visibility_) {
+        clock_t current_time = clock();
+        double taunt_mvmt;
+        double taunt_speed = PLAYER_SIZE / MVMT_PERIOD;
+
+        double mvmt_time = (current_time - start_time_) * 1.0 / CLOCKS_PER_SEC;
+        if (mvmt_time < MVMT_PERIOD / 2) {
+            taunt_mvmt = -taunt_speed * dt;
+        }
+        else if (mvmt_time < MVMT_PERIOD) {
+            taunt_mvmt = taunt_speed * dt;
+        }
+        else {
+            visibility_ = false;
+            return;
+        }
+        y_ += taunt_mvmt;
+    }
 }
 
 Player* Taunt::GetPlayer() {

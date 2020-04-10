@@ -18,7 +18,7 @@ const double HEIGHT = 0.033;
 
 
 Attack::Attack(const Player* player): player_(player), state_(IDLE), charges_(0) {
-    start_time_ = 0;
+    start_time_ = -1;
     Painter::GetPainter()->AddView(new AttackView(this));
 }
 
@@ -64,6 +64,10 @@ void Attack::Tick(double dt) {
 }
 
 void Attack::UpdateState() const {
+    if (start_time_ == -1) {
+        state_ = IDLE;
+        return;
+    }
     double time_passed = (clock() - start_time_) * 1.0 / CLOCKS_PER_SEC;
     if (time_passed < STARTUP_T) {
         state_ = STARTUP;

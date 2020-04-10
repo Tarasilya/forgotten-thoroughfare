@@ -1,6 +1,7 @@
 #include "texture_view.h"
 
 #include "painter/painter.h"
+#include "position.h"
 
 #include <cstdio>
 #include <iostream>
@@ -23,13 +24,13 @@ TextureView::TextureView(const std::string& file, Position* position) {
     texture_ = textures_[file];
     sprite_->setTexture(*texture_);
 
-    Painter* painter = Painter::GetPainter();
+    painter_ = Painter::GetPainter();
 }
 
 TextureView* TextureView::SetSize(double width, double height) {
     ScaleToSize(
-            painter->Transform(width, painter->Width()), 
-            painter->Transform(height, painter->Height()));
+            painter_->Transform(width, painter_->Width()), 
+            painter_->Transform(height, painter_->Height()));
 
     return this;
 }
