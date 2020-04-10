@@ -4,6 +4,7 @@
 #include "objects/player.h"
 #include "objects/items/stick/stick.h"
 #include "objects/displayable_object.h"
+#include "objects/items/apple/apple.h"
 #include "painter/painter.h"
 #include "views/view.h"
 #include "views/backpack_view.h"
@@ -55,8 +56,12 @@ void Game::InitObjects() {
     for (int i = 0; i < 100; i++) {
         Stick* stick = new Stick(); 
         AddObject(stick);
+        Apple* apple = new Apple();
+
+
 
         player->GetBackpack()->AddItem(stick);
+        player->GetBackpack()->AddItem(apple);
     }
 
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);

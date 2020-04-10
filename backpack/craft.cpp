@@ -1,6 +1,9 @@
+#include <cassert>
+
 #include "backpack/craft.h"
 #include "objects/player.h"
 #include "objects/items/sword/sword.h"
+#include "objects/items/cider/cider.h"
 
 std::map<ItemType, std::map<ItemType, int>> Craft::crafting_recipes_;
 
@@ -23,6 +26,14 @@ void Craft::CraftItem(ItemType requested_item, Player* p) {
 		switch(requested_item) {
 			case SWORD:
 				item_to_craft = new Sword();
+				break;
+			
+			case CIDER:
+				item_to_craft = new Cider();
+				break;
+			
+			default:
+				assert(false);
 		}
 		p->GetBackpack()->AddItem(item_to_craft);
 	}

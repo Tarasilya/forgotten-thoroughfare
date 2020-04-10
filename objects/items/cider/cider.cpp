@@ -1,6 +1,6 @@
 #include "objects/items/cider/cider.h"
 
-Cider::Cider() : Item(false, ItemType::Cider), name_("cider") {}
+Cider::Cider() : Item(false, ItemType::CIDER), name_("cider") {}
 
 void Cider::Tick(double dt){
 	return;
