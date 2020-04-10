@@ -69,7 +69,7 @@ void Game::InitObjects() {
     AddObject(player);
 
     GameObject* punching_bag = (new DisplayableObject(
-        "pics/punch_bag.png", true, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
+        "pics/punch_bag.png", false, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
     AddObject(punching_bag);
 }
 

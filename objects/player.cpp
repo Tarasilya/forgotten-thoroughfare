@@ -14,11 +14,8 @@
 #include "player/hp_bar.h"
 #include "objects/taunt/taunt.h"
 #include "objects/player/attack.h"
-<<<<<<< HEAD
 #include "views/texture_view.h"
-=======
 #include "backpack/craft.h"
->>>>>>> Initial Crafting Functionality
 
 const double speed = 0.4;
 const double taunt_size = 0.05;
@@ -149,6 +146,7 @@ void Player::Move(double dx, double dy) {
 
 void Player::PickUpItems() {
     for (auto object : game_->GetCollision(collision_box_)) {
+        std::cerr << "101\n";
         if (object != this && object->Pickupable(this)) {
             backpack_->PickItem((Item*) object);
             return;

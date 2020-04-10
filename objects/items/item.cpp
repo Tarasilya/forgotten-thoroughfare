@@ -42,6 +42,7 @@ std::map<ItemType, std::string> Item::GetConversionTable() {
 void Item::Drop(double x, double y) {
     visibility_ = true;
     collision_box_ = new RectCollisionBox(x, y, x + ITEM_SIZE, y + ITEM_SIZE); 
+    std::cerr << x << " " << y << " " << ITEM_SIZE << "\n";
     x_ = x;
     y_ = y;  
 }
@@ -51,6 +52,7 @@ bool Item::Droppable() {
 }
 
 bool Item::Pickupable(Player* p) {
+    std::cerr << "k3k\n";
     return true;
 }
 
