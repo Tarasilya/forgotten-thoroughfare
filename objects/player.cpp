@@ -15,6 +15,7 @@
 #include "objects/taunt/taunt.h"
 #include "objects/player/attack.h"
 #include "views/texture_view.h"
+#include "backpack/craft.h"
 
 const double speed = 0.4;
 const double taunt_size = 0.05;
@@ -43,6 +44,8 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[HEAL] = sf::Keyboard::S;
     moves[TAUNT] = sf::Keyboard::F;
     moves[ATTACK] = sf::Keyboard::R;
+    moves[CRAFT_SWORD] = sf::Keyboard::V;
+    moves[CRAFT_CIDER] = sf::Keyboard::B;
     backpack_ = new Backpack();
 }
 
@@ -75,7 +78,7 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         return true;
     }
 
-    if (key == moves[PICKUP]) {
+    if (key == moves[PICKUP] && !repeated) {
         PickUpItems();
         return true;
     }
@@ -103,6 +106,12 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     if (key == moves[ATTACK] && !repeated) {
         attack_->Trigger();
         return true;
+    }
+    if (key == moves[CRAFT_SWORD] && !repeated) {
+        Craft::CraftItem(ItemType::SWORD, this);
+    }
+    if (key == moves[CRAFT_CIDER] && !repeated) {
+        Craft::CraftItem(ItemType::CIDER, this);
     }
     return false;
 }
@@ -136,7 +145,8 @@ void Player::Move(double dx, double dy) {
 }
 
 void Player::PickUpItems() {
-    for (auto object : game_->GetCollision(collision_box_)) {
+    auto objects = game_->GetCollision(collision_box_);
+    for (auto object : objects) {
         if (object != this && object->Pickupable(this)) {
             backpack_->PickItem((Item*) object);
             return;

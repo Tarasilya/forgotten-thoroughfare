@@ -14,6 +14,19 @@ void Backpack::AddItem(Item* item) {
 	items_.push_back(item);
 }
 
+void Backpack::RemoveItem(ItemType type) {
+	bool removed = false;
+	for (int i = 0; i < items_.size(); i++) {
+		if (type == items_[i]->GetType()) {
+			items_.erase(begin(items_) + i);
+			removed = true;
+			return;
+		}
+	}
+	// should not try to remove unexisting item
+	assert(false);	
+}
+
 void Backpack::DropItem(double x, double y) {
 	if (!items_.empty()) {
 		Item* item_to_drop = items_.back();

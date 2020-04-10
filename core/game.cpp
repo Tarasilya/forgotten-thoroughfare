@@ -4,10 +4,12 @@
 #include "objects/player.h"
 #include "objects/items/stick/stick.h"
 #include "objects/displayable_object.h"
+#include "objects/items/apple/apple.h"
 #include "painter/painter.h"
 #include "views/view.h"
 #include "views/backpack_view.h"
 #include "views/fps_view.h"
+#include "backpack/craft.h"
 
 
 #include <iostream>
@@ -46,14 +48,21 @@ void Game::InitObjects() {
     auto painter = Painter::GetPainter();
 
     new FpsView();
+    Craft::Initialize();
+
 
     Player* player = new Player(0.25, 0.5, this);
 
     for (int i = 0; i < 100; i++) {
         Stick* stick = new Stick(); 
         AddObject(stick);
+        Apple* apple = new Apple();
+        AddObject(apple);
+
+
 
         player->GetBackpack()->AddItem(stick);
+        player->GetBackpack()->AddItem(apple);
     }
 
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
@@ -61,7 +70,7 @@ void Game::InitObjects() {
     AddObject(player);
 
     GameObject* punching_bag = (new DisplayableObject(
-        "pics/punch_bag.png", true, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
+        "pics/punch_bag.png", false, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
     AddObject(punching_bag);
 }
 

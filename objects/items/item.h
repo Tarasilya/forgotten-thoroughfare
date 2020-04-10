@@ -4,10 +4,11 @@
 #include "views/visible.h"
 #include "views/position.h"
 #include "collisions/rect_collision_box.h"
+#include <vector>
 
 const double ITEM_SIZE = 0.07;
 
-enum ItemType{STICK, APPLE, STONE};
+enum ItemType{STICK, APPLE, ROCK, SWORD, CIDER};
 
 /*
 	Null collision box whenever visibility is false and vice versa
@@ -23,7 +24,7 @@ private:
     ItemType type_;
 
 	static std::map<ItemType, std::string> item_type_convert_;
-
+	static std::vector<ItemType> item_types_;
 
 public:
 	Item(bool visibility, ItemType type);
@@ -31,6 +32,7 @@ public:
 	ItemType GetType();
 
 	static std::map<ItemType, std::string> GetConversionTable();	
+	static std::vector<ItemType> GetItemTypes();
 
     CollisionBox* GetCollisionBox() const override;
 	double GetX() override;
@@ -40,4 +42,5 @@ public:
 	bool Droppable();
 	bool Pickupable(Player* p) override;
 	bool Collidable(Player* p) override;
+	virtual bool Craftable() = 0;
 };
