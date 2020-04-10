@@ -11,11 +11,10 @@ const double MVMT_PERIOD = 0.8;
 
 
 Taunt::Taunt(Player* player) {
-	View* view = (new TextureView("pics/taunt2.png", this))
-		->SetZ(4)
+	(new TextureView("pics/taunt2.png", this))
 		->SetSize(SIZE, SIZE)
-		->SetVisibility(this);
-	Painter::GetPainter()->AddView(view);
+		->SetVisibility(this)
+        ->SetZ(4);
 
 	x_ = 0;
 	y_ = 0;

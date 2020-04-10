@@ -2,6 +2,7 @@
 
 #include "collisions/null_collision_box.h"
 #include "core/game.h"
+#include "objects/displayable_object.h"
 #include "painter/painter.h"
 #include "views/texture_view.h"
 #include "views/position.h"
@@ -24,18 +25,17 @@ Map::Map(std::string filename) {
 
     while(in >> row) {
         int j = 0;
-        map_.push_back(std::vector<TextureView*>());
         for(char c : row) {
             double x = (j - width / 2) * TILE_SIZE;
             double y = (i - height / 2) * TILE_SIZE;
-            map_.back().push_back(CreateTileView(x, y, c));
+            game->AddObject(CreateTile(x, y, c));
             j++;
         }
         i++;
     }
 }
 
-TextureView* Map::CreateTileView(double x, double y, char type) {
+DisplayableObject* Map::CreateTile(double x, double y, char type) {
     TextureView* view;
     std::string filename;
     switch(type) {
@@ -49,8 +49,9 @@ TextureView* Map::CreateTileView(double x, double y, char type) {
             filename = "pics/forest.jpg";
             break;
     }   
-    view = new TextureView(filename, new Position(x, y)); 
-    view->SetZ(0)->SetSize(TILE_SIZE, TILE_SIZE);
-    Painter::GetPainter()->AddView(view);
-    return view;    
+    DisplayableObject* tile = 
+        (new DisplayableObject(
+            filename, type != '@', new RectCollisionBox(x, y, x + TILE_SIZE, y + TILE_SIZE))
+        )->WithZ(0);
+    return tile;
 }

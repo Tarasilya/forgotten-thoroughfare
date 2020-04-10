@@ -16,16 +16,14 @@
 #include "objects/player/attack.h"
 #include "views/texture_view.h"
 
-const double speed = 0.3;
+const double speed = 0.4;
 const double taunt_size = 0.05;
 
 const double MAX_HP = 100;
 const double DMG = 10;
 
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
-    View* view = (new TextureView("pics/mouse_assassin.jpg", this))->SetZ(1)->SetSize(PLAYER_SIZE, PLAYER_SIZE);
-    Painter::GetPainter()->AddView(view);
-
+    (new TextureView("pics/mouse_assassin.jpg", this))->SetSize(PLAYER_SIZE, PLAYER_SIZE)->SetZ(1);
 
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);

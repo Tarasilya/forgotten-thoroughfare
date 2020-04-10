@@ -7,7 +7,7 @@ const double Y = 0;
 
 
 FpsView::FpsView() {
-    z_ = 100;
+    SetZ(100);
     time_sum_ = 0;
     prev_draw_ = 0;
 }

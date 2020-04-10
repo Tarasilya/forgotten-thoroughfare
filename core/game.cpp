@@ -3,7 +3,7 @@
 #include "map/map.h"
 #include "objects/player.h"
 #include "objects/items/stick/stick.h"
-#include "objects/punching_bag.h"
+#include "objects/displayable_object.h"
 #include "painter/painter.h"
 #include "views/view.h"
 #include "views/backpack_view.h"
@@ -14,6 +14,10 @@
 #include <cmath>
 #include <sstream>
 #include <cstdio>
+
+const double HP_WIDTH = 0.05;
+const double HP_HEIGHT = 0.1;
+const double HP_MAX_HP = 100;
 
 Game* Game::current_game_ = 0;
 
@@ -41,7 +45,7 @@ void Game::AddObject(GameObject* object) {
 void Game::InitObjects() {
     auto painter = Painter::GetPainter();
 
-    painter->AddView(new FpsView());
+    new FpsView();
 
     Player* player = new Player(0.25, 0.5, this);
 
@@ -53,10 +57,12 @@ void Game::InitObjects() {
     }
 
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
-    painter->AddView(backpack_view);
 
     AddObject(player);
-    AddObject(new PunchingBag());
+
+    GameObject* punching_bag = (new DisplayableObject(
+        "pics/punch_bag.png", true, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
+    AddObject(punching_bag);
 }
 
 

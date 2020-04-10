@@ -10,7 +10,7 @@ const Color ACTIVE_COLOR = Color(0, 0, 0);
 
 
 AttackView::AttackView(const Attack* attack): attack_(attack) {
-    z_ = 100;
+    SetZ(100);
 }
 
 void AttackView::Draw(Painter* painter) {

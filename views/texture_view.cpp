@@ -35,11 +35,6 @@ TextureView* TextureView::SetSize(double width, double height) {
     return this;
 }
 
-TextureView* TextureView::SetZ(int z) {
-    z_ = z;
-    return this;
-}
-
 TextureView* TextureView::SetVisibility(Visible* visibility) {
     visibility_ = visibility;
     return this;
