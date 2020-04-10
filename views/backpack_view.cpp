@@ -1,6 +1,7 @@
 #include "backpack_view.h"
 
 #include "painter/painter.h"
+#include "objects/items/item.h"
 
 #include <cstdio>
 #include <iostream>
@@ -19,8 +20,13 @@ void BackpackView::Draw(Painter* painter) {
 	}
 	else {
 		std::string backpack_content = "Backpack: \n";
-		std::map<ItemType, int> current_content = {{STICK, 0}, {APPLE, 0}, {ROCK, 0}, {SWORD, 0}};
+			
+		std::map<ItemType, int> current_content;
 
+		for (auto item_type : Item::GetItemTypes()) {
+			current_content[item_type] = 0;
+		}
+		
 		for (auto item : backpack_->GetItems()) {
 			current_content[item->GetType()] += 1;
 		}

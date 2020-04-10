@@ -21,6 +21,7 @@ const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
 const std::string ATTACK = "attack";
 const std::string CRAFT_SWORD = "craft_sword";
+const std::string CRAFT_CIDER = "craft_cider";
 
 const double PLAYER_SIZE = 0.1;
 

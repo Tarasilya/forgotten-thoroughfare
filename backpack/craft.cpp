@@ -6,7 +6,10 @@ std::map<ItemType, std::map<ItemType, int>> Craft::crafting_recipes_;
 
 void Craft::Initialize() {
 
-	crafting_recipes_ = {	{	SWORD, {{STICK, 3}, {APPLE, 0}, {ROCK, 0}}	}	};
+	crafting_recipes_ = {	
+		{ SWORD, {{STICK, 3}, {APPLE, 0}, {ROCK, 0}}	},
+		{ CIDER, {{STICK, 2}, {APPLE, 2}, {ROCK, 0}}	},
+		};
 
 }
 

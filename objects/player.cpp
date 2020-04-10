@@ -48,6 +48,7 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[TAUNT] = sf::Keyboard::F;
     moves[ATTACK] = sf::Keyboard::R;
     moves[CRAFT_SWORD] = sf::Keyboard::V;
+    moves[CRAFT_CIDER] = sf::Keyboard::B;
     backpack_ = new Backpack();
 }
 
@@ -111,6 +112,9 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     }
     if (key == moves[CRAFT_SWORD] && !repeated) {
         Craft::CraftItem(ItemType::SWORD, this);
+    }
+    if (key == moves[CRAFT_CIDER] && !repeated) {
+        Craft::CraftItem(ItemType::CIDER, this);
     }
     return false;
 }

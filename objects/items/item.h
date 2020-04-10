@@ -8,7 +8,7 @@
 
 const double ITEM_SIZE = 0.07;
 
-enum ItemType{STICK, APPLE, ROCK, SWORD};
+enum ItemType{STICK, APPLE, ROCK, SWORD, CIDER};
 
 /*
 	Null collision box whenever visibility is false and vice versa
