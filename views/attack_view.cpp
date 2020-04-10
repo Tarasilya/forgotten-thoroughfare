@@ -3,6 +3,7 @@
 #include "objects/player/attack.h"
 #include "painter/painter.h"
 
+#include <iostream>
 
 const Color STARTUP_COLOR = Color(100, 100, 100);
 const Color ACTIVE_COLOR = Color(0, 0, 0);

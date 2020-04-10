@@ -1,8 +1,11 @@
 #pragma once
 
 #include "objects/passive_object.h"
-#include "views/player_view.h"
+#include "views/visible.h"
+#include "views/position.h"
 #include "collisions/rect_collision_box.h"
+
+const double ITEM_SIZE = 0.07;
 
 enum ItemType{STICK, APPLE, STONE};
 
@@ -11,7 +14,7 @@ enum ItemType{STICK, APPLE, STONE};
 	Should not access x_ and y_ if not visible
 */
 
-class Item : public PassiveObject {
+class Item : public PassiveObject, public Visible, public Position {
 private:   
     double x_;
     double y_;
@@ -24,14 +27,14 @@ private:
 
 public:
 	Item(bool visibility, ItemType type);
-	bool GetVisibility();
+	bool GetVisibility() override;
 	ItemType GetType();
 
 	static std::map<ItemType, std::string> GetConversionTable();	
 
     CollisionBox* GetCollisionBox() const override;
-	double GetX();
-	double GetY();
+	double GetX() override;
+	double GetY() override;
 	void Drop(double x, double y);
 	void GetPicked();
 	bool Droppable();

@@ -12,8 +12,7 @@ void Controller::Run() {
     Game::StartGame();
     game_ = Game::GetCurrentGame();
 
-    clock_t t = clock();
-    clock_t prev_t = t;
+    clock_t prev_t = clock();
     while (window_->isOpen()) {
         sf::Event event;
         while (window_->pollEvent(event))
@@ -33,9 +32,9 @@ void Controller::Run() {
         }
 
 
-        clock_t dt = clock() - t;
-        t = clock();
-        if ( ((t - prev_t) * 1.0) / CLOCKS_PER_SEC > 0.016){
+        clock_t t = clock();
+        double dt = (t - prev_t) * 1.0 / CLOCKS_PER_SEC;
+        if ( dt > 0.016){
             prev_t = t;
 
             ProcessPressedKeys();

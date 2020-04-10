@@ -3,8 +3,6 @@
 #include "objects/items/item.h"
 #include "collisions/null_collision_box.h"
 
-const double item_size = 0.07;
-
 std::map<ItemType, std::string> Item::item_type_convert_ = {{STICK, "Stick"}, {APPLE, "Apple"}, {STONE, "Stone"}};
 
 Item::Item(bool visibility, ItemType type) {
@@ -42,7 +40,7 @@ std::map<ItemType, std::string> Item::GetConversionTable() {
 
 void Item::Drop(double x, double y) {
     visibility_ = true;
-    collision_box_ = new RectCollisionBox(x, y, x + item_size, y + item_size); 
+    collision_box_ = new RectCollisionBox(x, y, x + ITEM_SIZE, y + ITEM_SIZE); 
     x_ = x;
     y_ = y;  
 }

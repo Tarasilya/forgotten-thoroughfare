@@ -7,13 +7,13 @@
 
 class CollisionBox;
 class NullCollisionBox;
-class TileView;
+class TextureView;
 
 class Map {
 private:
-    std::vector<std::vector<TileView*>> map_;
+    std::vector<std::vector<TextureView*>> map_;
 
-    NullCollisionBox* null_collision_box_;
+    static TextureView* CreateTileView(double x, double y, char type);
 public:
     Map(std::string filename);
 };

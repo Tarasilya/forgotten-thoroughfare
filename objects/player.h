@@ -2,7 +2,7 @@
 
 #include "objects/game_object.h"
 #include "objects/damageable.h"
-#include "views/player_view.h"
+#include "views/position.h"
 #include "backpack/backpack.h"
 
 #include <unordered_map>
@@ -21,6 +21,7 @@ const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
 const std::string ATTACK = "attack";
 
+const double PLAYER_SIZE = 0.1;
 
 class Attack;
 class Game;
@@ -28,7 +29,7 @@ class RectCollisionBox;
 class HpBar;
 class Taunt;
 
-class Player : public GameObject, public Damageable {
+class Player : public GameObject, public Damageable, public Position {
 private:
     double x_;
     double y_;
@@ -46,7 +47,6 @@ private:
     Backpack* backpack_;
 
     void Move(double dx, double dy);
-    void MoveTaunt();
     void PickUpItems();
 
 public:
@@ -58,13 +58,10 @@ public:
     bool Pickupable(Player* p) override;
 
     void Damage(double dmg) override;
-
-    PlayerView* view;
     
-    double GetX() const;
-    double GetY() const;
+    double GetX() override;
+    double GetY() override;
     Backpack* GetBackpack();
     Taunt* GetTaunt();
     bool GetBackpackVisibility();
-    void FundamentallyExerciseTaunt();
 };
