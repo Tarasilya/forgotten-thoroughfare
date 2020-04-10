@@ -10,6 +10,7 @@ public:
     Backpack();
     std::vector<Item*> GetItems();
     void AddItem(Item* item);
+    void RemoveItem(ItemType type);
     void DropItem(double x, double y); // Drops topmost item of backpack
     void Display();
     void PickItem(Item* item);  

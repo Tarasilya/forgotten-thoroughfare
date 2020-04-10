@@ -8,6 +8,7 @@
 #include "views/view.h"
 #include "views/backpack_view.h"
 #include "views/fps_view.h"
+#include "backpack/craft.h"
 
 
 #include <iostream>
@@ -46,6 +47,8 @@ void Game::InitObjects() {
     auto painter = Painter::GetPainter();
 
     new FpsView();
+    Craft::Initialize();
+
 
     Player* player = new Player(0.25, 0.5, this);
 

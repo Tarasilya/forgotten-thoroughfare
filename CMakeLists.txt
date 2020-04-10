@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11" )
 
 file(GLOB A "*/*.cpp")
 file(GLOB B "*/items/*.cpp")
-file(GLOB C "*/items/stick/*.cpp")
+file(GLOB C "*/items/*/*.cpp")
 file(GLOB D "*/player/*.cpp")
 file(GLOB E "*/taunt/*.cpp")
 

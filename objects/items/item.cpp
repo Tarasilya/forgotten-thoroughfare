@@ -3,7 +3,8 @@
 #include "objects/items/item.h"
 #include "collisions/null_collision_box.h"
 
-std::map<ItemType, std::string> Item::item_type_convert_ = {{STICK, "Stick"}, {APPLE, "Apple"}, {STONE, "Stone"}};
+std::map<ItemType, std::string> Item::item_type_convert_ = {{STICK, "Stick"}, {APPLE, "Apple"}, {ROCK, "Rock"}, {SWORD, "Sword"}};
+std::vector<ItemType> Item::item_types_ = {STICK, APPLE, ROCK, SWORD};
 
 Item::Item(bool visibility, ItemType type) {
     visibility_ = visibility;
@@ -62,4 +63,8 @@ void Item::GetPicked() {
     x_ = 0;
     y_ = 0;
     collision_box_ = new NullCollisionBox();
+}
+
+std::vector<ItemType> Item::GetItemTypes() {
+    return {APPLE, STICK, ROCK, SWORD};
 }
