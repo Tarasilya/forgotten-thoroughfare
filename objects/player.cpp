@@ -29,8 +29,6 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
     attack_ = new Attack(this);
-    game->AddObject(attack_);
-    game->AddObject(taunt_);
     
     collision_box_ = new RectCollisionBox(x, y, x + PLAYER_SIZE, y + PLAYER_SIZE);
     moves[UP] = sf::Keyboard::I;

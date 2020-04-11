@@ -38,7 +38,6 @@ void Craft::CraftItem(ItemType requested_item, Player* p) {
 			default:
 				assert(false);
 		}
-		Game::GetCurrentGame()->AddObject(item_to_craft);
 		p->GetBackpack()->AddItem(item_to_craft);
 	}
 }

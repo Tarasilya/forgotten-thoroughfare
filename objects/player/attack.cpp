@@ -46,7 +46,7 @@ State Attack::GetState() const {
 void Attack::Tick(double dt) {
     UpdateState();
     if (state_ == ACTIVE) {
-        Game* game = Game::GetCurrentGame();
+        Game* game = Game::GetGame();
         for (auto object : game->GetCollision(GetCollisionBox())) {
             if (object == this) {
                 continue;

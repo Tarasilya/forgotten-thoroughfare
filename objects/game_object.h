@@ -7,6 +7,7 @@ class Player;
 
 class GameObject {
 public:
+    GameObject();
     virtual CollisionBox* GetCollisionBox() const = 0;
     virtual void Tick(double dt) = 0;
     virtual bool ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) = 0;

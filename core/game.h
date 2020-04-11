@@ -20,9 +20,8 @@ private:
 public: 
     static void StartGame();
     static void StopGame();
-    static Game* GetCurrentGame();
+    static Game* GetGame();
 
-    Game();
     void ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated);
     void Tick(double dt);
     void AddObject(GameObject* object);

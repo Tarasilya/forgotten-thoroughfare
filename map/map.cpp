@@ -17,7 +17,7 @@ Map::Map(std::string filename) {
     std::ifstream in (filename);
     std::string row;
     int i = 0;
-    Game* game = Game::GetCurrentGame();
+    Game* game = Game::GetGame();
 
     int height, width;
 
@@ -28,7 +28,7 @@ Map::Map(std::string filename) {
         for(char c : row) {
             double x = (j - width / 2) * TILE_SIZE;
             double y = (i - height / 2) * TILE_SIZE;
-            game->AddObject(CreateTile(x, y, c));
+            CreateTile(x, y, c);
             j++;
         }
         i++;

@@ -10,7 +10,7 @@ void Controller::Run() {
     Painter::Init(window_);
     Painter* painter = Painter::GetPainter();
     Game::StartGame();
-    game_ = Game::GetCurrentGame();
+    game_ = Game::GetGame();
 
     clock_t prev_t = clock();
     while (window_->isOpen()) {
