@@ -25,15 +25,12 @@ Game* Game::current_game_ = 0;
 
 void Game::StartGame() {
     current_game_ = new Game();
+    current_game_->InitObjects();
     current_game_->InitMap();
 }
 
-Game* Game::GetCurrentGame() {
+Game* Game::GetGame() {
     return current_game_;
-}
-
-Game::Game() {
-    InitObjects();
 }
 
 void Game::InitMap() {
@@ -50,14 +47,11 @@ void Game::InitObjects() {
     new FpsView();
     Craft::Initialize();
 
-
     Player* player = new Player(0.25, 0.5, this);
 
     for (int i = 0; i < 100; i++) {
         Stick* stick = new Stick(); 
-        AddObject(stick);
         Apple* apple = new Apple();
-        AddObject(apple);
 
 
 
@@ -67,11 +61,9 @@ void Game::InitObjects() {
 
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
 
-    AddObject(player);
 
     GameObject* punching_bag = (new DisplayableObject(
         "pics/punch_bag.png", false, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
-    AddObject(punching_bag);
 }
 
 
