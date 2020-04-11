@@ -1,7 +1,16 @@
-#include "objects/items/apple/apple.h"
-#include "objects/items/item.h"
+#include "apple.h"
 
-Apple::Apple() : Item(false, ItemType::APPLE), name_("apple") {}
+#include "collisions/null_collision_box.h"
+#include "objects/items/item.h"
+#include "painter/painter.h"
+#include "views/texture_view.h"
+
+Apple::Apple() : Item(false, ItemType::APPLE), name_("apple") {
+    (new TextureView("pics/apple.png", this))
+        ->SetSize(ITEM_SIZE, ITEM_SIZE)
+        ->SetVisibility(this)
+        ->SetZ(1);
+}
 
 void Apple::Tick(double dt){
 	return;
