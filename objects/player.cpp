@@ -16,6 +16,7 @@
 #include "objects/player/attack.h"
 #include "views/texture_view.h"
 #include "backpack/craft.h"
+#include "views/player_view.h"
 
 const double speed = 0.4;
 const double taunt_size = 0.05;
@@ -24,7 +25,7 @@ const double MAX_HP = 100;
 const double DMG = 10;
 
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
-    (new TextureView("pics/mouse_assassin.jpg", this))->SetSize(PLAYER_SIZE, PLAYER_SIZE)->SetZ(1);
+    new PlayerView(this);
 
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
@@ -68,10 +69,12 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         return true;
     }
     if (key == moves[LEFT]) {
+        direction_ = -1;
         horizontal_speed_ -= speed;
         return true;
     }
     if (key == moves[RIGHT]) {
+        direction_ = 1;
         horizontal_speed_ += speed;
         return true;
     }
@@ -114,6 +117,10 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     return false;
 }
 
+
+int Player::GetDirection() {
+    return direction_;
+}
 
 void Player::Damage(double dmg) {
     hp_bar_->Change(-dmg);
