@@ -14,7 +14,6 @@ class TextureView : public View {
 private:
     static std::map<std::string, sf::Texture*> textures_;
 
-    sf::Sprite* sprite_;
     sf::Texture* texture_;
 
     Visible* visibility_ = new AlwaysVisible();
@@ -22,11 +21,15 @@ private:
     Painter* painter_;
 
     void ScaleToSize(double width, double height);
+
+protected:
+    sf::Sprite* sprite_;
+
 public:
     TextureView(const std::string& file, Position* position);
     TextureView* SetSize(double width, double height);
     TextureView* SetVisibility(Visible* visibility);
 
-    void Draw(Painter* painter);
+    void Draw(Painter* painter) override;
     void Draw(Painter* painter, double x, double y);
 };
