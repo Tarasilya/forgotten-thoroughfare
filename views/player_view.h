@@ -15,4 +15,5 @@ public:
     void Draw(Painter* painter) override;
     double GetX() override;
     double GetY() override;
+    void Rotate(double angle);
 };

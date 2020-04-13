@@ -24,3 +24,8 @@ double PlayerView::GetX() {
 double PlayerView::GetY() {
     return player_->GetY();
 }
+
+
+void PlayerView::Rotate(double angle) {
+    sprite_->rotate(angle);
+}

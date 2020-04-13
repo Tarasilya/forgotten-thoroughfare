@@ -25,8 +25,10 @@ const double taunt_size = 0.05;
 const double MAX_HP = 100;
 const double DMG = 10;
 
+const double ANGLE = 8;
+
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
-    new PlayerView(this);
+    view_ = new PlayerView(this);
 
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
@@ -48,6 +50,8 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[CRAFT_NOW] = sf::Keyboard::B;
     moves[CRAFT] = sf::Keyboard::C;
     moves[MENU_INTERACTION] = sf::Keyboard::V;
+    moves[CRAFT_SWORD] = sf::Keyboard::V;
+    moves[CRAFT_CIDER] = sf::Keyboard::B;
     backpack_ = new Backpack();
 }
 
@@ -150,12 +154,28 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         attack_->Trigger();
         return true;
     }
+<<<<<<< HEAD
     if (key == moves[CRAFT_NOW] && !repeated) {
         if (info_status_ == CRAFT_MENU) {
             Craft::CraftItem(Item::GetCraftableTypes()[craft_view_->GetCurrentItem()], this);
             taunt_->Launch();
         }
         return true;
+=======
+    if (key == moves[ROTATE]) {
+        view_->Rotate(ANGLE);
+        return true;
+    }
+    if (key == moves[CROTATE]) {
+        view_->Rotate(-ANGLE);
+        return true;
+    }
+    if (key == moves[CRAFT_SWORD] && !repeated) {
+        Craft::CraftItem(ItemType::SWORD, this);
+    }
+    if (key == moves[CRAFT_CIDER] && !repeated) {
+        Craft::CraftItem(ItemType::CIDER, this);
+>>>>>>> tmp
     }
     return false;
 }
