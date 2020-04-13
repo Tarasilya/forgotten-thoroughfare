@@ -2,7 +2,7 @@
 
 #include "objects/player.h"
 
-PlayerView::PlayerView(Player* player): TextureView("pics/mouse_assassin.jpg", player), player_(player) {
+PlayerView::PlayerView(Player* player): TextureView("pics/mouse_assassin.jpg", this), player_(player) {
     SetZ(1);
     SetSize(PLAYER_SIZE, PLAYER_SIZE);
 }
@@ -14,4 +14,13 @@ void PlayerView::Draw(Painter* painter) {
         direction_ = current_direction;
     }
     TextureView::Draw(painter);
+}
+
+double PlayerView::GetX() {
+    return player_->GetX() + (direction_ == -1) * PLAYER_SIZE;
+}
+
+
+double PlayerView::GetY() {
+    return player_->GetY();
 }
