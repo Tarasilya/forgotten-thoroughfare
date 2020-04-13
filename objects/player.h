@@ -51,6 +51,8 @@ private:
     void Move(double dx, double dy);
     void PickUpItems();
 
+    int direction_ = 1;
+
 public:
     Player(double x, double y, Game* game);
     CollisionBox* GetCollisionBox() const override;
@@ -61,6 +63,8 @@ public:
 
     void Damage(double dmg) override;
     
+    int GetDirection();
+
     double GetX() override;
     double GetY() override;
     Backpack* GetBackpack();
