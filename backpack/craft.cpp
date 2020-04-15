@@ -67,3 +67,21 @@ void Craft::TakeIngredients(std::map<ItemType, int> crafting_requirement, Player
 		}
 	}
 }
+
+
+std::map<ItemType, int> Craft::GetRecipe(ItemType requested_item) {
+	return crafting_recipes_[requested_item];
+}
+
+
+std::map<ItemType, int> Craft::CountItems(Player* p) {
+	std::map<ItemType, int> current_backpack_content;
+
+	for (auto item_type : Item::GetItemTypes()) {
+		current_backpack_content[item_type] = 0;
+	}
+	for (auto item : p->GetBackpack()->GetItems()) {
+		current_backpack_content[item->GetType()] += 1;
+	}
+	return current_backpack_content;
+}

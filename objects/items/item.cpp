@@ -68,3 +68,11 @@ void Item::GetPicked() {
 std::vector<ItemType> Item::GetItemTypes() {
     return {APPLE, STICK, ROCK, SWORD, CIDER};
 }
+
+std::vector<ItemType> Item::GetBasicTypes() {
+    return {APPLE, STICK, ROCK};
+}
+
+std::vector<ItemType> Item::GetCraftableTypes() {
+    return {SWORD, CIDER};
+}

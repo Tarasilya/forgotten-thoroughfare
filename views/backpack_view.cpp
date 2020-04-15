@@ -41,7 +41,7 @@ void BackpackView::Draw(Painter* painter) {
 	}
 
     SetCoords(player_->GetX(), player_->GetY());
-    if (player_->GetBackpackVisibility()) {
+    if (player_->GetInfoStatus() == InfoStatus::BACKPACK_MENU) {
     	painter->Draw(*GetText());
     }
 }
