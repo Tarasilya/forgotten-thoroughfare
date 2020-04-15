@@ -22,11 +22,11 @@ ItemType Item::GetType() {
     return type_;
 }
 
-double Item::GetX() {
+double Item::GetX() const {
     return x_;
 }
 
-double Item::GetY() {
+double Item::GetY() const {
     return y_;
 }
 

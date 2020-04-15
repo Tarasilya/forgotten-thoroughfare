@@ -45,8 +45,6 @@ private:
     double horizontal_speed_;
     double vertical_speed_;
 
-    PlayerView* view_;
-
     HpBar* hp_bar_;
     Taunt* taunt_;
     Attack* attack_;
@@ -75,10 +73,10 @@ public:
     void Damage(double dmg) override;
     void SetCraftView(CraftView* craft_view);
     
-    int GetDirection();
+    int GetDirection() const;
 
-    double GetX() override;
-    double GetY() override;
+    double GetX() const override;
+    double GetY() const override;
     Backpack* GetBackpack();
     Taunt* GetTaunt();
     InfoStatus GetInfoStatus();

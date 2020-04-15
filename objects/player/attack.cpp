@@ -7,10 +7,6 @@
 #include "views/attack_view.h"
 #include "painter/painter.h"
 
-const double STARTUP_T = 0.5;
-const double ACTIVE_T = 0.2;
-const double RECOVERY_T = 0;
-
 const double DMG = 10;
 
 const double WIDTH = 0.1;
@@ -19,7 +15,7 @@ const double HEIGHT = 0.033;
 
 Attack::Attack(const Player* player): player_(player), state_(IDLE), charges_(0) {
     start_time_ = -1;
-    new AttackView(this);
+    view_ = new AttackView(this, player, PLAYER_SIZE);
 }
 
 void Attack::Trigger() {
@@ -27,15 +23,12 @@ void Attack::Trigger() {
     if (state_ == IDLE) {
         start_time_ = clock();
         state_ = STARTUP;
-        charges_ = 1;
+        charges_ = 1000;
     }
 }
 
 CollisionBox* Attack::GetCollisionBox() const {
-    RectCollisionBox* box = (RectCollisionBox*) player_->GetCollisionBox(); 
-    double y1 = (box->y1 + box->y2) / 2 - HEIGHT / 2;
-
-    return new RectCollisionBox(box->x1 - WIDTH, y1, box->x1, y1 + HEIGHT);
+    return view_->GetCollisionBox();
 }
 
 State Attack::GetState() const {
@@ -43,12 +36,26 @@ State Attack::GetState() const {
     return state_;
 }
 
+double Attack::GetActiveTime() const {
+    UpdateState();
+    if (state_ == STARTUP) {
+        return 0;
+    }
+    return (clock() - start_time_) * 1.0 / CLOCKS_PER_SEC - STARTUP_T;
+}
+
+
+int Attack::GetDirection() const {
+    return player_->GetDirection();
+}
+
+
 void Attack::Tick(double dt) {
     UpdateState();
     if (state_ == ACTIVE) {
         Game* game = Game::GetGame();
         for (auto object : game->GetCollision(GetCollisionBox())) {
-            if (object == this) {
+            if (object == this || object == player_) {
                 continue;
             }
             Damageable* damageable = dynamic_cast<Damageable*>(object);

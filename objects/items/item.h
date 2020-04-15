@@ -37,8 +37,8 @@ public:
 	static std::vector<ItemType> GetCraftableTypes();
 
     CollisionBox* GetCollisionBox() const override;
-	double GetX() override;
-	double GetY() override;
+	double GetX() const override;
+	double GetY() const override;
 	void Drop(double x, double y);
 	void GetPicked();
 	bool Droppable();

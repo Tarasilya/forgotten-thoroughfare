@@ -7,6 +7,6 @@ private:
 public:
     Position();
     Position(double x, double y);
-    virtual double GetX();
-    virtual double GetY();
+    virtual double GetX() const;
+    virtual double GetY() const;
 };

@@ -45,17 +45,32 @@ void TextureView::ScaleToSize(double width, double height) {
     sprite_->scale(sf::Vector2f(width / size.x, height / size.y));
 }
 
+TextureView* TextureView::SetCollisionVisibility(bool collision_visibility) {
+    collision_visibility_ = collision_visibility;
+}
+
+void TextureView::Rotate(double angle) {
+    sprite_->rotate(angle);
+}
+
 void TextureView::Draw(Painter* painter) {
     Draw(painter, position_->GetX(), position_->GetY());
 }
 
 void TextureView::Draw(Painter* painter, double x, double y) {
     if (visibility_->GetVisibility()) {
+        int x1 = painter->Transform(x, painter->Width());
+        int y1 = painter->Transform(y, painter->Width());
         sprite_->setPosition(
-            painter->Transform(x, painter->Width()),
-            painter->Transform(y, painter->Height()));
+            x1,
+            y1);
 
-        
+
         painter->Draw(sprite_);
+
+        if (collision_visibility_) {
+            auto rect = sprite_->getGlobalBounds();
+            painter->Draw({rect.left, rect.top, rect.left + rect.width, rect.top+rect.height, Color(255, 0, 0)}, false);
+        }
     }
 }

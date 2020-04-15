@@ -2,7 +2,14 @@
 
 #include "objects/passive_object.h"
 
+class AttackView;
+
 enum State {IDLE, STARTUP, ACTIVE, RECOVERY};
+
+const double STARTUP_T = 0.3;
+const double ACTIVE_T = 0.5;
+const double RECOVERY_T = 0;
+
 
 class Attack : public PassiveObject{
 private:
@@ -10,6 +17,8 @@ private:
     clock_t start_time_;
     const Player* player_;
     int charges_;
+
+    AttackView* view_;
 
     void UpdateState() const;
 public:
@@ -21,4 +30,6 @@ public:
     bool Collidable(Player* p) override;
 
     State GetState() const;
+    double GetActiveTime() const;
+    int GetDirection() const;
 };

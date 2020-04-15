@@ -13,7 +13,6 @@ private:
 public:
     PlayerView(Player* p);
     void Draw(Painter* painter) override;
-    double GetX() override;
-    double GetY() override;
-    void Rotate(double angle);
+    double GetX() const override;
+    double GetY() const override;
 };

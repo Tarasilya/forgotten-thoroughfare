@@ -45,13 +45,14 @@ bool DisplayableObject::Collidable(Player* p) {
 void DisplayableObject::Damage(double dmg) {
     if (hp_bar_ != 0) {
         hp_bar_->Change(-dmg);
+        std::cerr << "boom";
     }
 }
 
-double DisplayableObject::GetX() {
+double DisplayableObject::GetX() const {
     return collision_box_->x1;
 }
 
-double DisplayableObject::GetY() {
+double DisplayableObject::GetY() const {
     return collision_box_->y1;
 }

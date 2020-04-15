@@ -40,11 +40,11 @@ bool Taunt::Collidable(Player* p) {
 	return true;
 }
 
-double Taunt::GetX() {
+double Taunt::GetX() const {
 	return player_->GetX() + x_ - SIZE;
 }
 
-double Taunt::GetY() {
+double Taunt::GetY() const {
 	return player_->GetY() + y_ + SIZE;
 }
 

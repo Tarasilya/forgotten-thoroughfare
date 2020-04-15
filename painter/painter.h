@@ -43,7 +43,7 @@ public:
     static Painter* GetPainter();
 
     void Redraw();
-	void Draw(const Rectangle& rect);
+	void Draw(const Rectangle& rect, bool transform = true);
 	void Draw(const sf::Text& text, bool absolute = true);
     void Draw(sf::Sprite* player_sprite);
 
