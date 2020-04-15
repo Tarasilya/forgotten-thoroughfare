@@ -159,11 +159,14 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
             taunt_->Launch();
         }
         return true;
+    }
     if (key == moves[CRAFT_SWORD] && !repeated) {
         Craft::CraftItem(ItemType::SWORD, this);
+        return true;
     }
     if (key == moves[CRAFT_CIDER] && !repeated) {
         Craft::CraftItem(ItemType::CIDER, this);
+        return true;
     }
     return false;
 }
