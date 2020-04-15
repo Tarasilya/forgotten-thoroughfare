@@ -45,10 +45,9 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[HEAL] = sf::Keyboard::S;
     moves[TAUNT] = sf::Keyboard::F;
     moves[ATTACK] = sf::Keyboard::R;
-    moves[CRAFT_SWORD] = sf::Keyboard::V;
     moves[CRAFT_NOW] = sf::Keyboard::B;
     moves[CRAFT] = sf::Keyboard::C;
-    moves[MENU_INTERACTION] = sf::Keyboard::U;
+    moves[MENU_INTERACTION] = sf::Keyboard::V;
     backpack_ = new Backpack();
 }
 
@@ -129,7 +128,9 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     }
 
     if (key == moves[MENU_INTERACTION] && !repeated) {
-        craft_view_->ChangeCurrentItem();
+        if (info_status_ == CRAFT_MENU) {
+            craft_view_->ChangeCurrentItem();
+        }
         return true;
     }
 
@@ -149,14 +150,12 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         attack_->Trigger();
         return true;
     }
-    if (key == moves[CRAFT_SWORD] && !repeated) {
-        Craft::CraftItem(ItemType::SWORD, this);
-    }
     if (key == moves[CRAFT_NOW] && !repeated) {
         if (info_status_ == CRAFT_MENU) {
             Craft::CraftItem(Item::GetCraftableTypes()[craft_view_->GetCurrentItem()], this);
             taunt_->Launch();
         }
+        return true;
     }
     return false;
 }

@@ -20,7 +20,6 @@ const std::string DAMAGE = "damage";
 const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
 const std::string ATTACK = "attack";
-const std::string CRAFT_SWORD = "craft_sword";
 const std::string CRAFT_NOW = "craft_now";
 const std::string MENU_INTERACTION = "menu_interaction"; 
 const std::string CRAFT = "craft";
