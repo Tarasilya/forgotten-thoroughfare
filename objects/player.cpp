@@ -15,6 +15,7 @@
 #include "objects/taunt/taunt.h"
 #include "objects/player/attack.h"
 #include "views/texture_view.h"
+#include "views/craft_view.h"
 #include "backpack/craft.h"
 #include "views/player_view.h"
 
@@ -30,6 +31,7 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
     attack_ = new Attack(this);
+    info_status_ = NO_MENU;
     
     collision_box_ = new RectCollisionBox(x, y, x + PLAYER_SIZE, y + PLAYER_SIZE);
     moves[UP] = sf::Keyboard::I;
@@ -44,12 +46,18 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[TAUNT] = sf::Keyboard::F;
     moves[ATTACK] = sf::Keyboard::R;
     moves[CRAFT_SWORD] = sf::Keyboard::V;
-    moves[CRAFT_CIDER] = sf::Keyboard::B;
+    moves[CRAFT_NOW] = sf::Keyboard::B;
+    moves[CRAFT] = sf::Keyboard::C;
+    moves[MENU_INTERACTION] = sf::Keyboard::U;
     backpack_ = new Backpack();
 }
 
 CollisionBox* Player::GetCollisionBox() const {
     return collision_box_;
+}
+
+void Player::SetCraftView(CraftView* craft_view) {
+    craft_view_ = craft_view;
 }
 
 void Player::Tick(double dt) {
@@ -85,13 +93,46 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     }
 
     if (key == moves[BACKPACK] && !repeated) {
-        backpack_visibility_ = !backpack_visibility_;
+        switch(info_status_) {
+
+            case NO_MENU:
+            case CRAFT_MENU:
+                info_status_ = BACKPACK_MENU;
+                break;
+            
+            case BACKPACK_MENU:
+                info_status_ = NO_MENU;
+                break;
+
+        }
         return true;
     }
+
+    if (key == moves[CRAFT] && !repeated) {
+        switch(info_status_) {
+
+            case NO_MENU:
+            case BACKPACK_MENU:
+                info_status_ = CRAFT_MENU;
+                break;
+
+            case CRAFT_MENU:
+                info_status_ = NO_MENU;
+                break;
+        }
+        return true;
+    }
+
     if (key == moves[DAMAGE] && !repeated) {
         Damage(DMG);
         return true;
     }
+
+    if (key == moves[MENU_INTERACTION] && !repeated) {
+        craft_view_->ChangeCurrentItem();
+        return true;
+    }
+
     if (key == moves[HEAL] && !repeated) {
         Damage(-DMG);
         return true;
@@ -111,8 +152,11 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
     if (key == moves[CRAFT_SWORD] && !repeated) {
         Craft::CraftItem(ItemType::SWORD, this);
     }
-    if (key == moves[CRAFT_CIDER] && !repeated) {
-        Craft::CraftItem(ItemType::CIDER, this);
+    if (key == moves[CRAFT_NOW] && !repeated) {
+        if (info_status_ == CRAFT_MENU) {
+            Craft::CraftItem(Item::GetCraftableTypes()[craft_view_->GetCurrentItem()], this);
+            taunt_->Launch();
+        }
     }
     return false;
 }
@@ -174,8 +218,8 @@ Taunt* Player::GetTaunt() {
     return taunt_;
 }
 
-bool Player::GetBackpackVisibility() {
-    return backpack_visibility_;
+InfoStatus Player::GetInfoStatus() {
+    return info_status_;
 }
 
 bool Player::Collidable(Player* p) {

@@ -8,8 +8,10 @@
 #include "painter/painter.h"
 #include "views/view.h"
 #include "views/backpack_view.h"
+#include "views/craft_view.h"
 #include "views/fps_view.h"
 #include "backpack/craft.h"
+
 
 
 #include <iostream>
@@ -60,7 +62,8 @@ void Game::InitObjects() {
     }
 
     BackpackView* backpack_view = new BackpackView(player->GetBackpack(), player);
-
+    CraftView* craft_view = new CraftView(player->GetBackpack(), player);
+    player->SetCraftView(craft_view);
 
     GameObject* punching_bag = (new DisplayableObject(
         "pics/punch_bag.png", false, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);

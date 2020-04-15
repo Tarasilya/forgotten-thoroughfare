@@ -33,6 +33,8 @@ public:
 
 	static std::map<ItemType, std::string> GetConversionTable();	
 	static std::vector<ItemType> GetItemTypes();
+	static std::vector<ItemType> GetBasicTypes();
+	static std::vector<ItemType> GetCraftableTypes();
 
     CollisionBox* GetCollisionBox() const override;
 	double GetX() override;

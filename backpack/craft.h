@@ -15,4 +15,6 @@ public:
 	static void CraftItem(ItemType requested_item, Player* p);
 	static bool CheckIngredients(std::map<ItemType, int> crafting_requirement, Player* p);
 	static void TakeIngredients(std::map<ItemType, int> crafting_requirement, Player* p);
+	static std::map<ItemType, int> CountItems(Player* p);
+	static std::map<ItemType, int> GetRecipe(ItemType requested_item);
 };

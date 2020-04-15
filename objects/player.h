@@ -21,6 +21,9 @@ const std::string HEAL = "heal";
 const std::string TAUNT = "taunt";
 const std::string ATTACK = "attack";
 const std::string CRAFT_SWORD = "craft_sword";
+const std::string CRAFT_NOW = "craft_now";
+const std::string MENU_INTERACTION = "menu_interaction"; 
+const std::string CRAFT = "craft";
 
 const double PLAYER_SIZE = 0.1;
 
@@ -29,6 +32,9 @@ class Game;
 class RectCollisionBox;
 class HpBar;
 class Taunt;
+class CraftView;
+
+enum InfoStatus{NO_MENU, BACKPACK_MENU, CRAFT_MENU};
 
 class Player : public GameObject, public Damageable, public Position {
 private:
@@ -40,6 +46,8 @@ private:
     HpBar* hp_bar_;
     Taunt* taunt_;
     Attack* attack_;
+    InfoStatus info_status_;
+    CraftView* craft_view_;
 
     bool backpack_visibility_;
     Game* game_;
@@ -61,6 +69,7 @@ public:
     bool Pickupable(Player* p) override;
 
     void Damage(double dmg) override;
+    void SetCraftView(CraftView* craft_view);
     
     int GetDirection();
 
@@ -68,5 +77,5 @@ public:
     double GetY() override;
     Backpack* GetBackpack();
     Taunt* GetTaunt();
-    bool GetBackpackVisibility();
+    InfoStatus GetInfoStatus();
 };
