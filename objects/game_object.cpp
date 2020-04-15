@@ -2,6 +2,8 @@
 
 #include "core/game.h"
 
+#include <iostream>
+
 GameObject::GameObject() {
     Game::GetGame()->AddObject(this);
 }

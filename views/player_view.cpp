@@ -2,7 +2,7 @@
 
 #include "objects/player.h"
 
-PlayerView::PlayerView(Player* player): TextureView("pics/cider_warrior3.png", this), player_(player) {
+PlayerView::PlayerView(Player* player): TextureView("pics/default_warrior2.png", this), player_(player) {
     SetZ(1);
     SetSize(PLAYER_SIZE, PLAYER_SIZE);
 }
@@ -16,11 +16,11 @@ void PlayerView::Draw(Painter* painter) {
     TextureView::Draw(painter);
 }
 
-double PlayerView::GetX() {
+double PlayerView::GetX() const {
     return player_->GetX() + (direction_ == -1) * PLAYER_SIZE;
 }
 
 
-double PlayerView::GetY() {
+double PlayerView::GetY() const {
     return player_->GetY();
 }

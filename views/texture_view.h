@@ -14,6 +14,8 @@ class TextureView : public View {
 private:
     static std::map<std::string, sf::Texture*> textures_;
 
+    bool collision_visibility_ = false;
+
     sf::Texture* texture_;
 
     Visible* visibility_ = new AlwaysVisible();
@@ -29,6 +31,9 @@ public:
     TextureView(const std::string& file, Position* position);
     TextureView* SetSize(double width, double height);
     TextureView* SetVisibility(Visible* visibility);
+    TextureView* SetCollisionVisibility(bool collision_visibility);
+
+    void Rotate(double angle);
 
     void Draw(Painter* painter) override;
     void Draw(Painter* painter, double x, double y);

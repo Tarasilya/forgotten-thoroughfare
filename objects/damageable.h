@@ -2,5 +2,5 @@
 
 class Damageable {
 public:
-    virtual void Damage(double dmg) = 0;
+    virtual bool Damage(double dmg) = 0;
 };

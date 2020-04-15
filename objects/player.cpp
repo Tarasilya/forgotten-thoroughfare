@@ -25,6 +25,7 @@ const double taunt_size = 0.05;
 const double MAX_HP = 100;
 const double DMG = 10;
 
+
 Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
     new PlayerView(this);
 
@@ -48,6 +49,8 @@ Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), back
     moves[CRAFT_NOW] = sf::Keyboard::B;
     moves[CRAFT] = sf::Keyboard::C;
     moves[MENU_INTERACTION] = sf::Keyboard::V;
+    moves[CRAFT_SWORD] = sf::Keyboard::V;
+    moves[CRAFT_CIDER] = sf::Keyboard::B;
     backpack_ = new Backpack();
 }
 
@@ -157,16 +160,25 @@ bool Player::ProcessKey(sf::Keyboard::Key key, bool pressed, bool repeated) {
         }
         return true;
     }
+    if (key == moves[CRAFT_SWORD] && !repeated) {
+        Craft::CraftItem(ItemType::SWORD, this);
+        return true;
+    }
+    if (key == moves[CRAFT_CIDER] && !repeated) {
+        Craft::CraftItem(ItemType::CIDER, this);
+        return true;
+    }
     return false;
 }
 
 
-int Player::GetDirection() {
+int Player::GetDirection() const {
     return direction_;
 }
 
-void Player::Damage(double dmg) {
+bool Player::Damage(double dmg) {
     hp_bar_->Change(-dmg);
+    return true;
 }
 
 
@@ -202,10 +214,10 @@ void Player::PickUpItems() {
     }
 }
 
-double Player::GetX() {
+double Player::GetX() const {
     return x_;
 }
-double Player::GetY() {
+double Player::GetY() const {
     return y_;
 }
 

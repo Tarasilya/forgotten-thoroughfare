@@ -23,8 +23,8 @@ public:
 	clock_t GetStartTime();
 	bool GetVisibility() override;
 	Player* GetPlayer();
-	double GetX() override;
-	double GetY() override;
+	double GetX() const override;
+	double GetY() const override;
 	CollisionBox* GetCollisionBox() const override;
 	bool Pickupable(Player* p) override;
 	bool Collidable(Player* p) override;

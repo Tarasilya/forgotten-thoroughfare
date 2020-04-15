@@ -23,11 +23,14 @@ const std::string ATTACK = "attack";
 const std::string CRAFT_NOW = "craft_now";
 const std::string MENU_INTERACTION = "menu_interaction"; 
 const std::string CRAFT = "craft";
+const std::string CRAFT_SWORD = "craft_sword";
+const std::string CRAFT_CIDER = "craft_cider";
 
 const double PLAYER_SIZE = 0.1;
 
 class Attack;
 class Game;
+class PlayerView;
 class RectCollisionBox;
 class HpBar;
 class Taunt;
@@ -67,13 +70,13 @@ public:
     bool Collidable(Player* p) override;
     bool Pickupable(Player* p) override;
 
-    void Damage(double dmg) override;
     void SetCraftView(CraftView* craft_view);
+    bool Damage(double dmg) override;
     
-    int GetDirection();
+    int GetDirection() const;
 
-    double GetX() override;
-    double GetY() override;
+    double GetX() const override;
+    double GetY() const override;
     Backpack* GetBackpack();
     Taunt* GetTaunt();
     InfoStatus GetInfoStatus();

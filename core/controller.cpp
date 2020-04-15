@@ -6,7 +6,8 @@
 #include <iostream>
 
 void Controller::Run() {
-    window_ = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SYLA");
+    int size = sf::VideoMode::getDesktopMode().height * 0.9;
+    window_ = new sf::RenderWindow(sf::VideoMode(size, size), "SYLA");
     Painter::Init(window_);
     Painter* painter = Painter::GetPainter();
     Game::StartGame();

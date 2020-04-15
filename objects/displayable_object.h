@@ -23,8 +23,8 @@ public:
     void Tick(double dt) override;
     bool Collidable(Player* p) override;
 
-    double GetX() override;
-    double GetY() override;
+    double GetX() const override;
+    double GetY() const override;
 
-    void Damage(double dmg) override;
+    bool Damage(double dmg) override;
 };

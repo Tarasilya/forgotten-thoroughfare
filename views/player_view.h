@@ -13,6 +13,6 @@ private:
 public:
     PlayerView(Player* p);
     void Draw(Painter* painter) override;
-    double GetX() override;
-    double GetY() override;
+    double GetX() const override;
+    double GetY() const override;
 };
