@@ -5,7 +5,6 @@
 #include <iostream>
 
 GameObject::GameObject() {
-    std::cerr << "QQQ" << std::endl;
     Game::GetGame()->AddObject(this);
 }
 

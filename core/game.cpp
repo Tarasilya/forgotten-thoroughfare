@@ -65,10 +65,8 @@ void Game::InitObjects() {
     CraftView* craft_view = new CraftView(player->GetBackpack(), player);
     player->SetCraftView(craft_view);
 
-    std::cerr <<"a" <<std::endl;
     GameObject* punching_bag = (new DisplayableObject(
         "pics/punch_bag.png", false, new RectCollisionBox(0, 0, HP_WIDTH, HP_HEIGHT)))->WithHp(HP_MAX_HP);
-    std::cerr <<"b" <<std::endl;
 }
 
 

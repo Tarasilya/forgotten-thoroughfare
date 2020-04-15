@@ -42,11 +42,12 @@ bool DisplayableObject::Collidable(Player* p) {
     return collidable_;
 }
 
-void DisplayableObject::Damage(double dmg) {
+bool DisplayableObject::Damage(double dmg) {
     if (hp_bar_ != 0) {
         hp_bar_->Change(-dmg);
-        std::cerr << "boom";
+        return true;
     }
+    return false;
 }
 
 double DisplayableObject::GetX() const {

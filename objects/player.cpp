@@ -173,8 +173,9 @@ int Player::GetDirection() const {
     return direction_;
 }
 
-void Player::Damage(double dmg) {
+bool Player::Damage(double dmg) {
     hp_bar_->Change(-dmg);
+    return true;
 }
 
 

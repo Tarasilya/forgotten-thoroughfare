@@ -26,5 +26,5 @@ public:
     double GetX() const override;
     double GetY() const override;
 
-    void Damage(double dmg) override;
+    bool Damage(double dmg) override;
 };

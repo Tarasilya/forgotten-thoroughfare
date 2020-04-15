@@ -23,7 +23,7 @@ void Attack::Trigger() {
     if (state_ == IDLE) {
         start_time_ = clock();
         state_ = STARTUP;
-        charges_ = 1000;
+        charges_ = 1;
     }
 }
 
@@ -63,8 +63,9 @@ void Attack::Tick(double dt) {
                 continue;
             }
             if (charges_ > 0) {
-                damageable->Damage(DMG);
-                charges_--;
+                if (damageable->Damage(DMG)) {
+                    charges_--;
+                }
             }
         }
     }

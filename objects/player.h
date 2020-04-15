@@ -70,8 +70,8 @@ public:
     bool Collidable(Player* p) override;
     bool Pickupable(Player* p) override;
 
-    void Damage(double dmg) override;
     void SetCraftView(CraftView* craft_view);
+    bool Damage(double dmg) override;
     
     int GetDirection() const;
 
