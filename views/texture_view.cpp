@@ -47,6 +47,7 @@ void TextureView::ScaleToSize(double width, double height) {
 
 TextureView* TextureView::SetCollisionVisibility(bool collision_visibility) {
     collision_visibility_ = collision_visibility;
+    return this;
 }
 
 void TextureView::Rotate(double angle) {
