@@ -1,6 +1,6 @@
 #pragma once
 
-#include "objects/passive_object.h"
+#include "objects/game_object.h"
 #include "views/visible.h"
 #include "views/position.h"
 #include "collisions/rect_collision_box.h"
@@ -15,7 +15,7 @@ enum ItemType{STICK, APPLE, ROCK, SWORD, CIDER};
 	Should not access x_ and y_ if not visible
 */
 
-class Item : public PassiveObject, public Visible, public Position {
+class Item : public GameObject, public Visible, public Position {
 private:   
     double x_;
     double y_;

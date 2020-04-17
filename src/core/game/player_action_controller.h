@@ -1,10 +1,16 @@
 #pragma once
 
+#include "objects/player.h"
+
+#include <SFML/Window.hpp>
+
+#include <string>
+
 struct PlayerAction {
     std::string action_id;
     sf::Keyboard::Key key;
-    std::function runnable;
     bool allow_repeated;
+    void (Player::*runnable)();
     bool on_press = true;
 };
 
@@ -15,7 +21,7 @@ private:
 public:
     void AddAction(PlayerAction action);
 
-    void TriggerAction(std::string action_id);
+    void TriggerAction(std::string action_id, Player* player);
 
-    void GetActionId(sf::Keyboar::Key key);
+    std::string GetActionId(sf::Keyboard::Key key, bool pressed, bool repeated);
 };
