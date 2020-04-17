@@ -29,7 +29,8 @@ const double MAX_HP = 100;
 const double DMG = 10;
 
 
-Player::Player(double x, double y, Game* game) : x_(x), y_(y), game_(game), backpack_visibility_(false) {
+Player::Player(double x, double y, Game* game, bool authority) 
+        : x_(x), y_(y), game_(game), backpack_visibility_(false), authority_(authority) {
     new PlayerView(this);
 
     hp_bar_ = new HpBar(MAX_HP, this);
@@ -174,7 +175,10 @@ void Player::Move(double dx, double dy) {
     }
     x_ += dx;
     y_ += dy;
-    painter->PlayerMoved(x_, y_);
+
+    if (authority_) {
+        painter->PlayerMoved(x_, y_);
+    }
 }
 
 double Player::GetX() const {

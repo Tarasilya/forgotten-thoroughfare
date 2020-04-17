@@ -59,11 +59,12 @@ private:
     void Move(double dx, double dy);
 
     int direction_ = 1;
+    bool authority_;
 
     void InitBackpack();
 
 public:
-    Player(double x, double y, Game* game);
+    Player(double x, double y, Game* game, bool authority);
     CollisionBox* GetCollisionBox() const override;
     void Tick(double dt) override;
     bool Collidable(Player* p) override;

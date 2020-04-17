@@ -39,8 +39,8 @@ Game* Game::GetGame() {
 }
 
 void Game::InitPlayer() {
-    player1_ = new Player(0.25, 0.5, this);
-    player2_ = new Player(0.25, 0.5, this);
+    player1_ = new Player(0.25, 0.5, this, true);
+    player2_ = new Player(0.25, 0.5, this, false);
     CraftView* craft_view = new CraftView(player1_->GetBackpack(), player1_);
     player1_->SetCraftView(craft_view);
 
