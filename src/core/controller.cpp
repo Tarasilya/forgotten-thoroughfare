@@ -44,6 +44,10 @@ void Controller::Run() {
             prev_t = t;
 
             ProcessPressedKeys();
+            std::vector<std::string> actions = client_->Receive();
+            for (auto action : actions) {
+                game_->ProcessAction(action);
+            }
             game_->Tick(dt);
             painter->Redraw();
             window_->display();
