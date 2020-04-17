@@ -21,6 +21,7 @@
 #include "views/craft_view.h"
 #include "views/player_view.h"
 #include "views/texture_view.h"
+#include "views/view.h"
 
 const double speed = 0.4;
 const double taunt_size = 0.05;
@@ -31,7 +32,7 @@ const double DMG = 10;
 
 Player::Player(double x, double y, Game* game, bool authority) 
         : x_(x), y_(y), game_(game), backpack_visibility_(false), authority_(authority) {
-    new PlayerView(this);
+    view_ = new PlayerView(this, "pics/default_warrior2.png");
 
     hp_bar_ = new HpBar(MAX_HP, this);
     taunt_ = new Taunt(this);
@@ -152,6 +153,10 @@ int Player::GetDirection() const {
 
 bool Player::Damage(double dmg) {
     hp_bar_->Change(-dmg);
+    if (hp_bar_->GetCurrent() < 1) {
+        Painter::GetPainter()->RemoveView(view_);
+        view_ = new PlayerView(this, "pics/warrior3.png");
+    }
     return true;
 }
 
@@ -168,7 +173,10 @@ void Player::Move(double dx, double dy) {
             collision_box_->Move(new_dx, new_dy);
             x_ += dx + new_dx;
             y_ += dy + new_dy;
-            painter->PlayerMoved(x_, y_);
+
+            if (authority_) {
+                painter->PlayerMoved(x_, y_);
+            }
 
             return;
         }

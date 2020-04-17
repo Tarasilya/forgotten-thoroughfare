@@ -35,6 +35,7 @@ class RectCollisionBox;
 class HpBar;
 class Taunt;
 class CraftView;
+class View;
 
 enum InfoStatus{NO_MENU, BACKPACK_MENU, CRAFT_MENU};
 
@@ -45,6 +46,7 @@ private:
     double horizontal_speed_;
     double vertical_speed_;
 
+    View* view_;
     HpBar* hp_bar_;
     Taunt* taunt_;
     Attack* attack_;

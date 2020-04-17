@@ -2,7 +2,7 @@
 
 #include "objects/player.h"
 
-PlayerView::PlayerView(Player* player): TextureView("pics/default_warrior2.png", this), player_(player) {
+PlayerView::PlayerView(Player* player, std::string filename): TextureView(filename, this), player_(player) {
     SetZ(1);
     SetSize(PLAYER_SIZE, PLAYER_SIZE);
 }
