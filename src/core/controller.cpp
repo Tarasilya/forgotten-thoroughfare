@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "game.h"
 
+#include "client/client.h"
 #include "painter/painter.h"
 
 #include <iostream>
@@ -8,10 +9,14 @@
 void Controller::Run() {
     int size = sf::VideoMode::getDesktopMode().height * 0.9;
     window_ = new sf::RenderWindow(sf::VideoMode(size, size), "SYLA");
+
     Painter::Init(window_);
     Painter* painter = Painter::GetPainter();
+
     Game::StartGame();
     game_ = Game::GetGame();
+
+    client_ = new Client();
 
     clock_t prev_t = clock();
     while (window_->isOpen()) {
@@ -39,6 +44,10 @@ void Controller::Run() {
             prev_t = t;
 
             ProcessPressedKeys();
+            std::vector<std::string> actions = client_->Receive();
+            for (auto action : actions) {
+                game_->ProcessAction(action);
+            }
             game_->Tick(dt);
             painter->Redraw();
             window_->display();
@@ -53,7 +62,8 @@ void Controller::ProcessKey(sf::Keyboard::Key key, bool pressed) {
     }
     
     if (pressed) {
-        game_->ProcessKey(key, pressed, false);
+        std::string action = game_->ProcessKey(key, pressed, false);
+        SendAction(action);
         pressed_keys_[key] = false;
     }    
     else {
@@ -61,10 +71,18 @@ void Controller::ProcessKey(sf::Keyboard::Key key, bool pressed) {
     }
 }
 
+void Controller::SendAction(const std::string& action) {
+    if (action == "") {
+        return;
+    }
+    client_->Send(action);
+}
+
 void Controller::ProcessPressedKeys() {
     for (auto it = pressed_keys_.begin(); it != pressed_keys_.end(); it++) {
        if (it->second) {
-            game_->ProcessKey(it->first, true, it->second);
+            std::string action = game_->ProcessKey(it->first, true, it->second);
+            SendAction(action);
         }
         it->second = true;
     }

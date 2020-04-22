@@ -1,6 +1,6 @@
 #pragma once
 
-#include "objects/passive_object.h"
+#include "objects/game_object.h"
 
 class AttackView;
 
@@ -11,7 +11,7 @@ const double ACTIVE_T = 0.5;
 const double RECOVERY_T = 0;
 
 
-class Attack : public PassiveObject{
+class Attack : public GameObject {
 private:
     mutable State state_;
     clock_t start_time_;

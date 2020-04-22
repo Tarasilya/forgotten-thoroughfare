@@ -1,14 +1,14 @@
 #pragma once
 
-#include <ctime>
-
-#include "objects/passive_object.h"
+#include "objects/game_object.h"
 #include "views/visible.h"
 #include "views/position.h"
 
+#include <ctime>
+
 class Player;
 
-class Taunt : public PassiveObject, public Visible, public Position {
+class Taunt : public GameObject, public Visible, public Position {
 private:
 	double x_;
 	double y_;

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "objects/damageable.h"
-#include "objects/passive_object.h"
+#include "objects/game_object.h"
 #include "views/position.h"
 
 class HpBar;
 class RectCollisionBox;
 class TextureView;
 
-class DisplayableObject : public PassiveObject, public Position, public Damageable {
+class DisplayableObject : public GameObject, public Position, public Damageable {
 private:
     TextureView* view_;
     HpBar* hp_bar_ = 0;
