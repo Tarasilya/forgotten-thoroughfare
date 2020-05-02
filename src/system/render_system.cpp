@@ -1,6 +1,7 @@
 #include "render_system.h"
 
 #include "component/sprite_drawable.h"
+#include "component/transform.h"
 #include "component/window.h"
 #include "entity.h"
 #include "system_manager.h"
@@ -17,14 +18,19 @@ RenderSystem::RenderSystem(SystemManager* manager): System(manager) {
 
 
     required_components_.insert(type<SpriteDrawable>());
+    required_components_.insert(type<Transform>());
 }
 
 void RenderSystem::Tick(double dt) {
     auto window = system_manager_->GetComponentFromState<Window>()->GetWindow();
 
+    int width = window->getSize().x;
+    int height = window->getSize().y;
+
     window->clear({0, 0, 0});
     for (auto entity: entities_) {
         auto sprite_drawable = entity->GetComponent<SpriteDrawable>();
+        auto transform = entity->GetComponent<Transform>();
         auto file = sprite_drawable->GetDrawable();
 
         if (textures_.count(file) == 0) {
@@ -36,6 +42,11 @@ void RenderSystem::Tick(double dt) {
         }
         sf::Sprite sprite;
         sprite.setTexture(*textures_[file]);
+        sprite.setPosition(
+            transform->GetX() * width, 
+            transform->GetY() * height);
+        sprite.setRotation(transform->GetRotation());
+        sprite.setScale(transform->GetScaleX(), transform->GetScaleY());
         window->draw(sprite);
     }
     window->display();

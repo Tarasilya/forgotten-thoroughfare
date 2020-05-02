@@ -1,4 +1,5 @@
 #include "component/sprite_drawable.h"
+#include "component/transform.h"
 #include "component/window.h"
 #include "entity.h"
 #include "system/render_system.h"
@@ -22,6 +23,7 @@ int main() {
 
     Entity* rat = new Entity();
     rat->AddComponent(new SpriteDrawable("pics/default_warrior2.png"));
+    rat->AddComponent(new Transform(0.5, 0.5, 90, 0.1, 0.1));
     system_manager->AddEntity(rat);
 
     auto prev_t = std::chrono::high_resolution_clock::now();
