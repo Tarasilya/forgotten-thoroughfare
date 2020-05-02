@@ -9,18 +9,15 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17" )
 
-file(GLOB A "src/*/*.cpp")
-file(GLOB B "src/*/*/*.cpp")
-file(GLOB C "src/*/*/*/*.cpp")
+file(GLOB A "src/*.cpp")
+file(GLOB B "src/*/*.cpp")
 
-set(SOURCES ${A} ${B} ${C})
-file(GLOB SERVER "server/server.cpp")
+set(SOURCES ${A} ${B})
 
 
 add_executable(ft ${SOURCES}) 
 target_include_directories(ft PRIVATE src)
 
-add_executable(ser ${SERVER}) 
 
 if (UNIX AND NOT APPLE) 
 target_link_libraries(ft -L/usr/local/lib)
