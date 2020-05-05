@@ -1,10 +1,12 @@
 #include "sprite_drawable.h"
 
 
-SpriteDrawable::SpriteDrawable(const std::string& drawable): drawable_(drawable) {}
+namespace component {
 
-SpriteDrawable::~SpriteDrawable() {}
+SpriteDrawable::SpriteDrawable(const std::string& drawable): drawable_(drawable) {}
 
 const std::string& SpriteDrawable::GetDrawable() {
     return drawable_;
+}
+
 }

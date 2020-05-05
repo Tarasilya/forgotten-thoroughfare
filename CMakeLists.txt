@@ -7,12 +7,13 @@ endif()
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17" )
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror" )
 
 file(GLOB A "src/*.cpp")
 file(GLOB B "src/*/*.cpp")
+file(GLOB C "src/*/*/*.cpp")
 
-set(SOURCES ${A} ${B})
+set(SOURCES ${A} ${B} ${C})
 
 
 add_executable(ft ${SOURCES}) 

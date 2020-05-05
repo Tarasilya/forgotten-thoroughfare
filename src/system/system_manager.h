@@ -1,9 +1,13 @@
 #pragma once
 
 #include "entity.h"
-#include "system.h"
 
 #include <vector>
+
+
+namespace systems {
+
+class System;
 
 class SystemManager {
 private:
@@ -20,21 +24,49 @@ public:
     void RemoveEntity(Entity* entity);
 
     template<class T>
-    void RemoveComponentFromEntity(Entity* entity) {
-        for (auto system: systems_) {
-            system->ComponentRemovedFromEntity<T>(entity);
-        }
-    }
+    void ComponentRemoved(Entity* entity);
 
     template<class T>
-    void AddComponentToState(T* component) {
-        state_->AddComponent(component);
-    }
+    void ComponentAdded(Entity* entity);
 
     template<class T>
-    T* GetComponentFromState() {
-        return state_->GetComponent<T>();
-    }
+    void AddComponentToState(T* component);
+
+    template<class T>
+    T* GetComponentFromState();
 
     void Tick(double dt);
 };
+
+}
+
+#include "system.h"
+
+
+namespace systems {
+
+template <class T>
+void SystemManager::ComponentRemoved(Entity* entity) {
+    for (auto system: systems_) {
+        system->ComponentRemoved<T>(entity);
+    }
+}
+
+template <class T>
+void SystemManager::ComponentAdded(Entity* entity) {
+    for (auto system: systems_) {
+        system->ComponentAdded<T>(entity);
+    }
+}
+
+template<class T>
+void SystemManager::AddComponentToState(T* component) {
+    state_->AddComponent(component);
+}
+
+template<class T>
+T* SystemManager::GetComponentFromState() {
+    return state_->GetComponent<T>();
+}
+
+}

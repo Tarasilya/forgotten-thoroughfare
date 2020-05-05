@@ -2,6 +2,9 @@
 
 #include "component.h"
 
+
+namespace component {
+
 class Transform: public Component {
 private:
     double x_;
@@ -17,8 +20,6 @@ public:
         double rotation = 0, 
         double scale_x = 1, double scale_y = 1);
 
-    ~Transform() override;
-
     void SetPosition(double x, double y);
     void SetX(double x);
     void SetY(double y);
@@ -31,3 +32,5 @@ public:
     double GetScaleX();
     double GetScaleY();
 };
+
+}

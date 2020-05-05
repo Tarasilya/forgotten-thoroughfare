@@ -1,13 +1,13 @@
 #include "transform.h"
 
 
+namespace component {
+
 Transform::Transform(double x, double y, 
     double rotation, 
     double scale_x, double scale_y)
         : x_(x), y_(y), rotation_(rotation), scale_x_(scale_x), scale_y_(scale_y)
 {}
-
-Transform::~Transform() {}
 
 void Transform::SetPosition(double x, double y) {
     x_ = x;
@@ -49,4 +49,6 @@ double Transform::GetScaleX() {
 
 double Transform::GetScaleY() {
     return scale_y_;
+}
+
 }

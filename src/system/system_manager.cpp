@@ -4,13 +4,16 @@
 #include "system.h"
 #include "type.h"
 
+namespace systems {
+
 SystemManager::SystemManager() {
-    state_ = new Entity();
+    state_ = new Entity("globalState");
 }
 
 void SystemManager::AddSystem(System* system) {
-    std::cerr << "AddSystem" << std::endl;
+    std::cerr << "added (" << system->Name() << ")" << std::endl;
     systems_.push_back(system);
+    system->PrintComponents();
 }
 void SystemManager::AddEntity(Entity* entity) {
     for (auto system: systems_) {
@@ -28,4 +31,6 @@ void SystemManager::Tick(double dt) {
     for (auto system: systems_) {
         system->Tick(dt);
     }
+}
+
 }
