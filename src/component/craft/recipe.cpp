@@ -12,3 +12,7 @@ bool Recipe::IsEnough(std::map<std::string, int> items) {
 
     return true;
 }
+
+const std::map<std::string, int>& Recipe::Get() const {
+    return recipe_;
+}

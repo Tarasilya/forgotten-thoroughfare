@@ -37,29 +37,30 @@ void BCVisibility::Tick(double dt) {
         auto backpack = GetComponent<component::Backpack>(entity);
         auto craft = GetComponent<component::Craft>(entity);
         if (player_commands->Get(component::TOGGLE_CRAFT)) {
-            craft->SetVisibility(!craft->GetVisibility());
-            backpack->SetVisibility(false);
+            ToggleEntity(craft, 
+                entity, 
+                component::Craft::CraftMenuString(craft, backpack));
+            RemoveEntity(backpack);
         }
         if (player_commands->Get(component::TOGGLE_BACKPACK)) {
-            backpack->SetVisibility(!backpack->GetVisibility());
-            craft->SetVisibility(false);
-        }
-
-        if (backpack->GetVisibility() && backpack->GetEntity() == 0) {
-            backpack->SetEntity(CreateTextEntity(entity, backpack->ToString()));
-        }
-        if (craft->GetVisibility() && craft->GetEntity() == 0) {
-            craft->SetEntity(CreateTextEntity(entity, craft->ToString()));
-        }
-        if (!backpack->GetVisibility() && backpack->GetEntity() != 0) {
-            system_manager_->RemoveEntity(backpack->GetEntity());
-            backpack->RemoveEntity();
-        }
-        if (!craft->GetVisibility() && craft->GetEntity() != 0) {
-            system_manager_->RemoveEntity(craft->GetEntity());
-            craft->RemoveEntity();
+            ToggleEntity(backpack, entity, backpack->ToString());
+            RemoveEntity(craft);            
         }
     }
+}
+
+void BCVisibility::ToggleEntity(HasEntity* parent, Entity* entity, std::string text) {
+    if (parent->GetEntity() == 0) {
+        parent->SetEntity(CreateTextEntity(entity, text));
+    }
+    else {
+        RemoveEntity(parent);
+    }
+}
+
+void BCVisibility::RemoveEntity(HasEntity* parent) {
+    system_manager_->RemoveEntity(parent->GetEntity());
+    parent->RemoveEntity();
 }
 
 Entity* BCVisibility::CreateTextEntity(Entity* parent, std::string content) {

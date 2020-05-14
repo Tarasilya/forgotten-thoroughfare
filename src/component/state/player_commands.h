@@ -21,6 +21,8 @@ const std::string RIGHT = "right";
 const std::string ATTACK = "attack";
 const std::string TOGGLE_CRAFT = "toggle_craft";
 const std::string TOGGLE_BACKPACK = "toggle_backpack";
+const std::string MENU_DOWN = "menu_down";
+const std::string MENU_UP = "menu_up";
 const std::vector<Command> PLAYER_COMMANDS = 
     {
         {UP, true}, 
@@ -29,7 +31,9 @@ const std::vector<Command> PLAYER_COMMANDS =
         {RIGHT, true},
         {ATTACK, true},
         {TOGGLE_CRAFT, false},
-        {TOGGLE_BACKPACK, false}
+        {TOGGLE_BACKPACK, false},
+        {MENU_DOWN, false},
+        {MENU_UP, false},
     };
 
 class PlayerCommands: public Component {

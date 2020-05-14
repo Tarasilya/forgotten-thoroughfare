@@ -14,7 +14,8 @@
 #include "entity.h"
 #include "map.h"
 #include "system/attack.h"
-#include "system/bc_visibility.h"
+#include "system/bc/bc_visibility.h"
+#include "system/bc/craft_select.h"
 #include "system/camera/camera.h"
 #include "system/camera/camera_apply.h"
 #include "system/camera/camera_movement.h"
@@ -63,6 +64,7 @@ void Game::InitSystems() {
 
     system_manager_->AddSystem(new systems::PlayerMovement(system_manager_));
     system_manager_->AddSystem(new systems::BCVisibility(system_manager_));
+    system_manager_->AddSystem(new systems::CraftSelect(system_manager_));
     system_manager_->AddSystem(new systems::Attack(system_manager_));
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
     system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
@@ -113,7 +115,16 @@ void Game::InitRat() {
     rat->AddComponent(new component::Unpassable());
     rat->AddComponent(new component::CollisionRect(size, size));
     rat->AddComponent(new component::Player());
-    rat->AddComponent(new component::Backpack());
-    rat->AddComponent(new component::Craft(std::map<std::string, Recipe>()));
+    auto backpack = new component::Backpack();
+    backpack->AddItem(component::APPLE, 100);
+    backpack->AddItem(component::STICK, 100);
+    backpack->AddItem(component::STONE, 100);
+    rat->AddComponent(backpack);
+    rat->AddComponent(
+        new component::Craft(
+            {
+                {component::SWORD, Recipe({{component::STONE, 3}, {component::STICK, 1}})},
+                {component::CIDER, Recipe({{component::APPLE, 3}, {component::STICK, 1}})},
+            }));
     system_manager_->AddEntity(rat);
 }

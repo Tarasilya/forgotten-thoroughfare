@@ -1,18 +1,22 @@
 #pragma once
 
 #include "component/component.h"
-#include "component/visibility.h"
+#include "component/has_entity.h"
 #include "recipe.h"
 
+#include <string>
 
+namespace component {
+class Backpack;
+}
 class Entity;
 
 namespace component {
 
-class Craft: public Component, public Visibility {
+class Craft: public Component, public HasEntity {
 private:
     std::map<std::string, Recipe> recipes_;
-    Entity* entity_; 
+    std::string selected_;
 public:
     bool visibility = false;
 
@@ -20,9 +24,10 @@ public:
     const Recipe& GetRecipe(const std::string& item);
     std::string ToString();
 
-    void SetEntity(Entity* entity);
-    Entity* GetEntity();
-    void RemoveEntity();    
+    void SelectNext();
+    void SelectPrevious();
+
+    static std::string CraftMenuString(Craft* craft, Backpack* backpack);
 };
 
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component.h"
-#include "visibility.h"
+#include "has_entity.h"
 
 #include <map>
 #include <string>
@@ -15,21 +15,18 @@ const std::string APPLE = "apple";
 const std::string STICK = "stick";
 const std::string STONE = "stone";
 const std::string CIDER = "cider";
-const std::string SWORD = "apple";
+const std::string SWORD = "sword";
 
-class Backpack: public Component, public Visibility {
+class Backpack: public Component, public HasEntity {
 private:
     std::map<std::string, int> items_; 
-    Entity* entity_ = 0;
 
 public:
-    void AddItem(const std::string& item);
-    void RemoveItem(const std::string& item);
-    std::map<std::string, int>& GetItems();
+    void AddItem(const std::string& item, int amount = 1);
+    void RemoveItem(const std::string& item, int amount = 1);
+    int Count(const std::string& item);
+    const std::map<std::string, int>& GetItems();
 
-    void SetEntity(Entity* entity);
-    Entity* GetEntity();
-    void RemoveEntity();
     std::string ToString();
 };
 
