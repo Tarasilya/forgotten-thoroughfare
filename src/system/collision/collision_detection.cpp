@@ -5,7 +5,6 @@
 #include "component/movement.h"
 #include "component/transform.h"
 #include "entity.h"
-#include "system_manager.h"
 
 
 namespace systems {
@@ -27,9 +26,11 @@ void CollisionDetection::InitUsedState() {}
 
 void CollisionDetection::Tick(double dt) {
     for (auto entity1: Entities()) {
+        if (!entity1->HasComponent<component::Movement>()) {
+            continue;
+        }
         if (entity1->HasComponent<component::Collision>()) {
-            entity1->RemoveComponent<component::Collision>();
-            system_manager_->ComponentRemoved<component::Collision>(entity1);
+            system_manager_->RemoveComponent<component::Collision>(entity1);
         }
         component::Collision* collision = 0;
         for (auto entity2: Entities()) {
@@ -64,8 +65,7 @@ void CollisionDetection::Tick(double dt) {
                     << "] and [" << entity2->Name() << "]" << std::endl;
                 if (collision == 0) {
                     collision = new component::Collision(entity2);
-                    entity1->AddComponent(collision);
-                    system_manager_->ComponentAdded<component::Collision>(entity1);
+                    system_manager_->AddComponent(entity1, collision);
                 }
                 else {
                     collision->AddEntity(entity2);

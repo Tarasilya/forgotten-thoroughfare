@@ -1,0 +1,7 @@
+up Up
+down Down
+left Left
+right Right
+attack R
+toggle_craft C
+toggle_backpack B

@@ -17,5 +17,12 @@ bool CollisionRect::Intersects(const CollisionRect& rect) {
         && rect.x1 < x2 && rect.y1 < y2;
 }
 
+CollisionRect& CollisionRect::operator=(const CollisionRect& rect) {
+    x1 = rect.x1;
+    x2 = rect.x2;
+    y1 = rect.y1;
+    y2 = rect.y2;
+    return *this;
+}
 
 }

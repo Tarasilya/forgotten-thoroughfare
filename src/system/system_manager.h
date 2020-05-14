@@ -24,10 +24,10 @@ public:
     void RemoveEntity(Entity* entity);
 
     template<class T>
-    void ComponentRemoved(Entity* entity);
+    void AddComponent(Entity* entity, T* value);
 
     template<class T>
-    void ComponentAdded(Entity* entity);
+    void RemoveComponent(Entity* entity);
 
     template<class T>
     void AddComponentToState(T* component);
@@ -46,14 +46,16 @@ public:
 namespace systems {
 
 template <class T>
-void SystemManager::ComponentRemoved(Entity* entity) {
+void SystemManager::RemoveComponent(Entity* entity) {
+    entity->RemoveComponent<T>();
     for (auto system: systems_) {
         system->ComponentRemoved<T>(entity);
     }
 }
 
 template <class T>
-void SystemManager::ComponentAdded(Entity* entity) {
+void SystemManager::AddComponent(Entity* entity, T* value) {
+    entity->AddComponent(value);
     for (auto system: systems_) {
         system->ComponentAdded<T>(entity);
     }

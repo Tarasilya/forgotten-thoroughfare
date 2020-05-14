@@ -35,8 +35,7 @@ void MovementApply::Tick(double dt) {
     }
 
     for (auto entity: removed) {
-        entity->RemoveComponent<component::Movement>();
-        system_manager_->ComponentRemoved<component::Movement>(entity);
+        system_manager_->RemoveComponent<component::Movement>(entity);
     }
 }
 

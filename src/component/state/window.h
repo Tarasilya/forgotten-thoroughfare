@@ -12,7 +12,7 @@ private:
     sf::RenderWindow* window_;
 
 public:
-    void Init(int width, int height);
+    Window(int width, int height);
 
     sf::RenderWindow* GetWindow();
 };

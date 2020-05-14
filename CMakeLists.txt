@@ -12,8 +12,9 @@ set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror" )
 file(GLOB A "src/*.cpp")
 file(GLOB B "src/*/*.cpp")
 file(GLOB C "src/*/*/*.cpp")
+file(GLOB D "src/*/*/*/*.cpp")
 
-set(SOURCES ${A} ${B} ${C})
+set(SOURCES ${A} ${B} ${C} ${D})
 
 
 add_executable(ft ${SOURCES}) 

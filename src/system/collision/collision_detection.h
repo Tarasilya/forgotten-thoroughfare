@@ -1,21 +1,19 @@
 #pragma once
 
-#include "system.h"
-
-#include <SFML/Graphics.hpp>
+#include "system/system.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class Rendering: public System {
+class CollisionDetection: public System {
 protected:
     void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:
-    Rendering(SystemManager* manager);
+    CollisionDetection(SystemManager* manager);
 
     void Tick(double dt) override;
 };

@@ -24,6 +24,8 @@ public:
     void SetX(double x);
     void SetY(double y);
     void SetRotation(double rotation);
+    void SetScaleX(double scale_x);
+    void SetScaleY(double scale_y);
     void SetScale(double scale_x, double scale_y);
 
     double GetX();

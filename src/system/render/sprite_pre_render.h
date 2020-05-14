@@ -1,19 +1,19 @@
 #pragma once
 
-#include "system.h"
+#include "system/system.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class MovementApply: public System {
+class SpritePreRender: public System {
 protected:
     void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:
-    MovementApply(SystemManager* manager);
+    SpritePreRender(SystemManager* manager);
 
     void Tick(double dt) override;
 };

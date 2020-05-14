@@ -4,8 +4,8 @@
 #include "component/collision_rect.h"
 #include "component/movement.h"
 #include "component/transform.h"
+#include "component/unpassable.h"
 #include "entity.h"
-#include "system_manager.h"
 
 #include <cmath>
 
@@ -24,6 +24,7 @@ void CollisionResolve::InitRequiredComponents() {
     AddRequiredComponent<component::CollisionRect>();
     AddRequiredComponent<component::Transform>();
     AddRequiredComponent<component::Movement>();
+    AddRequiredComponent<component::Unpassable>();
 }
 
 void CollisionResolve::InitUsedState() {}
@@ -34,6 +35,9 @@ void CollisionResolve::Tick(double dt) {
     std::vector<Entity*> removed;
     for (auto entity: Entities()) {
         for (auto entity2: GetComponent<component::Collision>(entity)->GetEntities()) {
+            if (!entity2->HasComponent<component::Unpassable>()) {
+                continue;
+            }
             auto transform = GetComponent<component::Transform>(entity);
             auto movement = GetComponent<component::Movement>(entity);
             auto collision = GetComponent<component::CollisionRect>(entity)

@@ -18,6 +18,8 @@ public:
     CollisionRect Move(double dx, double dy);
 
     bool Intersects(const CollisionRect& rect);
+
+    CollisionRect& operator=(const CollisionRect& rect);
 };
 
 }

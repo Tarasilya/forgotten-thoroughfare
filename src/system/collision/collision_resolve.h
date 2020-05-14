@@ -1,19 +1,19 @@
 #pragma once
 
-#include "system.h"
+#include "system/system.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class CollisionDetection: public System {
+class CollisionResolve: public System {
 protected:
     void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:
-    CollisionDetection(SystemManager* manager);
+    CollisionResolve(SystemManager* manager);
 
     void Tick(double dt) override;
 };

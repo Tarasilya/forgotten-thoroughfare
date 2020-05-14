@@ -1,19 +1,18 @@
 #pragma once
 
-#include "system.h"
+#include "system/entityless.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class CollisionResolve: public System {
+class Input: public Entityless {
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:
-    CollisionResolve(SystemManager* manager);
+    Input(SystemManager* manager);
 
     void Tick(double dt) override;
 };

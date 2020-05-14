@@ -1,19 +1,19 @@
 #pragma once
 
-#include "system.h"
+#include "system/system.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class PlayerMovement: public System {
+class Attack: public System {
 protected:
     void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:
-    PlayerMovement(SystemManager* manager);
+    Attack(SystemManager* manager);
 
     void Tick(double dt) override;
 };

@@ -26,6 +26,14 @@ void Transform::SetRotation(double rotation) {
     rotation_ = rotation;
 }
 
+void Transform::SetScaleX(double scale_x) {
+    scale_x_ = scale_x;
+}
+
+void Transform::SetScaleY(double scale_y) {
+    scale_y_ = scale_y;
+}
+
 void Transform::SetScale(double scale_x, double scale_y) {
     scale_x_ = scale_x;
     scale_y_ = scale_y;

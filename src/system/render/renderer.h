@@ -1,18 +1,16 @@
 #pragma once
 
-#include "entityless.h"
+#include "system/entityless.h"
 
 
 namespace systems {
 
-class SystemManager;
-
-class Input: public Entityless {
+class Renderer: public Entityless {
 protected:
     void InitUsedState() override;
 
 public:
-    Input(SystemManager* manager);
+    Renderer(SystemManager* manager);
 
     void Tick(double dt) override;
 };

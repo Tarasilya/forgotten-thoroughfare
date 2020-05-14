@@ -20,6 +20,8 @@ private:
 public:
     void UpdateKey(sf::Keyboard::Key key, bool new_state);
     void AddKey(sf::Keyboard::Key key);
+    bool Pressed(sf::Keyboard::Key key);
+    bool PressedSingle(sf::Keyboard::Key key);
     const std::map<sf::Keyboard::Key, KeyState>& GetKeyStates();
 };
 
