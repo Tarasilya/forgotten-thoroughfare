@@ -1,8 +1,11 @@
 #include "craft.h"
 
 #include "component/backpack.h"
+#include "component/text.h"
+#include "entity.h"
 
 #include <iostream>
+
 
 namespace component {
 
@@ -37,6 +40,18 @@ void Craft::SelectPrevious() {
     }
     it--;
     selected_ = it->first;
+}
+
+const std::string& Craft::GetSelected() {
+    return selected_;
+}
+
+void Craft::UpdateView(Backpack* backpack) {
+    Entity* entity = GetEntity();
+    assert(entity != 0);
+    entity
+        ->GetComponent<component::Text>()
+        ->SetText(component::Craft::CraftMenuString(this, backpack));
 }
 
 std::string Craft::CraftMenuString(Craft* craft, Backpack* backpack) {

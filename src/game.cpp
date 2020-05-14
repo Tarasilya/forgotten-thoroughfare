@@ -15,6 +15,7 @@
 #include "map.h"
 #include "system/attack.h"
 #include "system/bc/bc_visibility.h"
+#include "system/bc/craft_item.h"
 #include "system/bc/craft_select.h"
 #include "system/camera/camera.h"
 #include "system/camera/camera_apply.h"
@@ -65,6 +66,7 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::PlayerMovement(system_manager_));
     system_manager_->AddSystem(new systems::BCVisibility(system_manager_));
     system_manager_->AddSystem(new systems::CraftSelect(system_manager_));
+    system_manager_->AddSystem(new systems::CraftItem(system_manager_));
     system_manager_->AddSystem(new systems::Attack(system_manager_));
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
     system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));

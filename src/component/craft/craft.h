@@ -1,5 +1,6 @@
 #pragma once
 
+#include "component/backpack.h"
 #include "component/component.h"
 #include "component/has_entity.h"
 #include "recipe.h"
@@ -24,6 +25,9 @@ public:
     const Recipe& GetRecipe(const std::string& item);
     std::string ToString();
 
+    void UpdateView(Backpack* backpack);
+
+    const std::string& GetSelected();
     void SelectNext();
     void SelectPrevious();
 
