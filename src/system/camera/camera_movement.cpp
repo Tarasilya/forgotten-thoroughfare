@@ -2,7 +2,7 @@
 
 #include "camera.h"
 #include "component/collision_rect.h"
-#include "component/player.h"
+#include "component/mouse.h"
 #include "component/transform.h"
 
 #include <cmath>
@@ -18,7 +18,7 @@ CameraMovement::CameraMovement(SystemManager* manager)
 
 
 void CameraMovement::InitRequiredComponents() {
-    AddRequiredComponent<component::Player>();
+    AddRequiredComponent<component::Mouse>();
     AddRequiredComponent<component::Transform>();
 }
 
@@ -27,17 +27,29 @@ void CameraMovement::InitUsedState() {
 }
 
 
-const double MARGIN = 0.33;
+const double MARGIN = 0.1;
+const double CAMERA_SPEED = 0.0003;
 
 void CameraMovement::Tick(double dt) {
     auto camera = GetState<component::Camera>();
     for (auto entity: Entities()) {
         auto transform = GetComponent<component::Transform>(entity);
-        double left = std::max(camera->x1 - (transform->GetX() - MARGIN), 0.);
-        double right = std::max((transform->GetX() + MARGIN) - camera->x2, 0.);
-        double top = std::max(camera->y1 - (transform->GetY() - MARGIN), 0.);
-        double bottom = std::max((transform->GetY() + MARGIN) - camera->y2, 0.);
-        *static_cast<component::CollisionRect*>(camera) = camera->Move(right - left, bottom - top);
+        double x_speed = 0;
+        double y_speed = 0;
+        if (transform->GetX() < MARGIN) {
+            x_speed -= CAMERA_SPEED;
+        }
+        if (transform->GetX() > 1 - MARGIN) {
+            x_speed += CAMERA_SPEED;
+        }
+        if (transform->GetY() < MARGIN) {
+            y_speed -= CAMERA_SPEED;
+        }
+        if (transform->GetY() > 1 - MARGIN) {
+            y_speed += CAMERA_SPEED;
+        }
+        *static_cast<component::CollisionRect*>(camera) 
+            = camera->Move(x_speed * dt, y_speed * dt);
     }
 }
 

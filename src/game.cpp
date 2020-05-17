@@ -4,10 +4,9 @@
 #include "component/backpack.h"
 #include "component/craft/craft.h"
 #include "component/craft/recipe.h"
-#include "component/player.h"
+#include "component/mouse.h"
 #include "component/sprite.h"
 #include "component/transform.h"
-#include "component/unpassable.h"
 #include "component/state/input.h"
 #include "component/state/player_commands.h"
 #include "component/state/window.h"
@@ -18,7 +17,8 @@
 #include "system/camera/camera_movement.h"
 #include "system/collision/collision_detection.h"
 #include "system/collision/collision_resolve.h"
-#include "system/input/input.h"
+#include "system/input/keyboard_input.h"
+#include "system/input/mouse_input.h"
 #include "system/input/player_commands.h"
 #include "system/movement/movement_apply.h"
 #include "system/render/render_vector.h"
@@ -41,6 +41,10 @@ Game::Game() {
     InitState();
     InitSystems();
     new Map(system_manager_);
+    auto mouse = new Entity("mouse");
+    mouse->AddComponent(new component::Transform());
+    mouse->AddComponent(new component::Mouse());
+    system_manager_->AddEntity(mouse);
 }
 
 void Game::InitState() {
@@ -53,7 +57,8 @@ void Game::InitState() {
 }
 
 void Game::InitSystems() {
-    system_manager_->AddSystem(new systems::Input(system_manager_));
+    system_manager_->AddSystem(new systems::KeyboardInput(system_manager_));
+    system_manager_->AddSystem(new systems::MouseInput(system_manager_));
     system_manager_->AddSystem(new systems::PlayerCommands(system_manager_));
 
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));

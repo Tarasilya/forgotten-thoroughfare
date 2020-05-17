@@ -1,4 +1,4 @@
-#include "input.h"
+#include "keyboard_input.h"
 
 #include "component/state/input.h"
 #include "component/state/window.h"
@@ -6,18 +6,18 @@
 
 namespace systems {
 
-Input::Input(SystemManager* manager)
-        : Entityless(manager, "Input") {
+KeyboardInput::KeyboardInput(SystemManager* manager)
+        : Entityless(manager, "KeyboardInput") {
     InitUsedState();
 }
 
-void Input::InitUsedState() {
+void KeyboardInput::InitUsedState() {
     AddUsedState<component::Input>();
     AddUsedState<component::Window>();
 }
 
 
-void Input::Tick(double dt) {
+void KeyboardInput::Tick(double dt) {
     auto input = GetState<component::Input>();
     auto window = GetState<component::Window>()->GetWindow();
 

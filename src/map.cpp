@@ -10,7 +10,7 @@
 #include <fstream>
 
 
-const double TILE_SIZE = 0.17;
+const double TILE_SIZE = 0.13;
 const int ROWS = 10;
 const int COLUMNS = 10;
 

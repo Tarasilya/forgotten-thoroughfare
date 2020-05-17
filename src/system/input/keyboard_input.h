@@ -7,12 +7,12 @@ namespace systems {
 
 class SystemManager;
 
-class Input: public Entityless {
+class KeyboardInput: public Entityless {
 protected:
     void InitUsedState() override;
 
 public:
-    Input(SystemManager* manager);
+    KeyboardInput(SystemManager* manager);
 
     void Tick(double dt) override;
 };
