@@ -23,19 +23,10 @@ void System::TryAddEntity(Entity* entity) {
         }
     }    
     entities_.insert(entity);
-
-    // if (entity->Name() != "") {
-    //     std::cerr << "[" << entity->Name() << "] "
-    //         << "added to (" << name_ << ")" << std::endl;
-    // }
 }
 
 void System::RemoveEntity(Entity* entity) {
     entities_.erase(entity);
-    // if (entity->Name() != "") {
-    //     std::cerr << "[" << entity->Name() << "] "
-    //         << "removed from (" << name_ << ")" << std::endl;
-    // }
 }
 
 void System::PrintComponents() {

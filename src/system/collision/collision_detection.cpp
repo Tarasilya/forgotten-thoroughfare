@@ -61,6 +61,7 @@ void CollisionDetection::Tick(double dt) {
 
 
             if (collision_rect1.Intersects(collision_rect2)) {
+                std::cerr << Entities().size() << std::endl;
                 std::cerr << "found collision between [" << entity1->Name() 
                     << "] and [" << entity2->Name() << "]" << std::endl;
                 if (collision == 0) {

@@ -1,7 +1,9 @@
 #pragma once
 
 #include "entity.h"
+#include "performance_data.h"
 
+#include <chrono>
 #include <vector>
 
 
@@ -12,8 +14,13 @@ class System;
 class SystemManager {
 private:
     std::vector<System*> systems_;
+    std::vector<PerformanceData<std::chrono::microseconds>> performance_;
+
+    int time_ = 0;
 
     Entity* state_;
+
+    std::chrono::microseconds MeasureTick(System* system, int dt);
 
 public:
     SystemManager();
@@ -35,7 +42,7 @@ public:
     template<class T>
     T* GetComponentFromState();
 
-    void Tick(double dt);
+    void Tick(int dt);
 };
 
 }
