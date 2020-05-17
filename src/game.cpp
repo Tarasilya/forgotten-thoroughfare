@@ -13,10 +13,6 @@
 #include "component/state/window.h"
 #include "entity.h"
 #include "map.h"
-#include "system/attack.h"
-#include "system/bc/bc_visibility.h"
-#include "system/bc/craft_item.h"
-#include "system/bc/craft_select.h"
 #include "system/camera/camera.h"
 #include "system/camera/camera_apply.h"
 #include "system/camera/camera_movement.h"
@@ -25,7 +21,6 @@
 #include "system/input/input.h"
 #include "system/input/player_commands.h"
 #include "system/movement/movement_apply.h"
-#include "system/movement/player_movement.h"
 #include "system/render/render_vector.h"
 #include "system/render/renderer.h"
 #include "system/render/sprite_pre_render.h"
@@ -45,9 +40,7 @@ Game::Game() {
     system_manager_ = new systems::SystemManager();
     InitState();
     InitSystems();
-    InitRat();
-    InitPunchingBags();
-    new Map("maps/dumb.map", system_manager_);
+    new Map(system_manager_);
 }
 
 void Game::InitState() {
@@ -63,11 +56,6 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::Input(system_manager_));
     system_manager_->AddSystem(new systems::PlayerCommands(system_manager_));
 
-    system_manager_->AddSystem(new systems::PlayerMovement(system_manager_));
-    system_manager_->AddSystem(new systems::BCVisibility(system_manager_));
-    system_manager_->AddSystem(new systems::CraftSelect(system_manager_));
-    system_manager_->AddSystem(new systems::CraftItem(system_manager_));
-    system_manager_->AddSystem(new systems::Attack(system_manager_));
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
     system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
     system_manager_->AddSystem(new systems::MovementApply(system_manager_));
@@ -94,39 +82,3 @@ void Game::Run() {
     }
 }
 
-void Game::InitPunchingBags() {
-    double x[] = {0, 0.3000001, 0.5000001};
-    double p_size = 0.1;
-    for (int i = 0; i < 3; i++) {
-        Entity* punching_bag = new Entity("punching_bag_" + std::to_string(i));
-        punching_bag->AddComponent(new component::Sprite("pics/punch_bag.png", p_size, p_size, 1));
-        punching_bag->AddComponent(new component::CollisionRect(p_size, p_size));
-        punching_bag->AddComponent(new component::Transform(x[i], 0.3));
-        if (i % 2) {
-            punching_bag->AddComponent(new component::Unpassable());
-        }
-        system_manager_->AddEntity(punching_bag);
-    }
-}
-
-void Game::InitRat() {
-    Entity* rat = new Entity("rat");
-    double size = 0.2;
-    rat->AddComponent(new component::Sprite("pics/default_warrior2.png", size, size, 5));
-    rat->AddComponent(new component::Transform(0.5, 0.4));
-    rat->AddComponent(new component::Unpassable());
-    rat->AddComponent(new component::CollisionRect(size, size));
-    rat->AddComponent(new component::Player());
-    auto backpack = new component::Backpack();
-    backpack->AddItem(component::APPLE, 100);
-    backpack->AddItem(component::STICK, 100);
-    backpack->AddItem(component::STONE, 100);
-    rat->AddComponent(backpack);
-    rat->AddComponent(
-        new component::Craft(
-            {
-                {component::SWORD, Recipe({{component::STONE, 3}, {component::STICK, 1}})},
-                {component::CIDER, Recipe({{component::APPLE, 3}, {component::STICK, 1}})},
-            }));
-    system_manager_->AddEntity(rat);
-}

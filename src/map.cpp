@@ -9,49 +9,44 @@
 
 #include <fstream>
 
+
 const double TILE_SIZE = 0.17;
+const int ROWS = 10;
+const int COLUMNS = 10;
 
-Map::Map(std::string filename, systems::SystemManager* manager) {
-    std::ifstream in (filename);
-    std::string row;
-    int i = 0;
-
-    int height, width;
-
-    in >> height >> width;
-
-    while(in >> row) {
-        int j = 0;
-        for(char c : row) {
-            double x = (j - width / 2) * TILE_SIZE;
-            double y = (i - height / 2) * TILE_SIZE;
-            manager->AddEntity(CreateTile(x, y, c));
-            j++;
+Map::Map(systems::SystemManager* manager) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            double x = (j * 2 - ROWS) * TILE_SIZE;
+            double y = (i * 2 - COLUMNS) * TILE_SIZE;
+            manager->AddEntity(CreateTile(x, y, STONE));
+            manager->AddEntity(CreateTile(x + TILE_SIZE, y, ROAD_HORIZONTAL));
+            manager->AddEntity(CreateTile(x, y + TILE_SIZE, ROAD_VERTICAL));
+            manager->AddEntity(
+                CreateTile(x + TILE_SIZE, y + TILE_SIZE, FOREST));
         }
-        i++;
     }
 }
 
-Entity* Map::CreateTile(double x, double y, char type) {
+Entity* Map::CreateTile(double x, double y, TileType type) {
     std::string filename;
     switch(type) {
-        case '@':
-            filename = "pics/water.jpg";
+        case STONE:
+            filename = "pics/stones.jpg";
             break;
-        case '.':
-            filename = "pics/sand.jpg";
+        case ROAD_VERTICAL:
+            filename = "pics/road_vertical.jpg";
             break;
-        case '*':
+        case ROAD_HORIZONTAL:
+            filename = "pics/road_horizontal.jpg";
+            break;
+        case FOREST:
             filename = "pics/forest.jpg";
             break;
     }   
-    Entity* tile = new Entity("tile " + std::string(1, type));
+    Entity* tile = new Entity("tile");
     tile->AddComponent(new component::Transform(x, y));
     tile->AddComponent(new component::Sprite(filename, TILE_SIZE, TILE_SIZE, 0));
-    if (type == '@') {
-        tile->AddComponent(new component::Unpassable());
-        tile->AddComponent(new component::CollisionRect(TILE_SIZE, TILE_SIZE));
-    }
     return tile;
 }
 

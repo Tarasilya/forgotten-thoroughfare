@@ -35,7 +35,7 @@ std::chrono::microseconds SystemManager::MeasureTick(System* system, int dt) {
     return std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
 }
 
-const int PERFORMANCE_PERIOD = 1000;
+const int PERFORMANCE_PERIOD = 5000;
 
 void SystemManager::Tick(int dt) {
     for (int i = 0; i < systems_.size(); i++) {

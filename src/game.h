@@ -11,8 +11,6 @@ private:
     void InitState();
     void InitSystems();
 
-    void InitRat();
-    void InitPunchingBags();
 public:
     Game();
 
