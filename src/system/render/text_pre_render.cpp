@@ -1,5 +1,6 @@
 #include "text_pre_render.h"
 
+#include "aspect.h"
 #include "component/parent_entity.h"
 #include "component/text.h"
 #include "component/transform.h"
@@ -17,8 +18,10 @@ namespace systems {
 
 TextPreRender::TextPreRender(SystemManager* manager)
         : System(manager, "TextPreRender") {
-    InitRequiredComponents();
     InitUsedState();
+
+    manager->RegisterAspect(
+        Aspect::CreateAspect<component::Text, component::Transform>());
 
     if (!font_.loadFromFile("SEASRN__.ttf"))
     {
@@ -26,10 +29,6 @@ TextPreRender::TextPreRender(SystemManager* manager)
     }
 }
 
-void TextPreRender::InitRequiredComponents() {
-    AddRequiredComponent<component::Text>();
-    AddRequiredComponent<component::Transform>();
-}
 
 void TextPreRender::InitUsedState() {
     AddUsedState<component::Window>();

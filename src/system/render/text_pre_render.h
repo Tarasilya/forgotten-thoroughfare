@@ -13,7 +13,6 @@ class TextPreRender: public System {
 private:
     sf::Font font_;
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:

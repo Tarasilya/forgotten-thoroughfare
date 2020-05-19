@@ -10,14 +10,10 @@
 namespace systems {
 
 Renderer::Renderer(SystemManager* manager)
-        : Entityless(manager, "Renderer") {
+        : System(manager, "Renderer") {
     InitUsedState();
 }
 
-void Renderer::InitUsedState() {
-    AddUsedState<component::Window>();
-    AddUsedState<component::RenderVector>();
-}
 
 void Renderer::Tick(double dt) {
     auto window = GetState<component::Window>()->GetWindow();

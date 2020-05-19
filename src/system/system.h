@@ -39,9 +39,6 @@ public:
     virtual void Tick(double dt) = 0;
     std::string Name();
 
-    virtual void TryAddEntity(Entity* entity);
-    void RemoveEntity(Entity* entity);
-
     template<class T> 
     T* GetComponent(Entity* entity);
 

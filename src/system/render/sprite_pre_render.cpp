@@ -19,13 +19,10 @@ namespace systems {
 
 SpritePreRender::SpritePreRender(SystemManager* manager)
         : System(manager, "SpritePreRender") {
-    InitRequiredComponents();
     InitUsedState();
-}
 
-void SpritePreRender::InitRequiredComponents() {
-    AddRequiredComponent<component::Sprite>();
-    AddRequiredComponent<component::Transform>();
+    manager->RegisterAspect(
+        Aspect::CreateAspect<component::Sprite, component::Transform>());
 }
 
 void SpritePreRender::InitUsedState() {
@@ -40,6 +37,7 @@ void SpritePreRender::Tick(double dt) {
     int width = window->getSize().x;
     int height = window->getSize().y;
 
+    auto entities = system_manager_->GetAspectEntities
     for (auto entity: Entities()) {
         auto sprite_drawable = GetComponent<component::Sprite>(entity);
         auto transform = GetComponent<component::Transform>(entity);

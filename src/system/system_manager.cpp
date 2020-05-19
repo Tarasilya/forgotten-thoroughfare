@@ -17,14 +17,19 @@ void SystemManager::AddSystem(System* system) {
     system->PrintComponents();
 }
 void SystemManager::AddEntity(Entity* entity) {
-    for (auto system: systems_) {
-        system->TryAddEntity(entity);
+    for (auto & [aspect, entities]: aspect_entities_) {
+        if (aspect.IsFit(entity)) {
+            entities.insert(entity);
+        }
     }
 }
 
 void SystemManager::RemoveEntity(Entity* entity) {
-    for (auto system: systems_) {
-        system->RemoveEntity(entity);
+    for (auto & [aspect, entities]: aspect_entities_) {
+        if (entities.find(entity) != entities.end()
+                && !aspect.IsFit(entity)) {
+            entities.erase(entity);
+        }
     }
 }
 
@@ -33,6 +38,15 @@ std::chrono::microseconds SystemManager::MeasureTick(System* system, int dt) {
     system->Tick(dt);
     auto finish = std::chrono::high_resolution_clock::now();
     return std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
+}
+
+const std::set<Entity*>& SystemManager::GetAspectEntities(const Aspect& aspect) {
+    assert(aspect_entities_.find(aspect) != aspect_entities_.end()
+        && "Getting entities for aspect that's not registered");
+    return aspect_entities_[aspect];
+}
+void SystemManager::RegisterAspect(const Aspect& aspect) {
+    aspect_entities_[aspect] = std::set<Entity*>();
 }
 
 const int PERFORMANCE_PERIOD = 5000;
