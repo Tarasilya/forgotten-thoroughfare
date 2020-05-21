@@ -71,11 +71,12 @@ void RectanglePreRender::Tick(double dt) {
 
 
         auto rectangle_size = rectangle->GetSize();
-        
 
 
-        rectangle_shape->setSize(sf::Vector2f(rectangle_size.first, rectangle_size.second));
-        rectangle_shape->setOutlineThickness(thickness);
+
+        rectangle_shape->setSize(
+            sf::Vector2f(rectangle_size.first * width, rectangle_size.second * height));
+        rectangle_shape->setOutlineThickness(thickness * width);
         rectangle_shape->setFillColor(sf::Color::Transparent);
         rectangle_shape->setOutlineColor(color);
         render_vector->push_back({rectangle->GetLayer(), new RectangleDrawable(rectangle_shape)});

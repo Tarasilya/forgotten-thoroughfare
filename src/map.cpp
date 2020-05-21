@@ -22,7 +22,7 @@ Map::Map(systems::SystemManager* manager) {
             double y = (i * 2 - COLUMNS) * TILE_SIZE;
 
             auto tile = CreateTile(x, y, STONE);
-            if (1) {
+            if (i * j == 25) {
                 tile->AddComponent(new component::Rectangle(sf::Color::White, TILE_SIZE, TILE_SIZE, 0.2*TILE_SIZE, 20));
             }
             manager->AddEntity(tile);
