@@ -52,7 +52,7 @@ void SystemManager::RegisterAspect(const Aspect& aspect) {
 const int PERFORMANCE_PERIOD = 5000;
 
 void SystemManager::Tick(int dt) {
-    for (int i = 0; i < systems_.size(); i++) {
+    for (size_t i = 0; i < systems_.size(); i++) {
         auto duration = MeasureTick(systems_[i], dt);
         performance_[i].Add(duration);
     }
@@ -67,7 +67,7 @@ void SystemManager::Tick(int dt) {
         auto total_mu = total.count();
         std::cerr << "Total avg: "
             << total_mu << "mu" << std::endl;
-        for (int i = 0; i < systems_.size(); i++) {
+        for (size_t i = 0; i < systems_.size(); i++) {
             auto system_mu = performance_[i].GetAvg().count();
             int percent = system_mu * 1.0 / total_mu * 100;
             std::cerr << "(" << systems_[i]->Name() << "): "

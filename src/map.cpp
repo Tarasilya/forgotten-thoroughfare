@@ -5,6 +5,7 @@
 #include "component/sprite.h"
 #include "component/transform.h"
 #include "component/unpassable.h"
+#include "component/rectangle.h"
 #include "system/system_manager.h"
 
 #include <fstream>
@@ -19,7 +20,12 @@ Map::Map(systems::SystemManager* manager) {
         for (int j = 0; j < COLUMNS; j++) {
             double x = (j * 2 - ROWS) * TILE_SIZE;
             double y = (i * 2 - COLUMNS) * TILE_SIZE;
-            manager->AddEntity(CreateTile(x, y, STONE));
+
+            auto tile = CreateTile(x, y, STONE);
+            if (1) {
+                tile->AddComponent(new component::Rectangle(sf::Color::White, TILE_SIZE, TILE_SIZE, 0.2*TILE_SIZE, 20));
+            }
+            manager->AddEntity(tile);
             manager->AddEntity(CreateTile(x + TILE_SIZE, y, ROAD_HORIZONTAL));
             manager->AddEntity(CreateTile(x, y + TILE_SIZE, ROAD_VERTICAL));
             manager->AddEntity(
