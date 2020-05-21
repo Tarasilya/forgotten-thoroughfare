@@ -8,8 +8,9 @@ namespace systems {
 class SystemManager;
 
 class MovementApply: public System {
+private:
+    static const Aspect movement_aspect_;
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:

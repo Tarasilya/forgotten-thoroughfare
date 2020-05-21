@@ -10,16 +10,13 @@
 
 namespace systems {
 
+const Aspect CameraMovement::mouse_aspect_
+    = Aspect::CreateAspect<component::Mouse, component::Transform>();
+
 CameraMovement::CameraMovement(SystemManager* manager)
         : System(manager, "CameraMovement") {
-    InitRequiredComponents();
+    system_manager_->RegisterAspect(mouse_aspect_);
     InitUsedState();
-}
-
-
-void CameraMovement::InitRequiredComponents() {
-    AddRequiredComponent<component::Mouse>();
-    AddRequiredComponent<component::Transform>();
 }
 
 void CameraMovement::InitUsedState() {
@@ -32,7 +29,8 @@ const double CAMERA_SPEED = 0.0003;
 
 void CameraMovement::Tick(double dt) {
     auto camera = GetState<component::Camera>();
-    for (auto entity: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(mouse_aspect_);
+    for (auto entity: entities) {
         auto transform = GetComponent<component::Transform>(entity);
         double x_speed = 0;
         double y_speed = 0;

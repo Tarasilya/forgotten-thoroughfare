@@ -10,7 +10,7 @@
 namespace systems {
 
 PlayerCommands::PlayerCommands(SystemManager* manager)
-        : Entityless(manager, "PlayerCommands") {
+        : System(manager, "PlayerCommands") {
     InitUsedState();
 
     controls_ = ConfigReader("config.txt").GetControls();

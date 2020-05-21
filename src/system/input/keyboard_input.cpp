@@ -7,7 +7,7 @@
 namespace systems {
 
 KeyboardInput::KeyboardInput(SystemManager* manager)
-        : Entityless(manager, "KeyboardInput") {
+        : System(manager, "KeyboardInput") {
     InitUsedState();
 }
 

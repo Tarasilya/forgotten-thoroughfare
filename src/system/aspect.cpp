@@ -14,7 +14,7 @@ bool Aspect::IsFit(Entity* entity) const {
     return test_fitness_(entity);
 }
 
-const std::string& Aspect::GetId() const {
+const std::string& Aspect::GetSignature() const {
     return signature_;
 }
 

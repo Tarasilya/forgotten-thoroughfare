@@ -9,23 +9,22 @@
 
 namespace systems {
 
+const Aspect CollisionDetection::collision_aspect_
+        = Aspect::CreateAspect<component::CollisionRect, component::Transform>();
+
 CollisionDetection::CollisionDetection(SystemManager* manager) 
         : System(manager, "CollisionDetection") {
-    InitRequiredComponents();
+    system_manager_->RegisterAspect(collision_aspect_);
     InitUsedState();
 }
 
-
-void CollisionDetection::InitRequiredComponents() {
-    AddRequiredComponent<component::CollisionRect>();
-    AddRequiredComponent<component::Transform>();
-}
 
 void CollisionDetection::InitUsedState() {}
 
 
 void CollisionDetection::Tick(double dt) {
-    for (auto entity1: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(collision_aspect_);
+    for (auto entity1: entities) {
         if (!entity1->HasComponent<component::Movement>()) {
             continue;
         }
@@ -33,7 +32,7 @@ void CollisionDetection::Tick(double dt) {
             system_manager_->RemoveComponent<component::Collision>(entity1);
         }
         component::Collision* collision = 0;
-        for (auto entity2: Entities()) {
+        for (auto entity2: entities) {
             if (entity1 == entity2) {
                 continue;
             }

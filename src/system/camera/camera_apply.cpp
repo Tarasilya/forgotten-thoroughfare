@@ -11,7 +11,7 @@
 namespace systems {
 
 CameraApply::CameraApply(SystemManager* manager)
-        : Entityless(manager, "CameraApply") {
+        : System(manager, "CameraApply") {
     InitUsedState();
 }
 

@@ -8,16 +8,14 @@
 
 namespace systems {
 
+const Aspect MovementApply::movement_aspect_
+        = Aspect::CreateAspect<component::Movement,
+            component::Transform>();
+
 MovementApply::MovementApply(SystemManager* manager)
         : System(manager, "MovementApply") {
-    InitRequiredComponents();
+    system_manager_->RegisterAspect(movement_aspect_);
     InitUsedState();
-}
-
-
-void MovementApply::InitRequiredComponents() {
-    AddRequiredComponent<component::Transform>();
-    AddRequiredComponent<component::Movement>();
 }
 
 void MovementApply::InitUsedState() {
@@ -25,7 +23,9 @@ void MovementApply::InitUsedState() {
 
 void MovementApply::Tick(double dt) {
     std::vector<Entity*> removed;
-    for (auto entity: Entities()) {
+
+    auto entities = system_manager_->GetAspectEntities(movement_aspect_);
+    for (auto entity: entities) {
         auto transform = GetComponent<component::Transform>(entity);
         auto movement = GetComponent<component::Movement>(entity);
         transform->SetX(transform->GetX() + movement->GetDx());

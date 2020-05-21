@@ -1,6 +1,5 @@
 #include "mouse_input.h"
 
-#include "component/mouse.h"
 #include "component/transform.h"
 #include "component/state/window.h"
 
@@ -11,14 +10,13 @@
 
 namespace systems {
 
+const Aspect MouseInput::mouse_aspect_
+    = Aspect::CreateAspect<component::Mouse>();
+
 MouseInput::MouseInput(SystemManager* manager)
         : System(manager, "MouseInput") {
-    InitRequiredComponents();
+    system_manager_->RegisterAspect(mouse_aspect_);
     InitUsedState();
-}
-
-void MouseInput::InitRequiredComponents() {
-    AddRequiredComponent<component::Mouse>();
 }
 
 void MouseInput::InitUsedState() {
@@ -30,7 +28,8 @@ void MouseInput::Tick(double dt) {
     int width = window->getSize().x;
     int height = window->getSize().y;
 
-    for (auto entity: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(mouse_aspect_);
+    for (auto entity: entities) {
         auto mouse_position = sf::Mouse::getPosition(*window);
         if (0 <= mouse_position.x && mouse_position.x < width
                 && 0 <= mouse_position.y && mouse_position.y < height) {

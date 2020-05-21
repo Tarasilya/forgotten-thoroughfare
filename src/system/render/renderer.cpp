@@ -14,6 +14,10 @@ Renderer::Renderer(SystemManager* manager)
     InitUsedState();
 }
 
+void Renderer::InitUsedState() {
+    AddUsedState<component::Window>();
+    AddUsedState<component::RenderVector>();
+}
 
 void Renderer::Tick(double dt) {
     auto window = GetState<component::Window>()->GetWindow();

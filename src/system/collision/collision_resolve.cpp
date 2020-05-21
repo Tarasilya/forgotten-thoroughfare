@@ -1,5 +1,4 @@
 #include "collision_resolve.h"
-
 #include "component/collision.h"
 #include "component/collision_rect.h"
 #include "component/movement.h"
@@ -12,19 +11,17 @@
 
 namespace systems {
 
+const Aspect CollisionResolve::collision_aspect_
+        = Aspect::CreateAspect<component::Collision, 
+            component::CollisionRect,
+            component::Movement,
+            component::Transform,
+            component::Unpassable>();
+
 CollisionResolve::CollisionResolve(SystemManager* manager) 
         : System(manager, "CollisionResolve") {
-    InitRequiredComponents();
+    system_manager_->RegisterAspect(collision_aspect_);
     InitUsedState();
-}
-
-
-void CollisionResolve::InitRequiredComponents() {
-    AddRequiredComponent<component::Collision>();
-    AddRequiredComponent<component::CollisionRect>();
-    AddRequiredComponent<component::Transform>();
-    AddRequiredComponent<component::Movement>();
-    AddRequiredComponent<component::Unpassable>();
 }
 
 void CollisionResolve::InitUsedState() {}
@@ -33,7 +30,8 @@ const double EPS = 1e-9;
 
 void CollisionResolve::Tick(double dt) {
     std::vector<Entity*> removed;
-    for (auto entity: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(collision_aspect_);
+    for (auto entity: entities) {
         for (auto entity2: GetComponent<component::Collision>(entity)->GetEntities()) {
             if (!entity2->HasComponent<component::Unpassable>()) {
                 continue;

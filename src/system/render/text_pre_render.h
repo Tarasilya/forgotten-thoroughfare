@@ -1,5 +1,7 @@
 #pragma once
 
+#include "component/text.h"
+#include "component/transform.h"
 #include "system/system.h"
 
 #include <SFML/Graphics.hpp>
@@ -12,6 +14,8 @@ class SystemManager;
 class TextPreRender: public System {
 private:
     sf::Font font_;
+    static const Aspect text_aspect_;
+
 protected:
     void InitUsedState() override;
 
