@@ -46,6 +46,7 @@ Entity* Map::CreateTile(double x, double y, TileType type) {
     }   
     Entity* tile = new Entity("tile");
     tile->AddComponent(new component::Transform(x, y));
+    tile->AddComponent(new component::CollisionRect(TILE_SIZE, TILE_SIZE));
     tile->AddComponent(new component::Sprite(filename, TILE_SIZE, TILE_SIZE, 0));
     return tile;
 }

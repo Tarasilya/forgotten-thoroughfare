@@ -61,7 +61,7 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::MouseInput(system_manager_));
     system_manager_->AddSystem(new systems::PlayerCommands(system_manager_));
 
-    //system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
+    system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
     //system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
     //system_manager_->AddSystem(new systems::MovementApply(system_manager_));
 

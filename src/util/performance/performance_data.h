@@ -9,15 +9,22 @@ class PerformanceData {
 private:
     std::deque<T> durations_;
     int period_;
+    T total_;
 
 public:
-    PerformanceData(int period = 60): period_(period) {}
+    PerformanceData(int period = 60): period_(period) {
+        total_ = T(0);
+    }
 
     void Add(T duration) {
+        total_ += duration;
         durations_.push_back(duration);
         if (durations_.size() > period_) {
             durations_.pop_front();
         }
+    }
+    T GetTotal() {
+        return total_;
     }
     T GetAvg() {
         T result(0);
