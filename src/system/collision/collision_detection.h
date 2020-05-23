@@ -1,5 +1,6 @@
 #pragma once
 
+#include "component/collision_rect.h"
 #include "system/system.h"
 
 
@@ -17,6 +18,8 @@ public:
     CollisionDetection(SystemManager* manager);
 
     void Tick(double dt) override;
+
+    static component::CollisionRect GetMovedRect(Entity* entity);
 };
 
 }
