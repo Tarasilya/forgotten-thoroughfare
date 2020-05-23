@@ -8,8 +8,9 @@ namespace systems {
 class SystemManager;
 
 class CameraMovement: public System {
+private:
+    static const Aspect mouse_aspect_;
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:

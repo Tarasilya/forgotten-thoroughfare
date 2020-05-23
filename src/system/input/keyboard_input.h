@@ -1,13 +1,13 @@
 #pragma once
 
-#include "system/entityless.h"
+#include "system/system.h"
 
 
 namespace systems {
 
 class SystemManager;
 
-class KeyboardInput: public Entityless {
+class KeyboardInput: public System {
 protected:
     void InitUsedState() override;
 

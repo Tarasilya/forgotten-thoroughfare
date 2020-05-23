@@ -1,11 +1,11 @@
 #pragma once
 
-#include "system/entityless.h"
+#include "system/system.h"
 
 
 namespace systems {
 
-class Renderer: public Entityless {
+class Renderer: public System {
 protected:
     void InitUsedState() override;
 

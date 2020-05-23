@@ -11,20 +11,24 @@ SystemManager::SystemManager() {
 }
 
 void SystemManager::AddSystem(System* system) {
-    std::cerr << "added (" << system->Name() << ")" << std::endl;
     systems_.push_back(system);
     performance_.push_back(PerformanceData<std::chrono::microseconds>());
     system->PrintComponents();
 }
 void SystemManager::AddEntity(Entity* entity) {
-    for (auto system: systems_) {
-        system->TryAddEntity(entity);
+    for (auto & [aspect, entities]: aspect_entities_) {
+        if (aspect.IsFit(entity)) {
+            entities.insert(entity);
+        }
     }
 }
 
 void SystemManager::RemoveEntity(Entity* entity) {
-    for (auto system: systems_) {
-        system->RemoveEntity(entity);
+    for (auto & [aspect, entities]: aspect_entities_) {
+        if (entities.find(entity) != entities.end()
+                && !aspect.IsFit(entity)) {
+            entities.erase(entity);
+        }
     }
 }
 
@@ -35,13 +39,22 @@ std::chrono::microseconds SystemManager::MeasureTick(System* system, int dt) {
     return std::chrono::duration_cast<std::chrono::microseconds>(finish - start);
 }
 
+const std::set<Entity*>& SystemManager::GetAspectEntities(const Aspect& aspect) {
+    assert(aspect_entities_.find(aspect) != aspect_entities_.end()
+        && "Getting entities for aspect that's not registered");
+    return aspect_entities_[aspect];
+}
+void SystemManager::RegisterAspect(const Aspect& aspect) {
+    std::cerr << "Registering aspect: " << aspect.GetSignature() << std::endl; 
+    aspect_entities_[aspect] = std::set<Entity*>();
+}
+
 const int PERFORMANCE_PERIOD = 5000;
 
 void SystemManager::Tick(int dt) {
     for (int i = 0; i < systems_.size(); i++) {
         auto duration = MeasureTick(systems_[i], dt);
         performance_[i].Add(duration);
-//        std::cerr << duration.count() << " " << performance_[i].GetAvg().count() <<  std::endl;
     }
     time_ += dt;
     if (time_ >= PERFORMANCE_PERIOD) {

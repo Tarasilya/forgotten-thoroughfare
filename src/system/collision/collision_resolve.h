@@ -8,8 +8,10 @@ namespace systems {
 class SystemManager;
 
 class CollisionResolve: public System {
+private:
+    static const Aspect collision_aspect_;
+
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:

@@ -10,7 +10,7 @@
 namespace systems {
 
 Renderer::Renderer(SystemManager* manager)
-        : Entityless(manager, "Renderer") {
+        : System(manager, "Renderer") {
     InitUsedState();
 }
 

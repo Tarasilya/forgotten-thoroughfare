@@ -1,13 +1,13 @@
 #pragma once
 
-#include "system/entityless.h"
+#include "system/system.h"
 
 #include <SFML/Graphics.hpp>
 
 
 namespace systems {
 
-class PlayerCommands: public Entityless {
+class PlayerCommands: public System {
 private:
     std::map<std::string, sf::Keyboard::Key> controls_;
 protected:

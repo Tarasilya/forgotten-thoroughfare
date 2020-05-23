@@ -1,8 +1,6 @@
 #include "sprite_pre_render.h"
 
 #include "component/parent_entity.h"
-#include "component/sprite.h"
-#include "component/transform.h"
 #include "component/state/window.h"
 #include "drawable/sprite_drawable.h"
 #include "entity.h"
@@ -17,15 +15,14 @@
 
 namespace systems {
 
+const Aspect SpritePreRender::sprite_aspect_
+        = Aspect::CreateAspect<component::Sprite, component::Transform>();
+
 SpritePreRender::SpritePreRender(SystemManager* manager)
         : System(manager, "SpritePreRender") {
-    InitRequiredComponents();
     InitUsedState();
-}
 
-void SpritePreRender::InitRequiredComponents() {
-    AddRequiredComponent<component::Sprite>();
-    AddRequiredComponent<component::Transform>();
+    manager->RegisterAspect(sprite_aspect_);
 }
 
 void SpritePreRender::InitUsedState() {
@@ -40,7 +37,8 @@ void SpritePreRender::Tick(double dt) {
     int width = window->getSize().x;
     int height = window->getSize().y;
 
-    for (auto entity: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(sprite_aspect_);
+    for (auto entity: entities) {
         auto sprite_drawable = GetComponent<component::Sprite>(entity);
         auto transform = GetComponent<component::Transform>(entity);
         auto file = sprite_drawable->GetDrawable();
