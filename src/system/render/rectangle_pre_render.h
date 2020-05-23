@@ -1,15 +1,18 @@
 #pragma once
 
 #include "system/system.h"
-
+#include "component/transform.h"
+#include "system/system.h"
 
 namespace systems {
 
 class SystemManager;
 
 class RectanglePreRender: public System {
+private:
+	static const Aspect rectangle_aspect_;
+
 protected:
-    void InitRequiredComponents() override;
     void InitUsedState() override;
 
 public:

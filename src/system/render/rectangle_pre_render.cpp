@@ -17,15 +17,13 @@
 
 namespace systems {
 
+const Aspect RectanglePreRender::rectangle_aspect_
+        = Aspect::CreateAspect<component::Rectangle, component::Transform>();
+
 RectanglePreRender::RectanglePreRender(SystemManager* manager)
         : System(manager, "RectanglePreRender") {
-    InitRequiredComponents();
     InitUsedState();
-}
-
-void RectanglePreRender::InitRequiredComponents() {
-    AddRequiredComponent<component::Rectangle>();
-    AddRequiredComponent<component::Transform>();
+    manager->RegisterAspect(rectangle_aspect_);
 }
 
 void RectanglePreRender::InitUsedState() {
@@ -40,7 +38,9 @@ void RectanglePreRender::Tick(double dt) {
     int width = window->getSize().x;
     int height = window->getSize().y;
 
-    for (auto entity: Entities()) {
+    auto entities = system_manager_->GetAspectEntities(rectangle_aspect_);
+    
+    for (auto entity: entities) {
         auto rectangle = GetComponent<component::Rectangle>(entity);
         auto transform = GetComponent<component::Transform>(entity);
         
