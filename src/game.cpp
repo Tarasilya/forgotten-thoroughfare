@@ -25,6 +25,7 @@
 #include "system/render/renderer.h"
 #include "system/render/sprite_pre_render.h"
 #include "system/render/text_pre_render.h"
+#include "system/render/rectangle_pre_render.h"
 #include "system/system.h"
 #include "system/system_manager.h"
 #include "textures.h"
@@ -68,6 +69,7 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::CameraMovement(system_manager_));
     system_manager_->AddSystem(new systems::TextPreRender(system_manager_));
     system_manager_->AddSystem(new systems::SpritePreRender(system_manager_));
+    system_manager_->AddSystem(new systems::RectanglePreRender(system_manager_));
     system_manager_->AddSystem(new systems::CameraApply(system_manager_));
     system_manager_->AddSystem(new systems::Renderer(system_manager_));
 }
