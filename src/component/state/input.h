@@ -1,18 +1,13 @@
 #pragma once 
 
 #include "component/component.h"
+#include "component/key_state.h"
 
 #include <SFML/Window.hpp>
 
 #include <map>
 
 namespace component {
-
-
-struct KeyState {
-    bool previous;
-    bool current;
-};
 
 class Input: public Component {
 private:

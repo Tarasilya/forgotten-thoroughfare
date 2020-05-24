@@ -7,8 +7,7 @@ namespace component {
 
 void Input::UpdateKey(sf::Keyboard::Key key, bool new_state) {
     auto& state = key_state_[key];
-    state.previous = state.current;
-    state.current = new_state;
+    state.Update(new_state);
 }
 
 const std::map<sf::Keyboard::Key, KeyState>& Input::GetKeyStates() {

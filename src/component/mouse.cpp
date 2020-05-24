@@ -3,11 +3,11 @@
 
 namespace component {
 
-bool Mouse::IsLeftPressed() {
-    return left_pressed_;
+KeyState Mouse::LeftState() {
+    return left_;
 }
-void Mouse::SetLeftPressed(bool value) {
-    left_pressed_ = value;
+void Mouse::UpdateLeft(bool value) {
+    left_.Update(value);
 }
 
 }
