@@ -1,5 +1,7 @@
 #include "collision_rect.h"
 
+#include <iostream>
+
 
 namespace component {
 
@@ -23,6 +25,10 @@ CollisionRect& CollisionRect::operator=(const CollisionRect& rect) {
     y1 = rect.y1;
     y2 = rect.y2;
     return *this;
+}
+
+void CollisionRect::Print()  {
+    std::cerr << x1 << " " << y1 << " " << x2 << " " << y2 << std::endl;
 }
 
 }

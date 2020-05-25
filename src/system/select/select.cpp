@@ -4,7 +4,9 @@
 #include "component/mouse.h"
 #include "component/rectangle.h"
 #include "component/selectable.h"
-#include "map.h"
+#include "component/selected.h"
+#include "component/state/map.h"
+#include "system/collision/collision_detection.h"
 
 
 namespace systems {
@@ -34,17 +36,29 @@ void Select::Tick(double dt) {
             if (!entity->HasComponent<component::Selectable>()) {
                 continue;
             }
-            if (entity->HasComponent<component::Rectangle>()) {
-                system_manager_
-                    ->RemoveComponent<component::Rectangle>(entity);
+            if (entity->HasComponent<component::CollisionRect>()) {
+                std::cerr << "clicked on: ";
+                CollisionDetection::GetMovedRect(entity).Print();
             }
-            else {
-                system_manager_
-                    ->AddComponent(entity, 
-                        new component::Rectangle(sf::Color::White, 
-                            TILE_SIZE, TILE_SIZE, 0.01, 5));
-            }
+            ToggleSelect(entity);
         }
+    }
+}
+
+void Select::ToggleSelect(Entity* entity) {
+    if (entity->HasComponent<component::Selected>()) {
+        system_manager_
+            ->RemoveComponent<component::Rectangle>(entity);
+        system_manager_
+            ->RemoveComponent<component::Selected>(entity);
+    }
+    else {
+        system_manager_
+            ->AddComponent(entity, 
+                new component::Rectangle(sf::Color::White, 
+                    component::TILE_SIZE, component::TILE_SIZE, 0.01, 5));
+        system_manager_
+            ->AddComponent(entity, new component::Selected());
     }
 }
 

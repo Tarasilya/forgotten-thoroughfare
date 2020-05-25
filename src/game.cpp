@@ -1,17 +1,15 @@
 #include "game.h"
 
 #include "component/collision_rect.h"
-#include "component/backpack.h"
-#include "component/craft/craft.h"
-#include "component/craft/recipe.h"
 #include "component/mouse.h"
 #include "component/sprite.h"
 #include "component/transform.h"
 #include "component/state/input.h"
+#include "component/state/map.h"
 #include "component/state/player_commands.h"
 #include "component/state/window.h"
+#include "component/unit.h"
 #include "entity.h"
-#include "map.h"
 #include "system/camera/camera.h"
 #include "system/camera/camera_apply.h"
 #include "system/camera/camera_movement.h"
@@ -20,7 +18,9 @@
 #include "system/input/keyboard_input.h"
 #include "system/input/mouse_input.h"
 #include "system/input/player_commands.h"
+#include "system/movement/execute_unit_movement.h"
 #include "system/movement/movement_apply.h"
+#include "system/movement/order_unit_movement.h"
 #include "system/render/render_vector.h"
 #include "system/render/renderer.h"
 #include "system/render/sprite_pre_render.h"
@@ -41,7 +41,18 @@ Game::Game() {
     system_manager_ = new systems::SystemManager();
     InitState();
     InitSystems();
-    new Map(system_manager_, "maps/dumb.map");
+    system_manager_->AddComponentToState(new component::Map(system_manager_, "maps/dumb.map"));
+    auto unit = new Entity("unit");
+    unit->AddComponent(new component::Transform(-0.05, -0.05));
+    unit->AddComponent(new component::CollisionRect(component::TILE_SIZE / 2, component::TILE_SIZE / 2));
+    unit->AddComponent(new component::Unit());
+    unit->AddComponent(
+        new component::Sprite(
+                "pics/rat.png", 
+                component::TILE_SIZE / 2, 
+                component::TILE_SIZE / 2,
+                1));
+    system_manager_->AddEntity(unit);
     auto mouse = new Entity("mouse");
     mouse->AddComponent(new component::Transform());
     mouse->AddComponent(new component::Mouse());
@@ -65,6 +76,8 @@ void Game::InitSystems() {
 
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
     system_manager_->AddSystem(new systems::Select(system_manager_));
+    system_manager_->AddSystem(new systems::OrderUnitMovement(system_manager_));
+    system_manager_->AddSystem(new systems::ExecuteUnitMovement(system_manager_));
     //system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
     //system_manager_->AddSystem(new systems::MovementApply(system_manager_));
 

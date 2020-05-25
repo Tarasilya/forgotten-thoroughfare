@@ -45,19 +45,8 @@ void CollisionDetection::Tick(double dt) {
                                 
                 auto collision_rect1 = GetMovedRect(entity1);
                 auto collision_rect2 = GetMovedRect(entity2);
-                // if (entity1->Name() == "mouse") {
-                //     std::cerr << collision_rect1.x1 << " "
-                //         << collision_rect1.x2 << " "
-                //         << collision_rect1.y1 << " "
-                //         << collision_rect1.y2 << ", "
-                //         << collision_rect2.x1 << " "
-                //         << collision_rect2.x2 << " "
-                //         << collision_rect2.y1 << " "
-                //         << collision_rect2.y2 << " " << std::endl;
-                // }
 
                 if (collision_rect1.Intersects(collision_rect2)) {
-                    //std::cerr << "inter!" << std::endl;
                     if (collision == 0) {
                         collision = new component::Collision(entity2);
                         system_manager_->AddComponent(entity1, collision);
@@ -68,9 +57,6 @@ void CollisionDetection::Tick(double dt) {
                 }
             }
         }
-        // if (entity1->Name() == "mouse") {
-        //     std::cerr << "=============" << std::endl;
-        // }
     }
 }
 
