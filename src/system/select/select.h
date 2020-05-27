@@ -10,6 +10,8 @@ class SystemManager;
 class Select: public System {
 private:
     static const Aspect mouse_aspect_;
+
+    void ToggleSelect(Entity* entity);
 protected:
     void InitUsedState() override;
 
