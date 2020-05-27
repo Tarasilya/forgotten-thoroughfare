@@ -26,9 +26,9 @@
 #include "system/render/sprite_pre_render.h"
 #include "system/render/text_pre_render.h"
 #include "system/render/rectangle_pre_render.h"
+#include "system/select/select.h"
 #include "system/system.h"
 #include "system/system_manager.h"
-#include "textures.h"
 
 #include <chrono>
 #include <iostream>
@@ -41,10 +41,11 @@ Game::Game() {
     system_manager_ = new systems::SystemManager();
     InitState();
     InitSystems();
-    new Map(system_manager_);
+    new Map(system_manager_, "maps/dumb.map");
     auto mouse = new Entity("mouse");
     mouse->AddComponent(new component::Transform());
     mouse->AddComponent(new component::Mouse());
+    mouse->AddComponent(new component::CollisionRect(0, 0));
     system_manager_->AddEntity(mouse);
 }
 
@@ -63,6 +64,7 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::PlayerCommands(system_manager_));
 
     system_manager_->AddSystem(new systems::CollisionDetection(system_manager_));
+    system_manager_->AddSystem(new systems::Select(system_manager_));
     //system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
     //system_manager_->AddSystem(new systems::MovementApply(system_manager_));
 

@@ -7,7 +7,6 @@
 #include "drawable/rectangle_drawable.h"
 #include "entity.h"
 #include "render_vector.h"
-#include "textures.h"
 #include "type.h"
 
 #include <SFML/Graphics.hpp>

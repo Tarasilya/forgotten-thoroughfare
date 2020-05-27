@@ -2,6 +2,7 @@
 
 #include "entity.h"
 #include "component/collision_rect.h"
+#include "component/selectable.h"
 #include "component/sprite.h"
 #include "component/transform.h"
 #include "component/unpassable.h"
@@ -11,25 +12,34 @@
 #include <fstream>
 
 
-const double TILE_SIZE = 0.13;
-const int ROWS = 10;
-const int COLUMNS = 10;
+std::map<char, TileType> char_to_type = {
+    {'*', FOREST},
+    {'-', ROAD_HORIZONTAL},
+    {'|', ROAD_VERTICAL},
+    {'o', STONE},
+};
 
-Map::Map(systems::SystemManager* manager) {
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            double x = (j * 2 - ROWS) * TILE_SIZE;
-            double y = (i * 2 - COLUMNS) * TILE_SIZE;
+Map::Map(systems::SystemManager* manager, std::string filename) {
+    std::ifstream in (filename);
+    std::vector<std::string> input;
+    std::string row;
+    while(in >> row) {
+        input.push_back(row);
+        assert (row.length() == input[0].length()
+            && "Rows in map are different length");
+    }
+    int rows = input.size();
+    int columns = input[0].length();
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            double x = (j - rows / 2) * TILE_SIZE;
+            double y = (i - columns / 2) * TILE_SIZE;
 
-            auto tile = CreateTile(x, y, STONE);
-            if (i * j == 25) {
-                tile->AddComponent(new component::Rectangle(sf::Color::White, TILE_SIZE, TILE_SIZE, 0.2*TILE_SIZE, 20));
-            }
+            auto tile = CreateTile(x, y, char_to_type[input[i][j]]);
             manager->AddEntity(tile);
-            manager->AddEntity(CreateTile(x + TILE_SIZE, y, ROAD_HORIZONTAL));
-            manager->AddEntity(CreateTile(x, y + TILE_SIZE, ROAD_VERTICAL));
-            manager->AddEntity(
-                CreateTile(x + TILE_SIZE, y + TILE_SIZE, FOREST));
+            if (i == rows - 1 && j == columns - 1) {
+                std::cerr << "THE TILE " << x << " " << y << std::endl;
+            }
         }
     }
 }
@@ -54,6 +64,9 @@ Entity* Map::CreateTile(double x, double y, TileType type) {
     tile->AddComponent(new component::Transform(x, y));
     tile->AddComponent(new component::CollisionRect(TILE_SIZE, TILE_SIZE));
     tile->AddComponent(new component::Sprite(filename, TILE_SIZE, TILE_SIZE, 0));
+    if (type != FOREST) {
+        tile->AddComponent(new component::Selectable());
+    }
     return tile;
 }
 

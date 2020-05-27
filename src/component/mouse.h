@@ -1,16 +1,17 @@
 #pragma once
 
 #include "component.h"
-
+#include "key_state.h"
 
 namespace component {
 
 class Mouse: public Component {
 private:
-    bool left_pressed_ = false;
+    KeyState left_;
 public:
-    bool IsLeftPressed();
-    void SetLeftPressed(bool value);
+    KeyState LeftState();
+    void UpdateLeft(bool value);
+
 };
 
 }
