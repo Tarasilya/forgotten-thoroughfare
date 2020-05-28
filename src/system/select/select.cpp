@@ -55,8 +55,13 @@ void Select::ToggleSelect(Entity* entity) {
     else {
         system_manager_
             ->AddComponent(entity, 
-                new component::Rectangle(sf::Color::White, 
-                    component::TILE_SIZE, component::TILE_SIZE, 0.01, 5));
+                new component::Rectangle(
+                    component::TILE_SIZE, 
+                    component::TILE_SIZE, 
+                    sf::Color::Transparent,
+                    5,
+                    0.01,
+                    sf::Color::White));
         system_manager_
             ->AddComponent(entity, new component::Selected());
     }
