@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "component/collision_rect.h"
+#include "component/hp.h"
 #include "component/mouse.h"
 #include "component/sprite.h"
 #include "component/transform.h"
@@ -52,6 +53,9 @@ Game::Game() {
                 component::TILE_SIZE / 2, 
                 component::TILE_SIZE / 2,
                 1));
+    auto hp = new component::Hp(100, unit, system_manager_);
+    unit->AddComponent(hp);
+    hp->Change(-30);
     system_manager_->AddEntity(unit);
     auto mouse = new Entity("mouse");
     mouse->AddComponent(new component::Transform());

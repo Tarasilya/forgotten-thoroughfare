@@ -1,39 +1,16 @@
-/*
-class Rectangle: public Component{
-
-private:
-    sf::Color color_;
-    std::pair<double, double> size_;
-    double thickness_;
-    int layer_;
-
-public:
-    Rectangle(sf::Color color_, 
-        double width_, 
-        double height_,
-        double thickness_,
-        int layer = 0);
-    
-    std::pair<double, double> GetSize();
-    double GetThickness();
-    int GetLayer();
-};
-*/
-
-
-
 #include "rectangle.h"
 
 
 namespace component {
 
-Rectangle::Rectangle(sf::Color color, 
-				double width,
-				double height,
-				double thickness,
-				int layer)
-        : color_(color), size_({width, height}), 
-        thickness_(thickness), layer_(layer) {}
+Rectangle::Rectangle(double width, 
+            double height,
+            sf::Color color,
+            int layer,
+            double thickness,
+            sf::Color outline_color)
+        : size_({width, height}), color_(color), layer_(layer),
+        thickness_(thickness), outline_color_(outline_color) {}
 
 
 std::pair<double, double> Rectangle::GetSize() {
@@ -49,7 +26,15 @@ int Rectangle::GetLayer() {
 }
 
 sf::Color Rectangle::GetColor() {
-	return color_;
+    return color_;
+}
+
+sf::Color Rectangle::GetOutlineColor() {
+    return outline_color_;
+}
+
+void Rectangle::SetWidth(double width) {
+    size_.first = width;
 }
 
 }
