@@ -133,8 +133,8 @@ std::pair<int, int> Map::GetCoords(Entity* tile) {
         ->GetComponent<component::CollisionRect>()
         ->Move(transform->GetX(), transform->GetY());
 
-    int i = (rect.y1 + rect.y2) / 2 /TILE_SIZE + rows_ / 2;
-    int j = (rect.x1 + rect.x2) / 2 /TILE_SIZE + columns_ / 2;;
+    int i = (rect.y1 + rect.y2) / 2 / TILE_SIZE + rows_ / 2;
+    int j = (rect.x1 + rect.x2) / 2 / TILE_SIZE + columns_ / 2;;
     return {i, j};
 }
 

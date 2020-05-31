@@ -24,7 +24,7 @@ Hp::Hp(int max, Entity* entity, systems::SystemManager* system_manager_): hp_(ma
 
 Entity* Hp::CreateHpRect(std::string name, sf::Color color, Entity* entity) {
     Entity* result = new Entity(name);
-    result->AddComponent(new component::Rectangle(0, HP_HEIGHT, color, 5));
+    result->AddComponent(new component::Rectangle(0, HP_HEIGHT, color, 6));
     result->AddComponent(new component::Transform(0, -HP_HEIGHT));
     result->AddComponent(new component::ParentEntity(entity));
     return result;

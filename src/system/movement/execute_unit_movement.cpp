@@ -25,6 +25,7 @@ ExecuteUnitMovement::ExecuteUnitMovement(SystemManager* manager)
 void ExecuteUnitMovement::InitUsedState() {}
 
 const double UNIT_SPEED = 0.0001;
+const double EPS = 1e-9;
 
 void ExecuteUnitMovement::Tick(double dt) {
     auto entities = system_manager_->GetAspectEntities(movement_order_aspect_);
@@ -34,65 +35,27 @@ void ExecuteUnitMovement::Tick(double dt) {
         auto order = entity->GetComponent<component::MovementOrder>();
         auto unit_rect = CollisionDetection::GetMovedRect(entity);
         auto tile_rect = CollisionDetection::GetMovedRect(order->Path()[0]);
+        auto cur_center = GetCenter(tile_rect);
+        auto unit_center = GetCenter(unit_rect);
         if (!unit_rect.Intersects(tile_rect)) {
             order->PopFirst();
         }
         if (order->Size() <= 1) {
-            removed.push_back(entity);
+            if (Manhattan(unit_center, cur_center) > EPS) {
+                MoveTowards(transform, UNIT_SPEED * dt, unit_center, cur_center);
+            }
+            else {
+                removed.push_back(entity);
+            }
             continue;
         }
-        auto cur_center = GetCenter(order->Path()[0]);
-        auto next_center = GetCenter(order->Path()[1]);
-        if (RoughlyEqual(
-                cur_center.GetY(),
-                next_center.GetY())) {
-            if (!RoughlyEqual(next_center.GetY(), transform->GetY())) {
-                if (transform->GetY() < next_center.GetY()) {
-                    transform->SetY(
-                        std::min(transform->GetY() + UNIT_SPEED * dt, next_center.GetY()));
-                }
-                else {
-                    transform->SetY(
-                        std::max(transform->GetY() - UNIT_SPEED * dt, next_center.GetY()));   
-                }
-            }
-            else {
-                if (transform->GetX() < next_center.GetX()) {
-                    transform->SetX(
-                        std::min(transform->GetX() + UNIT_SPEED * dt, next_center.GetX()));
-                }
-                else {
-                    transform->SetX(
-                        std::max(transform->GetX() - UNIT_SPEED * dt, next_center.GetX()));   
-                }
-            }
-        }
-        else if (RoughlyEqual(
-                cur_center.GetX(),
-                next_center.GetX())) {
-            if (!RoughlyEqual(next_center.GetX(), transform->GetX())) {
-                if (transform->GetX() < next_center.GetX()) {
-                    transform->SetX(
-                        std::min(transform->GetX() + UNIT_SPEED * dt, next_center.GetX()));
-                }
-                else {
-                    transform->SetX(
-                        std::max(transform->GetX() - UNIT_SPEED * dt, next_center.GetX()));
-                }
-            }
-            else {
-                if (transform->GetY() < next_center.GetY()) {
-                    transform->SetY(
-                        std::min(transform->GetY() + UNIT_SPEED * dt, next_center.GetY()));
-                }
-                else {
-                    transform->SetY(
-                        std::max(transform->GetY() - UNIT_SPEED * dt, next_center.GetY()));
-                }
-            }
+        auto next_tile_rect = CollisionDetection::GetMovedRect(order->Path()[1]);
+        auto next_center = GetCenter(next_tile_rect);
+        if (Manhattan(cur_center, next_center) + EPS < Manhattan(unit_center, next_center)) {
+            MoveTowards(transform, UNIT_SPEED * dt, unit_center, cur_center);
         }
         else {
-            assert (false && "bro wtf");
+            MoveTowards(transform, UNIT_SPEED * dt, unit_center, next_center);    
         }
     }
     for (auto entity: removed) {
@@ -100,14 +63,41 @@ void ExecuteUnitMovement::Tick(double dt) {
     }
 }
 
-component::Transform ExecuteUnitMovement::GetCenter(Entity* entity) {
-    auto rect = CollisionDetection::GetMovedRect(entity);
-    return component::Transform(
-        rect.x1 + component::TILE_SIZE / 2,
-        rect.y1 + component::TILE_SIZE / 2);
+void ExecuteUnitMovement::MoveTowards(component::Transform* unit_transform,
+        double speed,
+        component::Transform unit_center,
+        component::Transform target_center) {
+    if (RoughlyEqual(unit_center.GetX(), target_center.GetX())) {
+        AdjustY(unit_transform, speed, unit_center.GetY(), target_center.GetY());
+    }
+    else {
+        AdjustX(unit_transform, speed, unit_center.GetX(), target_center.GetX());
+    }
 }
 
-const double EPS = 1e-9;
+void ExecuteUnitMovement::AdjustX(component::Transform* unit_transform,
+        double speed, double cur_x, double target_x) {
+    double movemant_cap = std::abs(cur_x - target_x);
+    double delta = cur_x < target_x ? std::min(speed, movemant_cap) : -std::min(speed, movemant_cap);
+    unit_transform->SetX(unit_transform->GetX() + delta);
+}
+
+void ExecuteUnitMovement::AdjustY(component::Transform* unit_transform,
+        double speed, double cur_y, double target_y) {
+    double movemant_cap = std::abs(cur_y - target_y);
+    double delta = cur_y < target_y ? std::min(speed, movemant_cap) : -std::min(speed, movemant_cap);
+    unit_transform->SetY(unit_transform->GetY() + delta);
+}
+
+double ExecuteUnitMovement::Manhattan(component::Transform a, component::Transform b) {
+    return std::abs(a.GetX() - b.GetX()) + std::abs(a.GetY() - b.GetY());
+}
+
+component::Transform ExecuteUnitMovement::GetCenter(component::CollisionRect rect) {
+    return component::Transform(
+        (rect.x1 + rect.x2) / 2,
+        (rect.y1 + rect.y2) / 2);
+}
 
 bool ExecuteUnitMovement::RoughlyEqual(double x, double y) {
     return std::abs(x-y) < EPS;
