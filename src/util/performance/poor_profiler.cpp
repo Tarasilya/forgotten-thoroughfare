@@ -6,7 +6,6 @@
 std::vector<std::pair<const char*, PerformanceData<std::chrono::microseconds>>> PoorProfiler::data_;
 int PoorProfiler::i_ = 0;
 bool PoorProfiler::loop_ = false;
-
 std::chrono::time_point<std::chrono::high_resolution_clock> PoorProfiler::last_ = std::chrono::high_resolution_clock::now();
 std::string PoorProfiler::section_name_;
 
