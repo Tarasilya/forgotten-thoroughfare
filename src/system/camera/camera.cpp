@@ -4,6 +4,6 @@
 namespace component {
 
 
-Camera::Camera(): CollisionRect(0, 0, 1, 1) {}
+Camera::Camera(): CollisionRect(-0.5, -0.5, 0.5, 0.5) {}
 
 }
