@@ -20,6 +20,8 @@ public:
     bool Intersects(const CollisionRect& rect);
 
     CollisionRect& operator=(const CollisionRect& rect);
+
+    void Print();
 };
 
 }

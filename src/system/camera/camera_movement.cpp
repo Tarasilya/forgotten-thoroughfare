@@ -34,16 +34,16 @@ void CameraMovement::Tick(double dt) {
         auto transform = GetComponent<component::Transform>(entity);
         double x_speed = 0;
         double y_speed = 0;
-        if (transform->GetX() < MARGIN) {
+        if (transform->GetX() < camera->x1 + MARGIN) {
             x_speed -= CAMERA_SPEED;
         }
-        if (transform->GetX() > 1 - MARGIN) {
+        if (transform->GetX() > camera->x2 - MARGIN) {
             x_speed += CAMERA_SPEED;
         }
-        if (transform->GetY() < MARGIN) {
+        if (transform->GetY() < camera->y1 + MARGIN) {
             y_speed -= CAMERA_SPEED;
         }
-        if (transform->GetY() > 1 - MARGIN) {
+        if (transform->GetY() > camera->y2 - MARGIN) {
             y_speed += CAMERA_SPEED;
         }
         *static_cast<component::CollisionRect*>(camera) 

@@ -7,7 +7,6 @@
 #include "drawable/rectangle_drawable.h"
 #include "entity.h"
 #include "render_vector.h"
-#include "textures.h"
 #include "type.h"
 
 #include <SFML/Graphics.hpp>
@@ -44,10 +43,6 @@ void RectanglePreRender::Tick(double dt) {
         auto rectangle = GetComponent<component::Rectangle>(entity);
         auto transform = GetComponent<component::Transform>(entity);
         
-        double thickness = rectangle->GetThickness();
-
-        sf::Color color = rectangle->GetColor();
-
         auto copy_transform = new component::Transform();
         copy_transform->SetPosition(transform->GetX(),
                                     transform->GetY());
@@ -68,17 +63,13 @@ void RectanglePreRender::Tick(double dt) {
             copy_transform->GetX() * width, 
             copy_transform->GetY() * height);
 
-
-
         auto rectangle_size = rectangle->GetSize();
-
-
 
         rectangle_shape->setSize(
             sf::Vector2f(rectangle_size.first * width, rectangle_size.second * height));
-        rectangle_shape->setOutlineThickness(thickness * width);
-        rectangle_shape->setFillColor(sf::Color::Transparent);
-        rectangle_shape->setOutlineColor(color);
+        rectangle_shape->setOutlineThickness(rectangle->GetThickness() * width);
+        rectangle_shape->setFillColor(rectangle->GetColor());
+        rectangle_shape->setOutlineColor(rectangle->GetOutlineColor());
         render_vector->push_back({rectangle->GetLayer(), new RectangleDrawable(rectangle_shape)});
     }
 }

@@ -47,8 +47,6 @@ void CollisionDetection::Tick(double dt) {
                 auto collision_rect2 = GetMovedRect(entity2);
 
                 if (collision_rect1.Intersects(collision_rect2)) {
-                    std::cerr << "found collision between [" << entity1->Name() 
-                        << "] and [" << entity2->Name() << "]" << std::endl;
                     if (collision == 0) {
                         collision = new component::Collision(entity2);
                         system_manager_->AddComponent(entity1, collision);
