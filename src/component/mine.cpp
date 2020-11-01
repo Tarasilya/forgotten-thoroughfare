@@ -2,7 +2,7 @@
 
 namespace component {
 
-int Mine::GetProductivity() { 
+double Mine::GetProductivity() { 
 	return productivity_;
 }
 

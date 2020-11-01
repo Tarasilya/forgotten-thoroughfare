@@ -36,7 +36,7 @@ void Mining::Tick(double dt) {
 
     auto balance_entity = *balance_entities.begin();
 
-    int total_productivity = 0;
+    double total_productivity = 0;
 
 
 
@@ -45,7 +45,7 @@ void Mining::Tick(double dt) {
                                     ->GetProductivity();
     }
 
-    int total_earnings = total_productivity * dt;
+    double total_earnings = total_productivity * dt;
 
     component::AccountBalance::ChangeMoney(balance_entity, total_earnings);
 }

@@ -113,6 +113,7 @@ void Game::Run() {
 
     while (window->GetWindow()->isOpen()) {
         auto cur = std::chrono::high_resolution_clock::now();
+        // TODO: make dt int
         double dt = std::chrono::duration_cast<std::chrono::milliseconds>(cur - prev_t).count();
         if (dt > MIN_FRAME) {
             prev_t = cur;

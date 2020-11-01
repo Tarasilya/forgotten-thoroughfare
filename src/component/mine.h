@@ -6,9 +6,9 @@ namespace component {
 
 class Mine: public Component {
 private:
-    const int productivity_ = 10; 
+    const double productivity_ = 0.1; 
 public:
-    int GetProductivity();
+    double GetProductivity();
 };
 
 }
