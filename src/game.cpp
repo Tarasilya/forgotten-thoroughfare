@@ -1,10 +1,7 @@
 #include "game.h"
 
 #include "component/account_balance.h"
-#include "component/backpack.h"
 #include "component/collision_rect.h"
-#include "component/craft/craft.h"
-#include "component/craft/recipe.h"
 #include "component/hud.h"
 #include "component/hp.h"
 #include "component/mine.h"
