@@ -1,6 +1,7 @@
 #include "text_pre_render.h"
 
 #include "component/parent_entity.h"
+#include "component/hud.h"
 #include "component/state/window.h"
 #include "entity.h"
 #include "render_vector.h"
@@ -65,7 +66,13 @@ void TextPreRender::Tick(double dt) {
             transform->GetX() * width,
             transform->GetY() * height);
         draw_text->setFillColor(sf::Color::White);
-        render_vector->push_back({10, new TextDrawable(draw_text)});
+        auto text_drawable = new TextDrawable(draw_text);
+        
+        if (entity->HasComponent<component::HUD>()) {
+            text_drawable->HUD = true;
+        }
+        
+        render_vector->push_back({10, text_drawable});
 
         if (entity->HasComponent<component::ParentEntity>()) {
             auto parent_transform 

@@ -28,8 +28,10 @@ void CameraApply::Tick(double dt) {
 
 
     for (auto drawable: *render_queue) {
-        drawable.second->Move(-camera->x1 * window_size.x, 
-            -camera->y1 * window_size.y);
+        if (!drawable.second->HUD) {
+            drawable.second->Move(-camera->x1 * window_size.x, 
+                -camera->y1 * window_size.y);
+        }
     }
 }
 

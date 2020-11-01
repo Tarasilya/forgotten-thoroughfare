@@ -1,7 +1,13 @@
 #include "game.h"
 
+#include "component/account_balance.h"
+#include "component/backpack.h"
 #include "component/collision_rect.h"
+#include "component/craft/craft.h"
+#include "component/craft/recipe.h"
+#include "component/hud.h"
 #include "component/hp.h"
+#include "component/mine.h"
 #include "component/mouse.h"
 #include "component/sprite.h"
 #include "component/transform.h"
@@ -16,6 +22,7 @@
 #include "system/camera/camera_movement.h"
 #include "system/collision/collision_detection.h"
 #include "system/collision/collision_resolve.h"
+#include "system/economics/mining.h"
 #include "system/input/keyboard_input.h"
 #include "system/input/mouse_input.h"
 #include "system/input/player_commands.h"
@@ -62,6 +69,14 @@ Game::Game() {
     mouse->AddComponent(new component::Mouse());
     mouse->AddComponent(new component::CollisionRect(0, 0));
     system_manager_->AddEntity(mouse);
+
+    auto bank_and_mine = new Entity("bank_and_mine");
+    bank_and_mine->AddComponent(new component::AccountBalance());
+    bank_and_mine->AddComponent(new component::Text());
+    bank_and_mine->AddComponent(new component::Mine());
+    bank_and_mine->AddComponent(new component::HUD());
+    bank_and_mine->AddComponent(new component::Transform());
+    system_manager_->AddEntity(bank_and_mine);
 }
 
 void Game::InitState() {
@@ -84,6 +99,7 @@ void Game::InitSystems() {
     system_manager_->AddSystem(new systems::ExecuteUnitMovement(system_manager_));
     //system_manager_->AddSystem(new systems::CollisionResolve(system_manager_));
     //system_manager_->AddSystem(new systems::MovementApply(system_manager_));
+    system_manager_->AddSystem(new systems::Mining(system_manager_));
 
     system_manager_->AddSystem(new systems::CameraMovement(system_manager_));
     system_manager_->AddSystem(new systems::TextPreRender(system_manager_));
